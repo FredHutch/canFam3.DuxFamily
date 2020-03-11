@@ -12,12 +12,14 @@ library(org.Cf.eg.db)
 
 # "hom.Hs.inpCANFA: human to canine
 pkg_dir <- "/fh/fast/tapscott_s/CompBio/RNA-Seq/canFam3.DuxFamily"
+data_dir <- file.path(pkg_dir, "data")
 source(file.path(pkg_dir, "scripts", "inparanoid_homology.R"))
-load(file.path(pkg_dir, "data", "C2C12.ens.ddsl2.rda"))
-load(file.path(pkg_dir, "data", "CinC.ens.dds.rda"))
-load(file.path(pkg_dir, "data", "HinC.ens.dds.rda"))
-load(file.path(pkg_dir, "data", "HinH.ens.dds.rda"))
-load(file.path(pkg_dir, "data", "human_cleavage.rda"))
+load(file.path(data_dir,"C2C12.ens.ddsl2.rda"))
+load(file.path(data_dir, "CinC.ens.dds.rda"))
+rownames(CinC.ens.dds) <- sapply(strsplit(rownames(CinC.ens.dds), fixed=TRUE, "."), "[", 1)
+load(file.path(data_dir, "HinC.ens.dds.rda"))
+load(file.path(data_dir, "HinH.ens.dds.rda"))
+load(file.path(data_dir, "human_cleavage.rda"))
 
 
 #
@@ -30,7 +32,7 @@ cleavage_homology <- human_inparanoid_homology(as.character(human_cleavage$GeneI
 #
 # whole gene set homology
 #
-load(file.path(pkg_dir, "data", "HinH.ens.SE.rda"))
+load(file.path(data_dir, "HinH.ens.SE.rda"))
 no_keep <- grepl("LRG", rownames(HinH.ens.SE))
 human_universe <- rownames(HinH.ens.SE)[!no_keep]
 universe_homology <- human_inparanoid_homology(human_universe)
@@ -45,17 +47,42 @@ library(tidyverse)
 HinH_res <- as(results(HinH.ens.dds, lfcThreshold=1, alpha=0.05), "data.frame") %>%
   rownames_to_column(var="HUMAN_ENSEMBL") %>%
   dplyr::select(HUMAN_ENSEMBL, log2FoldChange, padj) %>%
-  rename(HinH_logFC=log2FoldChange, HinH_padj=padj)
-CinC_res <- results(CinC.ens.dds, lfcThreshold=1, alpha=0.05)
-HinC_res <- results(HinC.ens.dds, lfcThreshold=1, alpha=0.05)
-MinM_res <- results(C2C12.ens.ddsl2[[2]], lfcThreshold=1, alpha=0.05)
+  rename(HinH_logFC=log2FoldChange, HinH_padj=padj) %>%
+  dplyr::mutate(HinH_DE=HinH_padj < 0.05)
+CinC_res <- as(results(CinC.ens.dds, lfcThreshold=1, alpha=0.05), "data.frame") %>%
+  rownames_to_column(var="CANINE_ENSEMBL") %>%
+  dplyr::select(CANINE_ENSEMBL, log2FoldChange, padj) %>%
+  rename(CinC_logFC=log2FoldChange, CinC_padj=padj) %>%
+  dplyr::mutate(CinC_DE=CinC_padj < 0.05)
+HinC_res <- as(results(HinC.ens.dds, lfcThreshold=1, alpha=0.05), "data.frame") %>%
+  rownames_to_column(var="CANINE_ENSEMBL") %>%
+  dplyr::select(CANINE_ENSEMBL, log2FoldChange, padj) %>%
+  rename(HinC_logFC=log2FoldChange, HinC_padj=padj) %>%
+  dplyr::mutate(HinC_DE=HinC_padj < 0.05)
+MinM_res <- as(results(C2C12.ens.ddsl2[[2]], lfcThreshold=1, alpha=0.05), "data.frame") %>%
+  rownames_to_column(var="MOUSE_ENSEMBL") %>%
+  dplyr::select(MOUSE_ENSEMBL, log2FoldChange, padj) %>%
+  rename(MinM_logFC=log2FoldChange, MinM_padj=padj) %>%
+  dplyr::mutate(MinM_DE=MinM_padj < 0.05)
 
-HinH_CinC_HinC <- universe_homology[["human2canine"]] %>%
-  left_join()
+#  sanity check
+sum(HinH_res$HUMAN_ENSEMBL %in% universe_homology[[1]]$HUMAN_ENSEMBL)
+sum(CinC_res$CANINE_ENSEMBL %in% universe_homology[[1]]$CANINE_ENSEMBL)
 
-# combine human2canine and human2mouse
+HinH_CinC <- universe_homology[["human2canine"]] %>%
+  inner_join(HinH_res, by="HUMAN_ENSEMBL") %>% #1685
+  left_join(CinC_res, by="CANINE_ENSEMBL") # 1685
+
+H2C_cor <- HinH_CinC %>% 
+  dplyr::filter(!is.na(CinC_logFC)) %>%
+  summarise(cor_var=cor(HinH_logFC, CinC_logFC))
+
 HinH_MinM <- universe_homology[[2]] %>%
-
+  inner_join(HinH_res, by="HUMAN_ENSEMBL") %>% #1685
+  left_join(MinM_res, by="MOUSE_ENSEMBL")
+H2M_cor <- HinH_MinM %>% 
+  dplyr::filter(!is.na(MinM_logFC)) %>%
+  summarise(cor_var=cor(HinH_logFC, MinM_logFC))
 
 # (a) build a matrix of LogFC
 # (b) exame pairwise correlation
