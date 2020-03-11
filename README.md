@@ -1,3 +1,6 @@
+This package contain reproducible codes for DUXC expression and functions in canine myoblast
+
+# Genenral Work Flow
 ## Genome build
 - UCSC Genome broswser assembly ID: canFam3
 - NCBI Genome information: NCBI genome/85 CanFam3.1 GCF_000002285.3
@@ -21,18 +24,22 @@ _canFam3.rmsk_ pacakge.  The package is stored at
 ## Standard chromosomes
 Use standard chromosomes
 seqlevels of canFam3:
- sl[!grepl("chrUn_", sl)]
+```
  [1] "chr1"  "chr10" "chr11" "chr12" "chr13" "chr14" "chr15" "chr16" "chr17"
 [10] "chr18" "chr19" "chr2"  "chr20" "chr21" "chr22" "chr23" "chr24" "chr25"
 [19] "chr26" "chr27" "chr28" "chr29" "chr3"  "chr30" "chr31" "chr32" "chr33"
 [28] "chr34" "chr35" "chr36" "chr37" "chr38" "chr4"  "chr5"  "chr6"  "chr7"
 [37] "chr8"  "chr9"  "chrM"  "chrX"
+```
 
-## Differential Analysis
-**step 1**
-features: TxDb.Cfamiliaris.UCSC.canFam3.ensGene
-count: summarizedExperiment
-differential analysis: CinC vs Luc, HinC vs Luc, CALTinC
-hypothesis: mean log fold change greater than 1.
-repeat analysis: need to be re-done by the countRepeat package.
+## RNA-seq analysis
+**step 1: differential analysis using DESeq2**
+- features: TxDb.Cfamiliaris.UCSC.canFam3.ensGene
+- count: summarizedExperiment  
+- differential analysis: CinC vs Luc, HinC vs Luc, CALTinC 
+- null hypothesis: mean log fold change less than 1
+- FDR threshold: adjust p-value < 0.05
+**step 2: repeat analysis**
+- use the in-home R/Bioc package, _rmskStat_
+
 
