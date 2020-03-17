@@ -9,3 +9,4 @@ lm_eqn <- function(df){
 }
 
 do_goset <- funciton(universe, selected) {}
+
