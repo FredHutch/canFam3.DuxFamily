@@ -147,14 +147,18 @@ pdf(file.path(pkg_dir, "figures", "HinC_CinC_logFC_scatter.pdf"),
 plot(gg)  
 dev.off()  
 
+######################################
 #
 # cleavage-stage gene signature
 #
+######################################
+cleavage_homology <- human_inparanoid_homology(as.character(human_cleavage$GeneID))[["human2caniine"]]
 
-
+######################################
 #
 # GO analysis
 #
+######################################
 library(goseq)
 library(ggplot2)
 library(dplyr)
@@ -164,12 +168,82 @@ source(file.path(pkg_dir, "scripts", "tools.R"))
 universe <- rownames(CinC.ens.dds)
 selected <- CinC_res.2 %>% 
   dplyr::filter(CinC_padj < 0.05 & CinC_logFC > 0)  %>%
-  pull(ENSEMBL)
-CinC_go <- .do_goseq(universe=universe, selected=selected, p_value=0.01)
+  pull(ENSEMBL) #1553
+CinC_go <- .do_goseq(universe=universe, selected=selected, threshold_pval=0.01) %>%
+  mutate(log10Pval = -10 * log10(over_represented_pvalue)) 
+CinC_go_top35 <- CinC_go[1:35, ] %>%  
+  dplyr::arrange(desc(over_represented_pvalue)) %>%
+  mutate(term = factor(term, levels=term))
+
+# where is the cutoff for fdr (adjusted p-value)?
+fdr_n <- CinC_go_top35 %>% summarise(n = sum(fdr < 0.1))
+gg <- ggplot(CinC_go_top35, aes(x=term, y=log10Pval)) +
+  geom_bar(stat="identity") +
+  geom_vline(xintercept = 35 - as.numeric(fdr_n) + 0.5, linetype="dashed", color="gray75") +
+  coord_flip() +
+  theme_minimal() +
+  labs(y="-log10Pval", x="", title="CinC GO terms Enrichment")
+
+pdf(file.path(fig_dir, "CinC_go.pdf"), width=12, height=5)
+plot(gg)
+dev.off()
 
 # (b) HinC
 universe <- rownames(HinC.ens.dds)
 selected <- HinC_res.2 %>% 
-  dplyr::filter(CinC_padj < 0.05 & CinC_logFC > 0)  %>%
+  dplyr::filter(HinC_padj < 0.05 & HinC_logFC > 0)  %>%
   pull(ENSEMBL)
-HinC_go <- .do_seq(universe=universe, selected=selected, p_value=0.01)
+HinC_go <- .do_goseq(universe=universe, selected=selected, threshold_pval=0.01) %>%
+  mutate(log10Pval = -10 * log10(over_represented_pvalue)) 
+HinC_go_top35 <- HinC_go[1:35, ] %>% 
+  dplyr::arrange(desc(over_represented_pvalue)) %>%
+  mutate(term = factor(term, levels=term))
+
+gg <- ggplot(HinC_go_top35, aes(x=term, y=log10Pval)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  theme_minimal() +
+  labs(y="-log10Pval", x="", title="HinC GO terms Enrichment")
+pdf(file.path(fig_dir, "HinC_go.pdf"), width=12, height=5)
+plot(gg)
+dev.off()
+
+# (c) HinC and CinC go combine
+CinC_HinC_top35 <- CinC_go %>% top_n(35, log10Pval) %>%
+  dplyr::arrange(log10Pval) %>%
+  mutate(term = factor(term, levels=term)) %>%
+  left_join(HinC_go, by="category", suffix=c("_CinC", "_HinC")) %>%
+  dplyr::select(term_CinC, log10Pval_CinC, log10Pval_HinC) %>%
+  rename(CinC=log10Pval_CinC, HinC=log10Pval_HinC) %>%
+  gather(key="group", value="log10Pval", -term_CinC) 
+
+gg <- ggplot(CinC_HinC_top35, aes(x=group, y=term_CinC)) +
+  geom_point(aes(size=log10Pval)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank()) +
+  labs(title="Top GO in CinC")
+pdf(file.path(fig_dir, "CinC_HinC_go_top35.pdf"))
+plot(gg)
+dev.off()  
+
+HinC_CinC_top35 <- HinC_go %>% top_n(35, log10Pval) %>%
+  dplyr::arrange(log10Pval) %>%
+  mutate(term = factor(term, levels=term)) %>%
+  left_join(CinC_go, by="category", suffix=c("_HinC", "_CinC")) %>%
+  dplyr::select(term_HinC, log10Pval_CinC, log10Pval_HinC) %>%
+  rename(CinC=log10Pval_CinC, HinC=log10Pval_HinC) %>%
+  gather(key="group", value="log10Pval", -term_HinC) 
+
+gg <- ggplot(HinC_CinC_top35, aes(x=group, y=term_HinC)) +
+  geom_point(aes(size=log10Pval)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank()) +
+  labs(title="Top GO in HinC")
+pdf(file.path(fig_dir, "HinC_CinC_go_top35.pdf"), width=4.8, height=7)
+plot(gg)
+dev.off()  
+
