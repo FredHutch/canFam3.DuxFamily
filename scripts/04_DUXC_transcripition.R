@@ -158,11 +158,18 @@ dev.off()
 library(goseq)
 library(ggplot2)
 library(dplyr)
+source(file.path(pkg_dir, "scripts", "tools.R"))
 
 # (a) CinC
 universe <- rownames(CinC.ens.dds)
 selected <- CinC_res.2 %>% 
   dplyr::filter(CinC_padj < 0.05 & CinC_logFC > 0)  %>%
   pull(ENSEMBL)
-CinC_go <- .do_seq(universe=universe, selected=selected, p_value=0.01)
+CinC_go <- .do_goseq(universe=universe, selected=selected, p_value=0.01)
 
+# (b) HinC
+universe <- rownames(HinC.ens.dds)
+selected <- HinC_res.2 %>% 
+  dplyr::filter(CinC_padj < 0.05 & CinC_logFC > 0)  %>%
+  pull(ENSEMBL)
+HinC_go <- .do_seq(universe=universe, selected=selected, p_value=0.01)
