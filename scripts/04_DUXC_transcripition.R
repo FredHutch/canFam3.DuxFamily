@@ -20,6 +20,7 @@ load(file.path(data_dir, "human_cleavage.rda"))
 load(file.path(data_dir, "CinC.ens.dds.rda"))
 load(file.path(data_dir, "CALTinC.ens.dds.rda"))
 load(file.path(data_dir, "HinC.ens.dds.rda"))
+load(file.path(data_dir, "HinH.ens.dds.rda"))
 rownames(HinC.ens.dds) <- sapply(strsplit(rownames(HinC.ens.dds), fixed=TRUE, "."), "[", 1)
 rownames(CinC.ens.dds) <- sapply(strsplit(rownames(CinC.ens.dds), fixed=TRUE, "."), "[", 1)
 rownames(CALTinC.ens.dds) <- sapply(strsplit(rownames(CALTinC.ens.dds), fixed=TRUE, "."), "[", 1)
@@ -160,17 +161,57 @@ message("Total", nrow(canine_cleanve), "human-to-canine homologues.")
 
 # use functions from tools.R
 CinC_enrichment_prob <- 
-  cleavage_hypergeometric(cleavage_homology$human2canine, CinC_res)
+  geneset_hypergeometric(cleavage_homology$human2canine, CinC_res)
 HinC_enrichement_prob <- 
-  cleavage_hypergeometric(cleavage_homology$human2canine, HinC_res)
-knitr::kable(rbind(CinC_enrichment_prob), HinC_enrichement_prob))  
+  geneset_hypergeometric(cleavage_homology$human2canine, HinC_res)
+knitr::kable(rbind(CinC_enrichment_prob, HinC_enrichement_prob))  
 
 
 ######################################
 #
-# (4) 2C-like gene set enrichment
+# (4) mouse 2C-state gene set enrichment
 #
 ######################################
+# test: mouse to caninef
+library(xlsx)
+library(org.Mm.eg.db)
+source(file.path(pkg_dir, "scripts", "inparanoid_homology.R"))
+
+z4 <- read.xlsx(file.path(pkg_dir, "extdata", "ZSCAN4_ES_Upreg_Fixed.xlsx"),
+                      sheetIndex=1, stringsAsFactors=FALSE)
+z4_ensembl <- AnnotationDbi::select(org.Mm.eg.db, 
+                             keys=as.character(z4$GeneID), columns=c("ENSEMBL"), 
+                             keytype="REFSEQ") 
+                               
+                       
+seed_ensembl <- unique(z4_ensembl$ENSEMBL)
+mouse2canine <- mouse_inparanoid_homology(seed_ensembl)
+dim(mouse2canine)
+CinC_enrichment_prob <- 
+  z4state_hypergeometric(mouse2canine, CinC_res)
+HinC_enrichement_prob <- 
+  z4state_hypergeometric(mouse2canine, HinC_res)
+knitr::kable(rbind(CinC_enrichment_prob, HinC_enrichement_prob))
+
+######################################
+#
+# (5) DUX4 targets gene set enrichment
+#
+######################################
+HinH_res <- results(HinH.ens.dds, alpha=0.05, lfcThreshold=2)
+HinH_up_reg <- as(HinH_res, "data.frame") %>%
+  rownames_to_column(var="ENSEMBL") %>%
+  dplyr::filter(padj < 0.05 & log2FoldChange >0)
+seed_ensembl <- pull(HinH_up_reg, ENSEMBL)
+
+dux4_homology <- human_inparanoid_homology(seed_ensembl)
+
+CinC_enrichment_prob <- 
+  geneset_hypergeometric(dux4_homology$human2canine, CinC_res)
+HinC_enrichement_prob <- 
+  geneset_hypergeometric(dux4_homology$human2canine, HinC_res)
+knitr::kable(rbind(CinC_enrichment_prob, HinC_enrichement_prob))  
+
 
 
 ######################################
