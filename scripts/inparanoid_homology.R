@@ -53,8 +53,8 @@ human_inparanoid_homology <- function(seed_ensembl) {
   require(org.Mm.eg.db)
   require(org.Cf.eg.db)
 
-  human_canine <- as.list(om.Hs.inp.db::hom.Hs.inpCANFA)
-  human_mouse <- as.list(om.Hs.inp.db::hom.Hs.inpMUSMU)
+  human_canine <- as.list(hom.Hs.inp.db::hom.Hs.inpCANFA)
+  human_mouse <- as.list(hom.Hs.inp.db::hom.Hs.inpMUSMU)
 
   # NOTE: seed_ensembl must be human ensembl; get protein IDs and symbol
    # (1) paired: human protein id -to- canine protein id (1:n)
