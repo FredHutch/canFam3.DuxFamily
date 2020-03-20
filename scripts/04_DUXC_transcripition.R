@@ -24,11 +24,8 @@ rownames(HinC.ens.dds) <- sapply(strsplit(rownames(HinC.ens.dds), fixed=TRUE, ".
 rownames(CinC.ens.dds) <- sapply(strsplit(rownames(CinC.ens.dds), fixed=TRUE, "."), "[", 1)
 rownames(CALTinC.ens.dds) <- sapply(strsplit(rownames(CALTinC.ens.dds), fixed=TRUE, "."), "[", 1)
 
-# get cleavage-stage genes
-cleavage_homology <- human_inparanoid_homology(as.character(human_cleavage$GeneID))
-
 #
-# (0) DESeq2 results
+# (0) tidy datasets: DESeq2 results
 #
 
 # DataFrame form
@@ -56,10 +53,11 @@ CALTinC_res.2 <- as(CALTinC_res, "data.frame") %>%
   dplyr::mutate(CALTinC_DE=CALTinC_padj < 0.05)
 
 
-###################################################################################################
+#####################################
 #
 # (1) DESeq2 resutls and MAplots
 #
+####################################
 # (a) CinC
 summary(CinC_res)
 pdf(file.path(fig_dir, "CinC_maplot.pdf"), width=4, height=4)
@@ -87,10 +85,11 @@ text(x=10000, y=2, labels="up: 20", adj=c(0, 0))
 text(x=10000, y=-2, labels="down: 114", adj=c(0, 1))
 dev.off()
 
+###################################
 #
 # (2) comparison by scatter plot?
 #
-
+##################################
 # (a) CinC vs CALT
 CALTinC_CinC <- CinC_res.2 %>% inner_join(CALTinC_res.2, by="ENSEMBL") %>%
   dplyr::mutate(both_DE= CALTinC_DE & CinC_DE) %>%
@@ -149,14 +148,34 @@ dev.off()
 
 ######################################
 #
-# cleavage-stage gene signature
+# (3) cleavage-stage gene signature
 #
 ######################################
-cleavage_homology <- human_inparanoid_homology(as.character(human_cleavage$GeneID))[["human2caniine"]]
+cleavage_homology <- human_inparanoid_homology(as.character(human_cleavage$GeneID))
+canine_cleavage <- cleavage_homology$human2canine %>%
+  rename(ENSEMBL=CANINE_ENSEMBL) %>%
+  left_join(CinC_res.2, by="ENSEMBL") %>%
+  left_join(HinC_res.2, by="ENSEMBL") # total 73 genes
+message("Total", nrow(canine_cleanve), "human-to-canine homologues.")
+
+# use functions from tools.R
+CinC_enrichment_prob <- 
+  cleavage_hypergeometric(cleavage_homology$human2canine, CinC_res)
+HinC_enrichement_prob <- 
+  cleavage_hypergeometric(cleavage_homology$human2canine, HinC_res)
+knitr::kable(rbind(CinC_enrichment_prob), HinC_enrichement_prob))  
+
 
 ######################################
 #
-# GO analysis
+# (4) 2C-like gene set enrichment
+#
+######################################
+
+
+######################################
+#
+# (5) GO analysis
 #
 ######################################
 library(goseq)

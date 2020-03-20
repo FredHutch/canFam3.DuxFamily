@@ -8,9 +8,30 @@ lm_eqn <- function(df){
     as.character(as.expression(eq));
 }
 
-gsea_hypergeomatric <- function(universe, de_genes, gene_set) {
-    # this function performs hypergeometric testing for Gene Set Enrichment Analysis
+cleavage_hypergeometric <- function(cleavage_homology_canine, res_DF) {
+    ## hypergeometric testing for cleavage gene set (over-repersentation)
+    res_df <- as(res_DF, "data.frame") %>%
+    rownames_to_column(var="ENSEMBL")
+    canine_cleavage <- cleavage_homology_canine %>%
+      rename(ENSEMBL=CANINE_ENSEMBL) %>%
+      left_join(res_df, by="ENSEMBL") %>%
+      dplyr::filter(!is.na(log2FoldChange))
+
+    universe <- pull(res_df, ENSEMBL)
+    up_regulated <- res_df %>% dplyr::filter(log2FoldChange > 0 & padj < 0.05) %>%
+      pull(ENSEMBL)
+    black_ball <- length(universe) -  length(up_regulated) 
+    white_ball <- length(up_regulated)
+    ball_drown <- nrow(canine_cleavage)
+    white_drown <- canine_cleavage %>%
+      dplyr::filter(log2FoldChange > 0 & padj < 0.05) %>% nrow(.)
+    prob <- dhyper(white_drown, m=white_ball, n=black_ball, k=ball_drown, log = FALSE)
+    expected <- ball_drown * white_ball/(white_ball+black_ball)
+    return(c(total=black_ball+white_ball, up_regulated=white_ball,
+                  cleavage_set=ball_drown, up_reg_cleavage=white_drown,
+                  expected=expected, prob=prob))
 }
+
 
 .do_goseq <- function(universe, selected, threshold_pval=0.01, 
                       return.DEInCat=FALSE, dds=NULL) {
