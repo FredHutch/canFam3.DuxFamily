@@ -38,7 +38,12 @@ my_color <- c('#999999','#E69F00', '#56B4E9')
 #
 cleavage_homology <- human_inparanoid_homology(as.character(human_cleavage$GeneID))
 # how many of them are differentially expressed? run GSEA
-# like2c_homology
+
+#
+# whole genome set: mouse-canine
+#
+MinM.ens.dds <- C2C12.ens.ddsl2[["MinMvsNODOX"]]
+
 
 #
 # whole gene set homology

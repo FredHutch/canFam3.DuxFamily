@@ -1,7 +1,49 @@
 # Function maps human seed ensembl ID to canine/mouse ensembl ID. Mapping could be
 # 1:n. 
 
+mouse_inparanoid_homology <- function(seed_ensembl) {
+  # this function map mouse to canine homologs. 1:n.
+  require(DBI)
+  require(hom.Mm.inp.db)
+  require(dplyr)
+  require(tidyr)
+  require(purrr)
+  require(org.Mm.eg.db)
+  require(org.Cf.eg.db)
+
+  mouse_canine <- as.list(hom.Mm.inp.db::hom.Mm.inpCANFA)
+
+  if (!is.character(seed_ensembl))
+      stop("The seed ensembl ID must be a vector of character") 
+
+  ensembl_prot <- 
+      AnnotationDbi::select(org.Mm.eg.db, keys=seed_ensembl, 
+                            columns=c("ENSEMBLPROT", "SYMBOL"),
+                            keytype="ENSEMBL", multiVals="first") %>%
+        dplyr::filter(!is.na(ENSEMBLPROT)) %>% #filter na that has no protein id
+        dplyr::filter(ENSEMBLPROT %in% names(mouse_canine)) %>% # filter no homology in canine
+        dplyr::filter(!duplicated(ENSEMBLPROT)) %>% # some protein ID have duplicated SYMBOL resulting duplicated protein ID
+        dplyr::rename(MOUSE_ENSEMBL=ENSEMBL, MOUSE_SYMBOL=SYMBOL, MOUSE_ENSEMBLPROT=ENSEMBLPROT) # rename columns
+  
+  canine_paired <- mget(dplyr::pull(ensembl_prot, MOUSE_ENSEMBLPROT), hom.Mm.inp.db::hom.Mm.inpCANFA)   %>%
+      tibble::enframe() %>% tidyr::unnest(cols=2) %>%
+      dplyr::rename(MOUSE_ENSEMBLPROT=name, CANINE_ENSEMBLPROT=value)
+  canine_prot <- # protein ID -to- ensembl ID/symbol; 1:n
+      AnnotationDbi::select(org.Cf.eg.db, keys=canine_paired$CANINE_ENSEMBLPROT, 
+                            columns=c("ENSEMBL", "SYMBOL"), # have duplicatd mapping
+                            keytype="ENSEMBLPROT", multiVals="first") %>%
+        dplyr::filter(!is.na(ENSEMBL)) %>% # remove no ensembl id mapping 
+        dplyr::filter(!duplicated(ENSEMBL)) %>% # remove duplicated mapping 
+        dplyr::rename(CANINE_ENSEMBL=ENSEMBL, CANINE_SYMBOL=SYMBOL, CANINE_ENSEMBLPROT=ENSEMBLPROT)
+  # combind canine_paried and ensembl_prot => canine_prot  
+    canine_paired <- canine_paired %>% dplyr::right_join(canine_prot, by="CANINE_ENSEMBLPROT")
+    mouse_canine_paired <- ensembl_prot %>% right_join(canine_paired, by="MOUSE_ENSEMBLPROT")
+}
+
+
 human_inparanoid_homology <- function(seed_ensembl) {
+  # this function use inparanoid database to mapp human to canine/mouse homologs.
+  # the mapping could be 1:n
   require(DBI)
   require(hom.Hs.inp.db)
   require(dplyr)
@@ -11,8 +53,8 @@ human_inparanoid_homology <- function(seed_ensembl) {
   require(org.Mm.eg.db)
   require(org.Cf.eg.db)
 
-  human_canine <- as.list(hom.Hs.inpCANFA)
-  human_mouse <- as.list(hom.Hs.inpMUSMU)
+  human_canine <- as.list(om.Hs.inp.db::hom.Hs.inpCANFA)
+  human_mouse <- as.list(om.Hs.inp.db::hom.Hs.inpMUSMU)
 
   # NOTE: seed_ensembl must be human ensembl; get protein IDs and symbol
    # (1) paired: human protein id -to- canine protein id (1:n)
