@@ -216,7 +216,7 @@ knitr::kable(rbind(CinC_enrichment_prob, HinC_enrichement_prob))
 
 ######################################
 #
-# (5) GO analysis
+# (6) GO analysis
 #
 ######################################
 library(goseq)
