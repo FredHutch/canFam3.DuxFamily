@@ -58,17 +58,16 @@ embryo_hypergeometric <- function(cleavage_homology_canine, res_DF) {
                   expected=expected, prob=prob))
 }
 
-rmsk_enrichment <- function(rmsk_dds) {
-    #dds <- rmsk.dds[[name]]
+.rmsk_enrichment <- function(rmsk_dds) {
+    # threshold: p-value=0.0r correspondng to H_0: |lfc| < 0.5  
     rowdata <- as(rowData(rmsk_dds), "data.frame") %>%
       rownames_to_column(var="repName") %>%
       dplyr::select(repName, repClass, repFamily)
-    # first threshold: p-value=0.0r correspondng to H_0: |lfc| < 0.5  
+    # results using designated threshold and null hypothesis
     res_df <- as(results(rmsk_dds, alpha=0.05, lfcThreshold=0.5), "data.frame") %>%
       rownames_to_column(var="repName") %>%
       left_join(rowdata, by="repName") 
-    # padj: adj p-value =0.05 corresponding to H_0: |lfc| < 0.5
-    # padj_null_zero: adj p-value=0.05 correspondng to H_0: lfc=0  
+
     universe <- nrow(res_df)
     selected_up <- res_df %>% 
       summarise(up = sum(padj < 0.05 & log2FoldChange > 0.5, na.rm=TRUE)) %>%
@@ -97,8 +96,10 @@ rmsk_enrichment <- function(rmsk_dds) {
                 depletion_prob = dhyper(x=down, k=total, m=selected_down, n=universe-selected_down),
                 depletion_mu = total * selected_down/universe)      
     # print out to a spread sheet                
-    return(list(res_df=res_df, repFamily_summary=repFamily_summary, repClass_summary=repClass_summary))               
-})
+    return(list(res_df=res_df, 
+                repFamily_summary=repFamily_summary, 
+                repClass_summary=repClass_summary))               
+}
 
 .do_goseq <- function(universe, selected, threshold_pval=0.01, 
                       return.DEInCat=FALSE, dds=NULL) {
@@ -156,4 +157,49 @@ rmsk_enrichment <- function(rmsk_dds) {
                     "[[", 1)
     }
     rowData(dds[id])$gene_name
+}
+
+
+.rmsk_enrichment_alt <- function(rmsk_dds) {
+    # threshold: p-value=0.05 correspondng to H_0: |lfc| =0. 
+    # linear theshold lfc = 0.95  
+    rowdata <- as(rowData(rmsk_dds), "data.frame") %>%
+      rownames_to_column(var="repName") %>%
+      dplyr::select(repName, repClass, repFamily)
+    # results using designated threshold and null hypothesis
+    res_df <- as(results(rmsk_dds, alpha=0.05), "data.frame") %>%
+      rownames_to_column(var="repName") %>%
+      left_join(rowdata, by="repName") 
+
+    universe <- nrow(res_df)
+    selected_up <- res_df %>% 
+      summarise(up = sum(padj < 0.05 & log2FoldChange > 0.95, na.rm=TRUE)) %>%
+      pull(up)
+    selected_down <- res_df %>% 
+      summarise(down = sum(padj < 0.05 & log2FoldChange < 0.95, na.rm=TRUE)) %>%
+      pull(down)
+
+    # repFamily enrichment/depletion summary
+    repFamily_summary <- res_df %>% group_by(repFamily) %>%
+      summarise(total=n(), 
+                up = sum(padj < 0.05 & log2FoldChange > 0, na.rm=TRUE), 
+                down = sum(padj < 0.05 & log2FoldChange < 0, na.rm=TRUE),
+                enrichment_prob = dhyper(x=up, k=total, m=selected_up, n=universe - selected_up),
+                enrichment_mu = total * selected_up/universe,
+                depletion_prob = dhyper(x=down, k=total, m=selected_down, n=universe-selected_down),
+                depletion_mu = total * selected_down/universe)
+
+    # repClass enrichement/depletion summary
+    repClass_summary <- res_df %>% group_by(repClass) %>%
+       summarise(total=n(), 
+                up = sum(padj < 0.05 & log2FoldChange > 0, na.rm=TRUE), 
+                down = sum(padj < 0.05 & log2FoldChange < 0, na.rm=TRUE),
+                enrichment_prob = dhyper(x=up, k=total, m=selected_up, n=universe - selected_up),
+                enrichment_mu = total * selected_up/universe,
+                depletion_prob = dhyper(x=down, k=total, m=selected_down, n=universe-selected_down),
+                depletion_mu = total * selected_down/universe)      
+    # print out to a spread sheet                
+    return(list(res_df=res_df, 
+                repFamily_summary=repFamily_summary, 
+                repClass_summary=repClass_summary))               
 }
