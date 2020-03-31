@@ -95,19 +95,65 @@ gg1
 dev.off()
 
 #
-# (2) comparison
+# (2) enrichment comparison
 #
 
-# clearn up: only keep up > mu
-
+# (2a) over-represented repeat families and classes
 family_res <- full_join(HinC_rmsk$repFamily_summary, CinC_rmsk$repFamily_summary, 
                         by="repFamily", suffix=c("_HinC", "_CinC")) %>%
-  dplyr::select(repFamily, enrichment_prob_HinC, enrichment_prob_CinC) %>% 
-  tidyr::gather(key="sample", value="pval", -repFamily)
+  dplyr::select(repFamily, enrichment_prob_HinC, enrichment_prob_CinC,
+    up_HinC, up_CinC, enrichment_mu_HinC, enrichment_mu_CinC) %>% 
+  tidyr::gather(key="sample", value="pval", -repFamily, 
+                -up_HinC, -up_CinC, -enrichment_mu_HinC, -enrichment_mu_CinC) %>%
+  dplyr::mutate(sample = ifelse(grepl("HinC", sample), "HinC", "CinC")) %>%
+  dplyr::mutate(log10Pval = -10*log10(pval)) %>%
+  dplyr::mutate(up = ifelse(sample=="HinC", up_HinC, up_CinC),
+                mu = ifelse(sample=="HinC", enrichment_mu_HinC, enrichment_mu_CinC)) %>%
+  dplyr::mutate(overrepresented = pval < 0.1 & up > mu) 
 
+gg <- ggplot(family_res, aes(x=repFamily, y=sample)) +
+  geom_point(aes(size=log10Pval, color=overrepresented, fill=overrepresented)) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=0.5),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.position="bottom") +
+  labs(title=expression("Repeat Family GSEA: " ~ -10 * Log[10] ~ "(p-value)"),
+       size = expression(-10 * Log[10] ~ "(p-value)")) +
+  scale_fill_manual(name ="over-represented",  values=c("ivory4", "firebrick4")) +
+  scale_color_manual(name="over-represented", values=c("ivory4", "firebrick4"))
 
-# (2a) over-represented repeat families and classes
+pdf(file.path(fig_dir, "rmsk_repFamily_log10Pval.2.pdf"), width=8, height=3.8)
+gg
+dev.off()
 
+class_res <- full_join(HinC_rmsk$repClass_summary, CinC_rmsk$repClass_summary, 
+                        by="repClass", suffix=c("_HinC", "_CinC")) %>%
+  dplyr::select(repClass, enrichment_prob_HinC, enrichment_prob_CinC,
+    up_HinC, up_CinC, enrichment_mu_HinC, enrichment_mu_CinC) %>% 
+  tidyr::gather(key="sample", value="pval", -repClass, 
+                -up_HinC, -up_CinC, -enrichment_mu_HinC, -enrichment_mu_CinC) %>%
+  dplyr::mutate(sample = ifelse(grepl("HinC", sample), "HinC", "CinC")) %>%
+  dplyr::mutate(log10Pval = -10*log10(pval)) %>%
+  dplyr::mutate(up = ifelse(sample=="HinC", up_HinC, up_CinC),
+                mu = ifelse(sample=="HinC", enrichment_mu_HinC, enrichment_mu_CinC)) %>%
+  dplyr::mutate(overrepresented = pval < 0.1 & up > mu)                         
+
+gg <- ggplot(class_res, aes(x=repClass, y=sample)) +
+  geom_point(aes(size=log10Pval, color=overrepresented, fill=overrepresented), show.legend=FALSE) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust=0.5),
+        axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.position="bottom") +
+  labs(title=expression("Repeat Class GSEA: " ~ -10 * Log[10] ~ "(p-value)"),
+       size = expression(-10 * Log[10] ~ "(p-value)")) +
+  scale_fill_manual(name ="over-represented",  values=c("ivory4", "firebrick4")) +
+  scale_color_manual(name="over-represented", values=c("ivory4", "firebrick4"))
+
+pdf(file.path(fig_dir, "rmsk_repClass_log10Pval.pdf"), width=4.5, height=2)
+gg
+dev.off()
 
 # (2b) visualization of LTR families in terms of log2FC
 LTR <- comb %>% dplyr::filter(repClass_HinC == "LTR") %>%
@@ -141,8 +187,44 @@ pdf(file.path(fig_dir, "rmsk_repFamily_boxplot.pdf"), width=4, height=6)
 gg
 dev.off()
 
-# (2b) boxplot/jitter of LTR families
-# (2a) dot plot of all the repFamily and repClass over-repressentation p-value
+#
+# binding sites in relation to LTR family
+#
+chip_dir <- "/fh/fast/tapscott_s/CompBio/ChIP-Seq/canFam3.ImmCnMb.dux"
+load(file.path(chip_dir, "data", "peaks_list.rda"))
+
+# ? how many peaks/percentage are overlapping with LTR 
+sapply(peaks_list, function(rng) {
+    n <- sum(rng$repClass == "LTR", na.rm=TRUE) 
+    return(c(total=length(rng), n_LTR=n, freq_LTR=n/length(rng)))
+})
+
+# tidy up frequency: CinC stronger in ERVL; HinC stronger in ERVL-MaLR
+LTR_freq <- sapply(peaks_list[-3], function(rng) {
+    100 * table(rng$repFamily)[c("ERV1", "ERVL", "ERVL-MaLR")] / length(rng)
+})
+LTR_freq <- as.data.frame(t(LTR_freq)) %>%
+  rownames_to_column(var="sample_name") %>%
+  dplyr::mutate(trans_factor = sapply(strsplit(sample_name, "_", fixed=TRUE), "[[", 3)) %>%
+  dplyr::mutate(clone_type = sapply(strsplit(sample_name, "_", fixed=TRUE), "[[", 4)) %>%
+  tidyr::gather(key="Family", value="Frequency", -trans_factor, -clone_type, -sample_name) %>%
+  dplyr::mutate(Sample = paste0(trans_factor, "_", clone_type)) %>%
+  dplyr::mutate(Sample=factor(Sample, 
+                            levels = c("hDUX4_poly", "hDUX4_mono", "CCH_poly", "CCH_mono", "CALTh_poly")))
+gg <- ggplot(LTR_freq, aes(x=Sample, y=Frequency, fill=trans_factor)) +
+  geom_bar(stat="identity", width=0.8) +
+  facet_wrap( ~ Family, nrow=1) +
+  geom_text(aes(label=format(Frequency, digits=2)), vjust=1.6, color="gray25", size=3) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position="none") +
+  labs(y="Frequency (%)") +       
+  scale_fill_manual(values=c("#0072B2", "#009E73")) 
+pdf(file.path(fig_dir, "rmsk_LTR_peaks_freq_bar.pdf"), width=6, height=3)
+gg
+dev.off()  
+
+# tidy up average fold enrichment
 
 #
 # other threshold
