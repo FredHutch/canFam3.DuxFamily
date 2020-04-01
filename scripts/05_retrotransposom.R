@@ -290,6 +290,8 @@ gg <- ggplot(LTR_fold, aes(x=Sample, y=avg_fold_enrichment, fill=trans_factor)) 
 pdf(file.path(fig_dir, "rmsk_LTR_peaks_foldenrichment_bar.pdf"), width=6, height=3)
 gg
 dev.off()  
+
+
 #
 # other threshold
 #
