@@ -9,6 +9,9 @@ library(DESeq2)
 library(tidyverse)
 library(tidyr)
 library(ggrepel)
+library(purrr)
+#library(ggthemes)
+library(wesanderson) # modern palettes
 
 load(file.path(pkg_dir, "data", "rmsk.dds.rda"))
 load(file.path(pkg_dir, "data", "rmsk.res.rda"))
@@ -187,19 +190,51 @@ pdf(file.path(fig_dir, "rmsk_repFamily_boxplot.pdf"), width=4, height=6)
 gg
 dev.off()
 
+##############################################
 #
-# binding sites in relation to LTR family
+# (3) binding sites in relation to LTR family
 #
+##############################################
 chip_dir <- "/fh/fast/tapscott_s/CompBio/ChIP-Seq/canFam3.ImmCnMb.dux"
 load(file.path(chip_dir, "data", "peaks_list.rda"))
 
-# ? how many peaks/percentage are overlapping with LTR 
-sapply(peaks_list, function(rng) {
-    n <- sum(rng$repClass == "LTR", na.rm=TRUE) 
-    return(c(total=length(rng), n_LTR=n, freq_LTR=n/length(rng)))
-})
+# (3a) how many peaks/percentage are overlapping with LTR 
+repeat_class <- c("LTR", "SINE", "LINE", "DNA", "Simple_repeat", "Non-repetitive")
+rep_summary <- map(peaks_list, function(rng) {
+    total_peak <- length(rng)
+    df <- as(mcols(rng), "data.frame") %>% #tidy repClass
+      dplyr::mutate(tidy_repClass = as.character(repClass)) %>%
+      dplyr::mutate(tidy_repClass = replace(tidy_repClass, 
+                                            which(is.na(tidy_repClass)), "Non-repetitive")) %>%
+      dplyr::mutate(tidy_repClass = replace(tidy_repClass, 
+                                            which(!tidy_repClass %in% repeat_class), "Others")) %>%
+      dplyr::mutate(tidy_repClass = factor(tidy_repClass, 
+                                           levels=c(repeat_class[1:5], "Others", "Non-repetitive"))) %>%
+      group_by(tidy_repClass) %>%
+      summarise(frequency = 100 * n()/length(rng))
+}) %>% bind_rows(.id="sample_name") %>%
+  dplyr::mutate(trans_factor = sapply(strsplit(sample_name, "_", fixed=TRUE), "[[", 3)) %>%
+  dplyr::mutate(clone_type = sapply(strsplit(sample_name, "_", fixed=TRUE), "[[", 4)) %>%
+  dplyr::mutate(Sample = paste0(trans_factor, "_", clone_type)) %>%
+  dplyr::mutate(Sample=factor(Sample, 
+                            levels = c("hDUX4_poly", "hDUX4_mono", "CCH_poly", "CCH_mono", "CALTh_poly")))
+  
+col <- as.character(wes_palette(n=7, name="Darjeeling1", type="continuous"))
 
-# tidy up frequency: CinC stronger in ERVL; HinC stronger in ERVL-MaLR
+gg <- ggplot(rep_summary, aes(x=Sample, y=frequency, fill=tidy_repClass)) +
+  geom_bar(stat="identity") +
+  theme_minimal() +
+  geom_text(aes(label=round(frequency)), position = position_stack(vjust = 0.5), 
+            color="gray10", size=3.5) +
+  scale_fill_manual(values=col) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+        axis.title.x = element_blank())   +
+  labs(y="Frequency (%)", fill="Repeat class")        
+pdf(file.path(fig_dir, "rmsk_peaks_repClass_freq_bar.pdf"), height=6, width=3.5)
+gg
+dev.off()
+
+# (3b) tidy up LTR family frequency: CinC stronger in ERVL; HinC stronger in ERVL-MaLR
 LTR_freq <- sapply(peaks_list[-3], function(rng) {
     100 * table(rng$repFamily)[c("ERV1", "ERVL", "ERVL-MaLR")] / length(rng)
 })
@@ -218,14 +253,43 @@ gg <- ggplot(LTR_freq, aes(x=Sample, y=Frequency, fill=trans_factor)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position="none") +
-  labs(y="Frequency (%)") +       
+  labs(y="Frequency (%)", subtitle="Peak positions in relation to LTR families ") +       
   scale_fill_manual(values=c("#0072B2", "#009E73")) 
 pdf(file.path(fig_dir, "rmsk_LTR_peaks_freq_bar.pdf"), width=6, height=3)
 gg
 dev.off()  
 
 # tidy up average fold enrichment
+library(modelr)
+LTR_fold <- map(peaks_list[-3], function(rng) {
+    # average fold enrichment for each of the families
+    df <- as(mcols(rng), "data.frame") %>%
+      group_by(repFamily) %>%
+      summarise(avg_fold_enrichment = mean(fold_enrichment)) %>%
+      ungroup() %>%
+      dplyr::filter(repFamily %in% c("ERV1", "ERVL", "ERVL-MaLR"))
+}) %>% bind_rows(.id="sample_name") %>%
+  dplyr::mutate(trans_factor = sapply(strsplit(sample_name, "_", fixed=TRUE), "[[", 3)) %>%
+  dplyr::mutate(clone_type = sapply(strsplit(sample_name, "_", fixed=TRUE), "[[", 4)) %>%
+  dplyr::mutate(Sample = paste0(trans_factor, "_", clone_type)) %>%
+  dplyr::mutate(Sample=factor(Sample, 
+                            levels = c("hDUX4_poly", "hDUX4_mono", "CCH_poly", "CCH_mono", "CALTh_poly")))
 
+gg <- ggplot(LTR_fold, aes(x=Sample, y=avg_fold_enrichment, fill=trans_factor)) +
+  geom_bar(stat="identity", width=0.8) +
+  facet_wrap( ~ repFamily, nrow=1) +
+  geom_text(aes(label=format(avg_fold_enrichment, digits=2)), vjust=1.6, color="gray25", size=3) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position="none") +
+  labs(y="Fold enrichment", subtitle="Fold enrichment in relation to LTR families ") +       
+  scale_fill_manual(values=c("#0072B2", "#009E73")) +
+  coord_cartesian(ylim=c(5, NA))
+  #lims(y=c(3, NA)) +
+
+pdf(file.path(fig_dir, "rmsk_LTR_peaks_foldenrichment_bar.pdf"), width=6, height=3)
+gg
+dev.off()  
 #
 # other threshold
 #
