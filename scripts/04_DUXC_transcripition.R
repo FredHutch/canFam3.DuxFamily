@@ -161,9 +161,9 @@ message("Total", nrow(canine_cleanve), "human-to-canine homologues.")
 
 # use functions from tools.R
 CinC_enrichment_prob <- 
-  geneset_hypergeometric(cleavage_homology$human2canine, CinC_res)
+  embryo_hypergeometric(cleavage_homology$human2canine, CinC_res)
 HinC_enrichement_prob <- 
-  geneset_hypergeometric(cleavage_homology$human2canine, HinC_res)
+  embryo_hypergeometric(cleavage_homology$human2canine, HinC_res)
 knitr::kable(rbind(CinC_enrichment_prob, HinC_enrichement_prob))  
 
 
@@ -207,9 +207,9 @@ seed_ensembl <- pull(HinH_up_reg, ENSEMBL)
 dux4_homology <- human_inparanoid_homology(seed_ensembl)
 
 CinC_enrichment_prob <- 
-  geneset_hypergeometric(dux4_homology$human2canine, CinC_res)
+  embryo_hypergeometric(dux4_homology$human2canine, CinC_res)
 HinC_enrichement_prob <- 
-  geneset_hypergeometric(dux4_homology$human2canine, HinC_res)
+  embryo_hypergeometric(dux4_homology$human2canine, HinC_res)
 knitr::kable(rbind(CinC_enrichment_prob, HinC_enrichement_prob))  
 
 
