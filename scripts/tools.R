@@ -101,7 +101,7 @@ embryo_hypergeometric <- function(cleavage_homology_canine, res_DF) {
                 repClass_summary=repClass_summary))               
 }
 
-.do_goseq <- function(universe, selected, threshold_pval=0.01, 
+.do_goseq <- function(universe, selected, threshold.fdr=0.01, 
                       return.DEInCat=FALSE, dds=NULL) {
     # This function perfroms GO term analysis for canFam3 genome build genes                          
     require(goseq)
@@ -124,15 +124,16 @@ embryo_hypergeometric <- function(cleavage_homology_canine, res_DF) {
     
     enriched.BP <- GO.BP %>%
       mutate(fdr = p.adjust(over_represented_pvalue, method="BH")) %>%
-      dplyr::filter(over_represented_pvalue < threshold_pval)
+      dplyr::filter(fdr < threshold.fdr)
     
-    if (return.DEInCat & !is.null(dds)) {
-      cat_genes <- lapply(enriched.BP$category, function(GOID) {
+    if (return.DEInCat) {
+      cat_genes <- sapply(enriched.BP$category, function(GOID) {
         cat_genes <- .cat2DEgenes(GOID, pwf=pwf)
-        cat_genename <- .mapID2GeneName(dds, 
-                                        id=cat_genes, clean=TRUE)
+        cat_genename <- AnnotationDbi::select(org.Cf.eg.db, 
+                                              keys=cat_genes, keytype="ENSEMBL",
+                                              columns="SYMBOL") %>% pull(SYMBOL)
         paste(cat_genename, collapse=",")
-      })  
+      })
       enriched.BP <- add_column(enriched.BP, DEInCat=cat_genes)
     }
 
@@ -140,7 +141,7 @@ embryo_hypergeometric <- function(cleavage_homology_canine, res_DF) {
 }
 
 .cat2DEgenes <- function(GOID, pwf) {
-    gene2cat <- getgo(rownames(pwf), "hg38", "ensGene", fetch.cats = "GO:BP")
+    gene2cat <- getgo(rownames(pwf), "canFam3", "ensGene", fetch.cats = "GO:BP")
     names(gene2cat) <- rownames(pwf)
     cat2gene <- goseq:::reversemapping(gene2cat)
     #' sanity check
@@ -151,13 +152,21 @@ embryo_hypergeometric <- function(cleavage_homology_canine, res_DF) {
     sig_gene[sig_gene %in% geneInGOID]
 }
 
-.mapID2GeneName <- function(dds, id, clean=TRUE) {
-    if (clean)  {
-      rownames(dds) <- sapply(strsplit(rownames(dds), ".", fixed=TRUE),
-                    "[[", 1)
-    }
-    rowData(dds[id])$gene_name
+.mapID2GeneName <- function(ensembl_id) {
+  require(org.Cf.eg.db)
+  require(AnnotationDbi)
+  AnnotationDbi::select(org.Cf.eg.db, keys=cat_gene, keytype="ENSEMBL", columns="SYMBOL") %>%
+    pull(SYMBOL)
+
 }
+#
+#.mapID2GeneName <- function(dds, id, clean=FALSE) {
+#    if (clean)  {
+#     rownames(dds) <- sapply(strsplit(rownames(dds), ".", fixed=TRUE),
+#                    "[[", 1)
+#    }
+#    rowData(dds[id])$gene_name
+#}
 
 
 .rmsk_enrichment_alt <- function(rmsk_dds) {
@@ -203,3 +212,14 @@ embryo_hypergeometric <- function(cleavage_homology_canine, res_DF) {
                 repFamily_summary=repFamily_summary, 
                 repClass_summary=repClass_summary))               
 }
+
+
+### nonsense
+library(annotate)
+library(mouse4302.db)
+probe <- as.list(as.list(mouse4302ALIAS2PROBE))
+sub_probe <- unlist(probe[1:10], use.name=FALSE)
+a=AnnotationDbi::select(mouse4302.db, keys=probe, columns=c("SYMBOL", "ENTREZID"),
+                        keytype="PROBEID",
+                        multiVals="first") %>%
+                      dplyr::filter(!duplicated(PROBEID))  
