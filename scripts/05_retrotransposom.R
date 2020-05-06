@@ -14,7 +14,7 @@ library(purrr)
 library(wesanderson) # modern palettes
 
 load(file.path(pkg_dir, "data", "rmsk.dds.rda"))
-load(file.path(pkg_dir, "data", "rmsk.res.rda"))
+load(file.path(pkg_dir, "data", "rmsk.res.rda")) # it seems like we don't need this
 
 # 
 # (1)DESeq2 results
@@ -50,6 +50,8 @@ lapply(names(rmsk.dds[1:2]), function(name) {
 source(file.path(pkg_dir, "scripts", "tools.R")) # .rmsk_enrichment
 HinC_rmsk <- .rmsk_enrichment(rmsk.dds[["HinC"]])
 CinC_rmsk <- .rmsk_enrichment(rmsk.dds[["CinC"]])
+save(HinC_rmsk, file=file.path(pkg_dir, "data", "HinC_rmsk.rda"))
+save(CinC_rmsk, file=file.path(pkg_dir, "data", "CinC_rmsk.rda"))
 
 # I would like to know the enrichment analysis results differ by different
 # threshold? not much different (.rmsk_enrichement_alt()) Stable 
@@ -58,6 +60,9 @@ CinC_rmsk <- .rmsk_enrichment(rmsk.dds[["CinC"]])
 # satellite: 
 HinC_rmsk$res_df %>% dplyr::filter(repFamily == "Satellite")
 CinC_rmsk$res_df %>% dplyr::filter(repFamily == "Satellite")
+
+save(HinC_rmsk, file=file.path(pkg_dir, "data", "HinC_rmsk.rda"))
+save(CinC_rmsk, file=file.path(pkg_dir, "data", "CinC_rmsk.rda"))
 
 # (1c) scatter plot of HinC and CinC; highlight LTR: ERVL-MaLR
 comb <- inner_join(HinC_rmsk$res_df, CinC_rmsk$res_df, 
