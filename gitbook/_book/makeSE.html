@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 RNA-seq to DESeq2 | Conservation and ERVL activation of Canine DUXC</title>
+  <meta name="description" content="Bioinformatics and statistics analysis" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 RNA-seq to DESeq2 | Conservation and ERVL activation of Canine DUXC" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bioinformatics and statistics analysis" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 RNA-seq to DESeq2 | Conservation and ERVL activation of Canine DUXC" />
+  
+  <meta name="twitter:description" content="Bioinformatics and statistics analysis" />
+  
+
+<meta name="author" content="Chao-Jen Wong" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="chipseq.html"/>
+<link rel="next" href="DUXC-transcriptome.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">DUXC</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i><b>0.1</b> Datasets</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#tips"><i class="fa fa-check"></i><b>0.2</b> Tips</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="chipseq.html"><a href="chipseq.html"><i class="fa fa-check"></i><b>1</b> ChIP-seq for the canine model</a><ul>
+<li class="chapter" data-level="1.1" data-path="chipseq.html"><a href="chipseq.html#chip-seq-samples"><i class="fa fa-check"></i><b>1.1</b> ChIP-seq samples</a></li>
+<li class="chapter" data-level="1.2" data-path="chipseq.html"><a href="chipseq.html#workflow"><i class="fa fa-check"></i><b>1.2</b> workflow</a></li>
+<li class="chapter" data-level="1.3" data-path="chipseq.html"><a href="chipseq.html#peaks-and-functional-distribution"><i class="fa fa-check"></i><b>1.3</b> Peaks and functional distribution</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="chipseq.html"><a href="chipseq.html#functional-distribution"><i class="fa fa-check"></i><b>1.3.1</b> Functional distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="chipseq.html"><a href="chipseq.html#motifs-analysis-need-update"><i class="fa fa-check"></i><b>1.4</b> Motifs analysis NEED UPDATE</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="makeSE.html"><a href="makeSE.html"><i class="fa fa-check"></i><b>2</b> RNA-seq to DESeq2</a><ul>
+<li class="chapter" data-level="2.1" data-path="makeSE.html"><a href="makeSE.html#rna-seq-preprocessing"><i class="fa fa-check"></i><b>2.1</b> RNA-seq preprocessing</a></li>
+<li class="chapter" data-level="2.2" data-path="makeSE.html"><a href="makeSE.html#reads-counts"><i class="fa fa-check"></i><b>2.2</b> Reads counts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="makeSE.html"><a href="makeSE.html#define-gene-features"><i class="fa fa-check"></i><b>2.2.1</b> Define gene features</a></li>
+<li class="chapter" data-level="2.2.2" data-path="makeSE.html"><a href="makeSE.html#read-counts"><i class="fa fa-check"></i><b>2.2.2</b> Read counts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="makeSE.html"><a href="makeSE.html#deseq2"><i class="fa fa-check"></i><b>2.3</b> DESeq2</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html"><i class="fa fa-check"></i><b>3</b> DUXC transcriptome</a><ul>
+<li class="chapter" data-level="3.1" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#load-datasets"><i class="fa fa-check"></i><b>3.1</b> Load datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#deseq2-threshold-and-results"><i class="fa fa-check"></i><b>3.2</b> DESeq2 threshold and results</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#cinc-duxc-expressed-canine-muscle-cells"><i class="fa fa-check"></i><b>3.2.1</b> CinC: DUXC expressed canine muscle cells</a></li>
+<li class="chapter" data-level="3.2.2" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#hinc-dux4-expressed-canine-muscle-cells"><i class="fa fa-check"></i><b>3.2.2</b> HinC: DUX4 expressed canine muscle cells</a></li>
+<li class="chapter" data-level="3.2.3" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#caltinc-duxc-alt-expressed-canine-muscle-cells"><i class="fa fa-check"></i><b>3.2.3</b> CALTinC: DUXC-ALT expressed canine muscle cells</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="repeats.html"><a href="repeats.html"><i class="fa fa-check"></i><b>4</b> Retrotransposome transcriptome</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="repeats.html"><a href="repeats.html#repeat-classes-distribtuion-on-canine-genome"><i class="fa fa-check"></i><b>4.0.1</b> Repeat Classes distribtuion on canine genome</a></li>
+<li class="chapter" data-level="4.0.2" data-path="repeats.html"><a href="repeats.html#peaks-class-freqency"><i class="fa fa-check"></i><b>4.0.2</b> Peaks class freqency</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html"><i class="fa fa-check"></i><b>5</b> DUXC transcriptome compared to early embryo transcriptome profile</a><ul>
+<li class="chapter" data-level="5.1" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#maplots"><i class="fa fa-check"></i><b>5.1</b> MAplots</a></li>
+<li class="chapter" data-level="5.2" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#comparison-by-scatter-plots"><i class="fa fa-check"></i><b>5.2</b> Comparison by scatter plots</a></li>
+<li class="chapter" data-level="5.3" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#cleavage-stage-gene-signature"><i class="fa fa-check"></i><b>5.3</b> cleavage-stage gene signature</a></li>
+<li class="chapter" data-level="5.4" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#c-like-state-gene-signature"><i class="fa fa-check"></i><b>5.4</b> 2C-like state gene signature</a></li>
+<li class="chapter" data-level="5.5" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#compare-to-ipscs"><i class="fa fa-check"></i><b>5.5</b> Compare to iPSCs</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html"><i class="fa fa-check"></i><b>6</b> DUXC transcriptome compared to the FSHD transcriptional profile</a><ul>
+<li class="chapter" data-level="6.1" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#hinh-and-minm"><i class="fa fa-check"></i><b>6.1</b> HinH and MinM</a></li>
+<li class="chapter" data-level="6.2" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#cross-species-dux4-expression-in-human-mouse-and-canine"><i class="fa fa-check"></i><b>6.2</b> Cross-species DUX4 expression in human, mouse and canine</a></li>
+<li class="chapter" data-level="6.3" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#hinh-cinc-minm-hinm-and-hinc"><i class="fa fa-check"></i><b>6.3</b> HinH, CinC, MinM, HinM and HinC</a></li>
+<li class="chapter" data-level="6.4" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#using-ensembl-orthologs-database"><i class="fa fa-check"></i><b>6.4</b> Using Ensembl orthologs database</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#get-canine-human-and-human-mouse-orthologs"><i class="fa fa-check"></i><b>6.4.1</b> Get canine-human and human-mouse orthologs</a></li>
+<li class="chapter" data-level="6.4.2" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#cinc-transcriptome-compare-to-up-regulated-homologs-in-hinh"><i class="fa fa-check"></i><b>6.4.2</b> CinC transcriptome compare to up-regulated homologs in HinH</a></li>
+<li class="chapter" data-level="6.4.3" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#hinc-transcriptome-compare-to-up-regulated-homologs-in-hinh"><i class="fa fa-check"></i><b>6.4.3</b> HinC transcriptome compare to up-regulated homologs in HinH</a></li>
+<li class="chapter" data-level="6.4.4" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#minm"><i class="fa fa-check"></i><b>6.4.4</b> MinM</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#go-analysis-for-five-conditions"><i class="fa fa-check"></i><b>6.5</b> GO analysis for five conditions</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#homologs-intersect-in-all-conditions"><i class="fa fa-check"></i><b>6.5.1</b> Homologs intersect in all conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="DUXC-FSHD-profile.html"><a href="DUXC-FSHD-profile.html#misc-hinm-vs.minm"><i class="fa fa-check"></i><b>6.6</b> Misc: HinM vs. MinM</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ERVL.html"><a href="ERVL.html"><i class="fa fa-check"></i><b>7</b> ERVL Subfamilies</a><ul>
+<li class="chapter" data-level="7.1" data-path="ERVL.html"><a href="ERVL.html#backgroud"><i class="fa fa-check"></i><b>7.1</b> Backgroud</a></li>
+<li class="chapter" data-level="7.2" data-path="ERVL.html"><a href="ERVL.html#overlapping-v"><i class="fa fa-check"></i><b>7.2</b> Overlapping V</a></li>
+<li class="chapter" data-level="7.3" data-path="ERVL.html"><a href="ERVL.html#duxc-and-dux4-functions-in-malr-sub-families"><i class="fa fa-check"></i><b>7.3</b> DUXC and DUX4 functions in MaLR sub-families</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ERVL.html"><a href="ERVL.html#codes-and-figure"><i class="fa fa-check"></i><b>7.3.1</b> Codes and figure</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="ERVL.html"><a href="ERVL.html#duxc-alt-and-ervl-transcriptions"><i class="fa fa-check"></i><b>7.4</b> DUXC-ALT and ERVL transcriptions</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="ERVL.html"><a href="ERVL.html#erv-subfamily-expression"><i class="fa fa-check"></i><b>7.4.1</b> ERV subfamily expression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="DUXC-ALT.html"><a href="DUXC-ALT.html"><i class="fa fa-check"></i><b>8</b> DUXC-ALT transcriptome</a></li>
+<li class="chapter" data-level="9" data-path="LTR-activation.html"><a href="LTR-activation.html"><i class="fa fa-check"></i><b>9</b> LTR activation</a><ul>
+<li class="chapter" data-level="9.1" data-path="LTR-activation.html"><a href="LTR-activation.html#copy-number"><i class="fa fa-check"></i><b>9.1</b> Copy number</a></li>
+<li class="chapter" data-level="9.2" data-path="LTR-activation.html"><a href="LTR-activation.html#sattillites-activiation"><i class="fa fa-check"></i><b>9.2</b> Sattillites activiation</a></li>
+<li class="chapter" data-level="9.3" data-path="LTR-activation.html"><a href="LTR-activation.html#ltrs-activation"><i class="fa fa-check"></i><b>9.3</b> LTRs activation</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="LTR-activation.html"><a href="LTR-activation.html#direct-binding-of-dux4-and-duxc"><i class="fa fa-check"></i><b>9.3.1</b> Direct binding of DUX4 and DUXC</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="LTR-activation.html"><a href="LTR-activation.html#sine"><i class="fa fa-check"></i><b>9.4</b> SINE</a></li>
+<li class="chapter" data-level="9.5" data-path="LTR-activation.html"><a href="LTR-activation.html#line1-activation"><i class="fa fa-check"></i><b>9.5</b> LINE1 activation</a></li>
+<li class="chapter" data-level="9.6" data-path="LTR-activation.html"><a href="LTR-activation.html#satellites"><i class="fa fa-check"></i><b>9.6</b> Satellites</a></li>
+<li class="chapter" data-level="9.7" data-path="LTR-activation.html"><a href="LTR-activation.html#sines"><i class="fa fa-check"></i><b>9.7</b> SINEs</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="peaks-line1.html"><a href="peaks-line1.html"><i class="fa fa-check"></i><b>10</b> DUXC peaks and LINE1s</a><ul>
+<li class="chapter" data-level="10.1" data-path="peaks-line1.html"><a href="peaks-line1.html#peaks-of-cch-and-hdux4"><i class="fa fa-check"></i><b>10.1</b> Peaks of CCH and hDUX4</a></li>
+<li class="chapter" data-level="10.2" data-path="peaks-line1.html"><a href="peaks-line1.html#overlapping-with-expressed-l1s"><i class="fa fa-check"></i><b>10.2</b> Overlapping with expressed L1s</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="peaks-line1.html"><a href="peaks-line1.html#peaks-overlap-with-l1s"><i class="fa fa-check"></i><b>10.2.1</b> Peaks overlap with L1s</a></li>
+<li class="chapter" data-level="10.2.2" data-path="peaks-line1.html"><a href="peaks-line1.html#duxc-motif-discovery-using-l1-overlapped-peaks"><i class="fa fa-check"></i><b>10.2.2</b> DUXC Motif discovery using L1-overlapped peaks</a></li>
+<li class="chapter" data-level="10.2.3" data-path="peaks-line1.html"><a href="peaks-line1.html#match-dux4-and-duxc-motif-to-l1-overapped-peaks"><i class="fa fa-check"></i><b>10.2.3</b> Match DUX4 and DUXC motif to L1-overapped peaks</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="peaks-line1.html"><a href="peaks-line1.html#line1-element-with-aatca"><i class="fa fa-check"></i><b>10.3</b> LINE1 element with AATCA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i># References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Conservation and ERVL activation of Canine DUXC</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="makeSE" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> RNA-seq to DESeq2</h1>
+<p>This chapter summarizes our RNA-seq data preprocessing, read counts, and <em>DESeq2</em> differential analysis. All these steps were applied to the human, mouse, and canine models.</p>
+<div id="rna-seq-preprocessing" class="section level2">
+<h2><span class="header-section-number">2.1</span> RNA-seq preprocessing</h2>
+<p>Low quality reads were filtered (based on the filter flag embedded in the sequence ID) prior to alignment to genome canine (canFam3), mouse (mm10) and human (hg38) genome by Tophat/2.1.0 and Bowtie/2.2.3. Gene features were collected from Ensembl database; reads were counted toward gene features using the <code>summarizeOverlaps</code> function from Bioconductor’s <em>GenomicAlignments</em> package.</p>
+</div>
+<div id="reads-counts" class="section level2">
+<h2><span class="header-section-number">2.2</span> Reads counts</h2>
+<p>Code below presents an example of counting reads that completely overlap with exons of gene features (exons) using the <code>summarizeOverlaps</code> function - the count matrix, metadata, and gene features are stored into an object called <code>SummarizedExperiments</code>.</p>
+<div id="define-gene-features" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Define gene features</h3>
+<p>Example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(DESeq2))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(TxDb.Cfamiliaris.UCSC.canFam3.ensGene) <span class="co"># custom TxDb package</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(GenomicAlignments))</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(org.Cf.eg.db)) <span class="co"># Biocondutor annotation package for Canis familiaris</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(BioCParallel))</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">mparam &lt;-<span class="st"> </span><span class="kw">MulticoreParam</span>(<span class="dt">workers =</span> 4L, <span class="dt">type =</span> <span class="st">&quot;SOCK&quot;</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">register</span>(mparam, <span class="dt">default =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># (1) define gene features: extract exons and keep ones from standard chromosome</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">ens_exons &lt;-<span class="st"> </span><span class="kw">exonsBy</span>(TxDb.Cfamiliaris.UCSC.canFam3.ensGene, <span class="dt">by=</span><span class="st">&quot;gene&quot;</span>)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">ens_exons &lt;-<span class="st"> </span><span class="kw">keepStandardChromosomes</span>(ens_exons, <span class="dt">pruning.mode=</span><span class="st">&quot;fine&quot;</span>)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># make sure that the sequence level is UCSC, not NCBI </span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">seqlevelsStyle</span>(ens_exons)</a></code></pre></div>
+</div>
+<div id="read-counts" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Read counts</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># (2) bamFiles -&gt; summarizeOverlaps</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># define bamFiles (an example)</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">pkgDir &lt;-<span class="st"> &quot;~/tapscott/RNA-Seq/canFam3.DuxFamily&quot;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">dataDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(pkgDir, <span class="st">&quot;data&quot;</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">ngsDir &lt;-<span class="st"> &quot;/shared/ngs/illumina/atyler/170208_SN367_0857_AHF37NBCXY&quot;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">bamDir &lt;-<span class="st"> </span><span class="kw">file.path</span>(ngsDir, <span class="st">&quot;tophat&quot;</span>, <span class="st">&quot;bam&quot;</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">bamFiles &lt;-<span class="st"> </span><span class="kw">list.files</span>(bamDir, <span class="dt">pattern=</span><span class="st">&quot;</span><span class="ch">\\</span><span class="st">.bam$&quot;</span>, <span class="dt">full.names=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">bamFiles &lt;-<span class="st"> </span>bamFiles[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)]</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># summarizeOverlaps -&gt; SummerizeExpriment instance</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">canine.ens.SE &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span>GenomicAlignments<span class="op">::</span><span class="kw">summarizeOverlaps</span>(<span class="dt">features=</span>ens_exons,</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">                                       <span class="dt">reads=</span>bamFiles,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">                                       <span class="dt">mode=</span><span class="st">&quot;IntersectionStrict&quot;</span>,</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                                       <span class="dt">inter.feature=</span><span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">                                       <span class="dt">singleEnd=</span><span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">                                       <span class="dt">ignore.strand=</span><span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">                                       <span class="dt">BPPARAM=</span>mparam)</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co"># clean up metadata and column names</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="kw">colnames</span>(canine.ens.SE) &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">&quot;.bam&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="kw">colnames</span>(canine.ens.SE))</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">canine.ens.SE<span class="op">$</span>nick_name  &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">pheno_type &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(bamFiles), <span class="st">&quot;_&quot;</span>), <span class="st">&quot;[[&quot;</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">canine.ens.SE<span class="op">$</span>pheno_type &lt;-<span class="st">  </span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="st">  </span><span class="kw">factor</span>(pheno_type, </a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">         <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;luciferase&quot;</span>, <span class="st">&quot;hDUX4CA&quot;</span>, <span class="st">&quot;cDUXCintac&quot;</span>, <span class="st">&quot;cDUXCinter&quot;</span>))</a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">canine.ens.SE<span class="op">$</span>nick_name &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="st">  </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;LinC&quot;</span>, <span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;HinC&quot;</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">           <span class="kw">rep</span>(<span class="st">&quot;CinC&quot;</span>, <span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;CALTinC&quot;</span>, <span class="dv">3</span>)), </a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">         <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;LinC&quot;</span>, <span class="st">&quot;HinC&quot;</span>, <span class="st">&quot;CinC&quot;</span>, <span class="st">&quot;CALTinC&quot;</span>))</a></code></pre></div>
+</div>
+</div>
+<div id="deseq2" class="section level2">
+<h2><span class="header-section-number">2.3</span> DESeq2</h2>
+<p>We used stardard DESeq2 analysis finds genes affected by the transcription factors:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># example</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">sub &lt;-<span class="st"> </span>canine.ens.SE[, canine.ens.SE<span class="op">$</span>nick_name <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(CinC, <span class="st">&quot;LinC&quot;</span>)]</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">dds &lt;-<span class="st"> </span><span class="kw">DESeqDataSet</span>(sub, <span class="dt">design =</span> <span class="op">~</span><span class="st"> </span>nick)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(dds)</a></code></pre></div>
+<p>This is the list of <code>DESeqDataSet</code> instances, product of <em>DESeq2</em>, available in the <a href="https://github.com/FredHutch/canFam3.DuxFamily/data">data</a> folder.</p>
+<pre><code>├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
+├── CinC.ens.dds.rda: DUXC transcriptome in canine skeletal muscle
+├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
+├── C2C12.ens.ddsl2.rda: DUX4 and Dux transcriptome in mouse myoblast
+├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chipseq.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="DUXC-transcriptome.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["gitbook.pdf", "gitbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

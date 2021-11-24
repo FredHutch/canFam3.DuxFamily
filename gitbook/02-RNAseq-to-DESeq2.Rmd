@@ -1,0 +1,80 @@
+# RNA-seq to DESeq2 {#makeSE}
+This chapter summarizes our RNA-seq data preprocessing, read counts, and _DESeq2_ differential analysis. All these steps were applied to the human, mouse, and canine models.
+
+## RNA-seq preprocessing 
+Low quality reads were filtered (based on the filter flag embedded in the sequence ID) prior to alignment to genome canine (canFam3), mouse (mm10) and human (hg38) genome by Tophat/2.1.0 and Bowtie/2.2.3. Gene features were collected from Ensembl database; reads were counted toward gene features using the `summarizeOverlaps` function from Bioconductor's _GenomicAlignments_ package.
+
+## Reads counts
+Code below presents an example of counting reads that completely overlap with exons of gene features (exons) using the `summarizeOverlaps` function - the count matrix, metadata, and gene features are stored into an object called `SummarizedExperiments`. 
+
+### Define gene features
+Example:
+```{r genecounts-makeSE, eval=FALSE}
+suppressPackageStartupMessages(library(DESeq2))
+library(TxDb.Cfamiliaris.UCSC.canFam3.ensGene) # custom TxDb package
+suppressPackageStartupMessages(library(GenomicAlignments))
+suppressPackageStartupMessages(library(org.Cf.eg.db)) # Biocondutor annotation package for Canis familiaris
+suppressPackageStartupMessages(library(BioCParallel))
+mparam <- MulticoreParam(workers = 4L, type = "SOCK")
+register(mparam, default = TRUE)
+# (1) define gene features: extract exons and keep ones from standard chromosome
+ens_exons <- exonsBy(TxDb.Cfamiliaris.UCSC.canFam3.ensGene, by="gene")
+ens_exons <- keepStandardChromosomes(ens_exons, pruning.mode="fine")
+# make sure that the sequence level is UCSC, not NCBI 
+seqlevelsStyle(ens_exons)
+```
+
+### Read counts
+```{r create-se, eval=FALSE}
+# (2) bamFiles -> summarizeOverlaps
+# define bamFiles (an example)
+pkgDir <- "~/tapscott/RNA-Seq/canFam3.DuxFamily"
+dataDir <- file.path(pkgDir, "data")
+ngsDir <- "/shared/ngs/illumina/atyler/170208_SN367_0857_AHF37NBCXY"
+bamDir <- file.path(ngsDir, "tophat", "bam")
+bamFiles <- list.files(bamDir, pattern="\\.bam$", full.names=TRUE)
+bamFiles <- bamFiles[c(1, 5, 6, 7, 8, 9, 10, 11, 12, 2, 3, 4)]
+
+# summarizeOverlaps -> SummerizeExpriment instance
+canine.ens.SE <- 
+  GenomicAlignments::summarizeOverlaps(features=ens_exons,
+                                       reads=bamFiles,
+                                       mode="IntersectionStrict",
+                                       inter.feature=TRUE,
+                                       singleEnd=TRUE,
+                                       ignore.strand=TRUE,
+                                       BPPARAM=mparam)
+
+# clean up metadata and column names
+colnames(canine.ens.SE) <- sub(".bam", "", colnames(canine.ens.SE))
+canine.ens.SE$nick_name  <- 
+pheno_type <- sapply(strsplit(basename(bamFiles), "_"), "[[", 2)
+canine.ens.SE$pheno_type <-  
+  factor(pheno_type, 
+         levels=c("luciferase", "hDUX4CA", "cDUXCintac", "cDUXCinter"))
+canine.ens.SE$nick_name <- 
+  factor(c(rep("LinC", 3), rep("HinC", 3),
+           rep("CinC", 3), rep("CALTinC", 3)), 
+         levels=c("LinC", "HinC", "CinC", "CALTinC"))
+```
+
+## DESeq2
+We used stardard DESeq2 analysis finds genes affected by the transcription factors. Here we give an example using the `canine.ens.SE` for comparison bewteen DUXC (`CinC`) and Luciferase (`LinC`) samples:
+
+```{r deseq2-example, eval=FALSE}
+# example: DUXC vs. luciferase
+sub <- canine.ens.SE[, canine.ens.SE$nick_name %in% c(CinC, "LinC")]
+dds <- DESeqDataSet(sub, design = ~ nickname)
+dds <- DESeq(dds)
+```
+
+This is the list of `DESeqDataSet` instances, product of _DESeq2_, available in the [data](https://github.com/FredHutch/canFam3.DuxFamily/data) folder.
+```
+├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
+├── CinC.ens.dds.rda: DUXC transcriptome in canine skeletal muscle
+├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
+├── C2C12.ens.ddsl2.rda: DUX4 and Dux transcriptome in mouse myoblast
+├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
+```
+
+
