@@ -1,4 +1,4 @@
-This package contain reproducible codes for DUXC expression and functions in canine myoblast
+This package contains reproducible codes for DUXC expression and functions in canine myoblast
 
 # Genenral Work Flow
 ## Genome build
