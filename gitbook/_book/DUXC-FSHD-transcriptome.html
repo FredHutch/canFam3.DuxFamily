@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 DUXC and Dux transcriptome compared to that of FSHD | Conservation and ERVL activation of Canine DUXC</title>
+  <meta name="description" content="Bioinformatics and statistics analysis" />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 DUXC and Dux transcriptome compared to that of FSHD | Conservation and ERVL activation of Canine DUXC" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bioinformatics and statistics analysis" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 DUXC and Dux transcriptome compared to that of FSHD | Conservation and ERVL activation of Canine DUXC" />
+  
+  <meta name="twitter:description" content="Bioinformatics and statistics analysis" />
+  
+
+<meta name="author" content="Chao-Jen Wong" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="DUXC-transcriptome.html"/>
+<link rel="next" href="DUXC-cleavage-profile.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">DUXC</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i><b>0.1</b> Datasets</a></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#tips"><i class="fa fa-check"></i><b>0.2</b> Tips</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="chipseq.html"><a href="chipseq.html"><i class="fa fa-check"></i><b>1</b> ChIP-seq for the canine model</a><ul>
+<li class="chapter" data-level="1.1" data-path="chipseq.html"><a href="chipseq.html#chip-seq-samples"><i class="fa fa-check"></i><b>1.1</b> ChIP-seq samples</a></li>
+<li class="chapter" data-level="1.2" data-path="chipseq.html"><a href="chipseq.html#workflow"><i class="fa fa-check"></i><b>1.2</b> workflow</a></li>
+<li class="chapter" data-level="1.3" data-path="chipseq.html"><a href="chipseq.html#peaks-and-functional-distribution"><i class="fa fa-check"></i><b>1.3</b> Peaks and functional distribution</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="chipseq.html"><a href="chipseq.html#functional-distribution"><i class="fa fa-check"></i><b>1.3.1</b> Functional distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="chipseq.html"><a href="chipseq.html#motifs-analysis-need-update"><i class="fa fa-check"></i><b>1.4</b> Motifs analysis NEED UPDATE</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="makeSE.html"><a href="makeSE.html"><i class="fa fa-check"></i><b>2</b> RNA-seq to DESeq2</a><ul>
+<li class="chapter" data-level="2.1" data-path="makeSE.html"><a href="makeSE.html#rna-seq-preprocessing"><i class="fa fa-check"></i><b>2.1</b> RNA-seq preprocessing</a></li>
+<li class="chapter" data-level="2.2" data-path="makeSE.html"><a href="makeSE.html#reads-counts"><i class="fa fa-check"></i><b>2.2</b> Reads counts</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="makeSE.html"><a href="makeSE.html#define-gene-features"><i class="fa fa-check"></i><b>2.2.1</b> Define gene features</a></li>
+<li class="chapter" data-level="2.2.2" data-path="makeSE.html"><a href="makeSE.html#read-counts"><i class="fa fa-check"></i><b>2.2.2</b> Read counts</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="makeSE.html"><a href="makeSE.html#deseq2"><i class="fa fa-check"></i><b>2.3</b> DESeq2</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html"><i class="fa fa-check"></i><b>3</b> DUXC transcriptome</a><ul>
+<li class="chapter" data-level="3.1" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#load-datasets-and-settings"><i class="fa fa-check"></i><b>3.1</b> Load datasets and settings</a></li>
+<li class="chapter" data-level="3.2" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#cinc-duxc-expresison-in-canine-muscle-cells"><i class="fa fa-check"></i><b>3.2</b> CinC: DUXC expresison in canine muscle cells</a></li>
+<li class="chapter" data-level="3.3" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#hinc-dux4-expression-in-canine-muscle-cells"><i class="fa fa-check"></i><b>3.3</b> HinC: DUX4 expression in canine muscle cells</a></li>
+<li class="chapter" data-level="3.4" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#duxc-alt-expression---caltinc"><i class="fa fa-check"></i><b>3.4</b> DUXC-ALT expression - CALTinC</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#go-analysis-for-the-down-regulated-gene-set"><i class="fa fa-check"></i><b>3.4.1</b> GO analysis for the down-regulated gene set</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#cross-species-models-dux4-expression-in-canine-and-murine"><i class="fa fa-check"></i><b>3.5</b> Cross-species models: DUX4 expression in canine and murine</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#dux4-and-duxc-expression-in-canine"><i class="fa fa-check"></i><b>3.5.1</b> DUX4 and DUXC expression in canine</a></li>
+<li class="chapter" data-level="3.5.2" data-path="DUXC-transcriptome.html"><a href="DUXC-transcriptome.html#dux4-and-dux-expression-in-murine"><i class="fa fa-check"></i><b>3.5.2</b> DUX4 and Dux expression in murine</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html"><i class="fa fa-check"></i><b>4</b> DUXC and Dux transcriptome compared to that of FSHD</a><ul>
+<li class="chapter" data-level="4.1" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html#duxc-transcriptome-compared-to-that-of-fshd"><i class="fa fa-check"></i><b>4.1</b> DUXC transcriptome compared to that of FSHD</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html#get-canine-human-homologs"><i class="fa fa-check"></i><b>4.1.1</b> Get canine-human homologs</a></li>
+<li class="chapter" data-level="4.1.2" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html#gsea-enrichment-of-fshd-transcriptome"><i class="fa fa-check"></i><b>4.1.2</b> GSEA: enrichment of FSHD transcriptome</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html#dux-transcriptome-compared-to-that-of-fshd"><i class="fa fa-check"></i><b>4.2</b> Dux transcriptome compared to that of FSHD</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html#get-canine-human-homologs-1"><i class="fa fa-check"></i><b>4.2.1</b> Get canine-human homologs</a></li>
+<li class="chapter" data-level="4.2.2" data-path="DUXC-FSHD-transcriptome.html"><a href="DUXC-FSHD-transcriptome.html#gsea-enrichment-of-fshd-transcriptome-1"><i class="fa fa-check"></i><b>4.2.2</b> GSEA: enrichment of FSHD transcriptome</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html"><i class="fa fa-check"></i><b>5</b> DUXC transcriptome compared to early embryo transcriptome profile</a><ul>
+<li class="chapter" data-level="5.1" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#cleavage-stage-gene-signature"><i class="fa fa-check"></i><b>5.1</b> cleavage-stage gene signature</a></li>
+<li class="chapter" data-level="5.2" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#c-like-state-gene-signature"><i class="fa fa-check"></i><b>5.2</b> 2C-like state gene signature</a></li>
+<li class="chapter" data-level="5.3" data-path="DUXC-cleavage-profile.html"><a href="DUXC-cleavage-profile.html#compare-to-ipscs"><i class="fa fa-check"></i><b>5.3</b> Compare to iPSCs</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="ERVL.html"><a href="ERVL.html"><i class="fa fa-check"></i><b>6</b> ERVL Subfamilies</a><ul>
+<li class="chapter" data-level="6.1" data-path="ERVL.html"><a href="ERVL.html#backgroud"><i class="fa fa-check"></i><b>6.1</b> Backgroud</a></li>
+<li class="chapter" data-level="6.2" data-path="ERVL.html"><a href="ERVL.html#overlapping-v"><i class="fa fa-check"></i><b>6.2</b> Overlapping V</a></li>
+<li class="chapter" data-level="6.3" data-path="ERVL.html"><a href="ERVL.html#duxc-and-dux4-functions-in-malr-sub-families"><i class="fa fa-check"></i><b>6.3</b> DUXC and DUX4 functions in MaLR sub-families</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="ERVL.html"><a href="ERVL.html#codes-and-figure"><i class="fa fa-check"></i><b>6.3.1</b> Codes and figure</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="ERVL.html"><a href="ERVL.html#duxc-alt-and-ervl-transcriptions"><i class="fa fa-check"></i><b>6.4</b> DUXC-ALT and ERVL transcriptions</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="ERVL.html"><a href="ERVL.html#erv-subfamily-expression"><i class="fa fa-check"></i><b>6.4.1</b> ERV subfamily expression</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="repeats.html"><a href="repeats.html"><i class="fa fa-check"></i><b>7</b> Retrotransposome transcriptome</a><ul>
+<li class="chapter" data-level="7.0.1" data-path="repeats.html"><a href="repeats.html#repeat-classes-distribtuion-on-canine-genome"><i class="fa fa-check"></i><b>7.0.1</b> Repeat Classes distribtuion on canine genome</a></li>
+<li class="chapter" data-level="7.0.2" data-path="repeats.html"><a href="repeats.html#peaks-class-freqency"><i class="fa fa-check"></i><b>7.0.2</b> Peaks class freqency</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="LTR-activation.html"><a href="LTR-activation.html"><i class="fa fa-check"></i><b>8</b> LTR activation</a><ul>
+<li class="chapter" data-level="8.1" data-path="LTR-activation.html"><a href="LTR-activation.html#copy-number"><i class="fa fa-check"></i><b>8.1</b> Copy number</a></li>
+<li class="chapter" data-level="8.2" data-path="LTR-activation.html"><a href="LTR-activation.html#sattillites-activiation"><i class="fa fa-check"></i><b>8.2</b> Sattillites activiation</a></li>
+<li class="chapter" data-level="8.3" data-path="LTR-activation.html"><a href="LTR-activation.html#ltrs-activation"><i class="fa fa-check"></i><b>8.3</b> LTRs activation</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="LTR-activation.html"><a href="LTR-activation.html#direct-binding-of-dux4-and-duxc"><i class="fa fa-check"></i><b>8.3.1</b> Direct binding of DUX4 and DUXC</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="LTR-activation.html"><a href="LTR-activation.html#sine"><i class="fa fa-check"></i><b>8.4</b> SINE</a></li>
+<li class="chapter" data-level="8.5" data-path="LTR-activation.html"><a href="LTR-activation.html#line1-activation"><i class="fa fa-check"></i><b>8.5</b> LINE1 activation</a></li>
+<li class="chapter" data-level="8.6" data-path="LTR-activation.html"><a href="LTR-activation.html#satellites"><i class="fa fa-check"></i><b>8.6</b> Satellites</a></li>
+<li class="chapter" data-level="8.7" data-path="LTR-activation.html"><a href="LTR-activation.html#sines"><i class="fa fa-check"></i><b>8.7</b> SINEs</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="peaks-line1.html"><a href="peaks-line1.html"><i class="fa fa-check"></i><b>9</b> DUXC peaks and LINE1s</a><ul>
+<li class="chapter" data-level="9.1" data-path="peaks-line1.html"><a href="peaks-line1.html#peaks-of-cch-and-hdux4"><i class="fa fa-check"></i><b>9.1</b> Peaks of CCH and hDUX4</a></li>
+<li class="chapter" data-level="9.2" data-path="peaks-line1.html"><a href="peaks-line1.html#overlapping-with-expressed-l1s"><i class="fa fa-check"></i><b>9.2</b> Overlapping with expressed L1s</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="peaks-line1.html"><a href="peaks-line1.html#peaks-overlap-with-l1s"><i class="fa fa-check"></i><b>9.2.1</b> Peaks overlap with L1s</a></li>
+<li class="chapter" data-level="9.2.2" data-path="peaks-line1.html"><a href="peaks-line1.html#duxc-motif-discovery-using-l1-overlapped-peaks"><i class="fa fa-check"></i><b>9.2.2</b> DUXC Motif discovery using L1-overlapped peaks</a></li>
+<li class="chapter" data-level="9.2.3" data-path="peaks-line1.html"><a href="peaks-line1.html#match-dux4-and-duxc-motif-to-l1-overapped-peaks"><i class="fa fa-check"></i><b>9.2.3</b> Match DUX4 and DUXC motif to L1-overapped peaks</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="peaks-line1.html"><a href="peaks-line1.html#line1-element-with-aatca"><i class="fa fa-check"></i><b>9.3</b> LINE1 element with AATCA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i># References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Conservation and ERVL activation of Canine DUXC</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="DUXC-FSHD-transcriptome" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> DUXC and Dux transcriptome compared to that of FSHD</h1>
+<p>This chapter implemented the statistics methods comparing DUXC transcriptome to that of FSHD. The results suggested that DUXC induced transcription program similar to FSHD muscle cells. We employed the FSHD transcriptome profile done by Jagannathan 2016 (ref): 666 mis-expressed genes in FSHD muscle cell lines. With their 520 homologous (by Ensembl orthologs database V88) in canine, we used hypergeometric tests to exam whether the FSHD transcription program is enriched in canine.</p>
+<p><strong>Results:</strong> based on the 520 human-to-canine homologous, the Pearson correlation between DUXC transcriptome and FSHD transcriptome is 0.35, moderately higher than that of between mouse Dux and FSHD transcriptome (0.29). Out of the 520 homologous, 146 (29%) were positively affected by DUXC in canine; as a result, the hypergeometric test yielded <span class="math inline">\(1e-12\)</span> <span class="math inline">\(p\)</span>-value, suggesting that that the mis-expressed gene set of FSHD was enriched.</p>
+<p>Below are the codes implementing the statistics methods.</p>
+<p><strong>Load datasets</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">pkg_dir &lt;-<span class="st"> &quot;~/CompBio/canFam3.DuxFamily&quot;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">fig_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;figures&quot;</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">data_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;data&quot;</span>)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">pkg_dir &lt;-<span class="st"> &quot;~/CompBio/canFam3.DuxFamily&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">source</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;scripts&quot;</span>, <span class="st">&quot;load_lib_dataset.R&quot;</span>))</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;canine_human_mouse_ensOrtholog.rda&quot;</span>))</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;human_mouse_ensOrtholog.rda&quot;</span>))</a></code></pre></div>
+<div id="duxc-transcriptome-compared-to-that-of-fshd" class="section level2">
+<h2><span class="header-section-number">4.1</span> DUXC transcriptome compared to that of FSHD</h2>
+<div id="get-canine-human-homologs" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Get canine-human homologs</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># read the table made by Jagannathan 2016</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">HinH_de &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="dt">file=</span><span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;extdata&quot;</span>, </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                                   <span class="st">&quot;Jagannathan-2016-sup-table-1-lfc.csv&quot;</span>), <span class="dt">skip =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(iDUX4_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>, iDUX4_pval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(ENSEMBL, iDUX4_logFC, iDUX4_pval) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">HUMAN_ENSEMBL=</span>ENSEMBL, <span class="dt">HinH_logFC=</span>iDUX4_logFC, <span class="dt">HinH_padj=</span>iDUX4_pval) </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># create canine-to-human ortholog data.frame, restrict to hDUX4 transcriptome (FSHD profile)</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">canine_human_homolog &lt;-<span class="st"> </span>canine_human_mouse_ensOrtholog <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(ensembl_gene_id, hsapiens_homolog_ensembl_gene, hsapiens_homolog_associated_gene_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">CANINE_ENSEMBL=</span>ensembl_gene_id, <span class="dt">HUMAN_ENSEMBL=</span>hsapiens_homolog_ensembl_gene) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter out empty string</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(HUMAN_ENSEMBL <span class="op">!=</span><span class="st"> &quot;&quot;</span>, <span class="op">!</span><span class="kw">duplicated</span>(HUMAN_ENSEMBL), <span class="op">!</span><span class="kw">duplicated</span>(CANINE_ENSEMBL)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">  </span><span class="kw">inner_join</span>(HinH_de, <span class="dt">by=</span><span class="st">&quot;HUMAN_ENSEMBL&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="kw">left_join</span>(CinC, <span class="dt">by=</span><span class="st">&quot;CANINE_ENSEMBL&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw">left_join</span>(HinC, <span class="dt">by=</span><span class="st">&quot;CANINE_ENSEMBL&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">CinC_up =</span> <span class="kw">ifelse</span>(CinC_padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>CinC_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;YES&quot;</span>, <span class="st">&quot;NO&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">HinC_up =</span> <span class="kw">ifelse</span>(HinC_padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>HinC_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;YES&quot;</span>, <span class="st">&quot;NO&quot;</span>))</a></code></pre></div>
+</div>
+<div id="gsea-enrichment-of-fshd-transcriptome" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> GSEA: enrichment of FSHD transcriptome</h3>
+<p>Code below calculates the correlation (Pearson) and implements GSEA inferring FSHD transcriptome enrichment.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># GSEA: universe=; selected=; FSHD set=1735; picked=363;</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">white_drawn =<span class="st"> </span><span class="kw">sum</span>(canine_human_homolog<span class="op">$</span>CinC_up<span class="op">==</span><span class="st">&quot;YES&quot;</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="co"># up-regulated in FSHD profile</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">white_ball  =<span class="st"> </span>CinC <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(CinC_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, CinC_padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>() <span class="co"># up-regulated </span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">black_ball  =<span class="st"> </span><span class="kw">nrow</span>(CinC) <span class="op">-</span><span class="st"> </span>white_ball <span class="co"># universe - up-regulated</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">ball_drawn  =<span class="st"> </span><span class="kw">nrow</span>(canine_human_homolog)  <span class="co"># how many are in FSHD profile</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">prob &lt;-<span class="st"> </span><span class="kw">dhyper</span>(<span class="dt">x=</span>white_drawn, </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">               <span class="dt">m=</span>white_ball, <span class="dt">n=</span>black_ball, <span class="dt">k=</span>ball_drawn, <span class="dt">log =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co"># correlation: pearson</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">pearson &lt;-<span class="st"> </span>canine_human_homolog <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(CinC_logFC)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">pearson =</span> <span class="kw">cor</span>(HinH_logFC, CinC_logFC)) </a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">label &lt;-<span class="st"> </span><span class="kw">sprintf</span>(<span class="st">&quot;up in CinC = %2.0f / %1.0f </span><span class="ch">\n</span><span class="st">pearson = %0.2f&quot;</span>, </a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">                 <span class="kw">sum</span>(canine_human_homolog<span class="op">$</span>CinC_up<span class="op">==</span><span class="st">&quot;YES&quot;</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="kw">nrow</span>(canine_human_homolog), pearson)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw">ggplot</span>(canine_human_homolog, <span class="kw">aes</span>(<span class="dt">x=</span>CinC_logFC, <span class="dt">y=</span>HinH_logFC, <span class="dt">color=</span>CinC_up)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="st">  </span><span class="co">#geom_abline(intercept=0, slope=1, color=&quot;gray75&quot;, alpha=0.2) +</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&quot;gray75&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.7</span>, <span class="dt">size=</span><span class="fl">1.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="op">-</span><span class="dv">2</span>, <span class="dt">y=</span><span class="fl">7.5</span>, <span class="dt">label=</span>label, <span class="dt">hjust=</span><span class="dv">0</span>, <span class="dt">vjust=</span><span class="dv">0</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;ivory4&quot;</span>, <span class="st">&quot;firebrick4&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;CinC compared to up-regulated homologs in HinH&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning: Removed 35 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 35 rows containing missing values (geom_point).</code></pre>
+<div class="figure"><span id="fig:viz-canine-human-homolog-CinC"></span>
+<img src="gitbook_files/figure-html/viz-canine-human-homolog-CinC-1.png" alt="Scatter plot of 520 homologs expression in  DUXC expressed canine myobrast and FSHD muscle cells. Dashlines represents the linear regression." width="672" />
+<p class="caption">
+Figure 4.1: Scatter plot of 520 homologs expression in DUXC expressed canine myobrast and FSHD muscle cells. Dashlines represents the linear regression.
+</p>
+</div>
+</div>
+</div>
+<div id="dux-transcriptome-compared-to-that-of-fshd" class="section level2">
+<h2><span class="header-section-number">4.2</span> Dux transcriptome compared to that of FSHD</h2>
+<div id="get-canine-human-homologs-1" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Get canine-human homologs</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">human_mouse_homolog &lt;-<span class="st"> </span>human_mouse_ensOrtholog <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(ensembl_gene_id, external_gene_name, </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                mmusculus_homolog_ensembl_gene, mmusculus_homolog_associated_gene_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">HUMAN_ENSEMBL=</span>ensembl_gene_id, <span class="dt">HUMAN_gene_name=</span>external_gene_name ,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">         <span class="dt">MOUSE_ENSEMBL=</span>mmusculus_homolog_ensembl_gene,   </a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">         <span class="dt">MOUSE_gene_name=</span>mmusculus_homolog_associated_gene_name) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(HUMAN_ENSEMBL <span class="op">!=</span><span class="st"> &quot;&quot;</span>, <span class="op">!</span><span class="kw">duplicated</span>(HUMAN_ENSEMBL), <span class="op">!</span><span class="kw">duplicated</span>(MOUSE_ENSEMBL)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw">inner_join</span>(HinH_de, <span class="dt">by=</span><span class="st">&quot;HUMAN_ENSEMBL&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw">left_join</span>(MinM, <span class="dt">by=</span><span class="st">&quot;MOUSE_ENSEMBL&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="st">  </span><span class="kw">left_join</span>(HinM, <span class="dt">by=</span><span class="st">&quot;MOUSE_ENSEMBL&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">MinM_up =</span> <span class="kw">ifelse</span>(MinM_padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>MinM_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;YES&quot;</span>, <span class="st">&quot;NO&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">HinM_up =</span> <span class="kw">ifelse</span>(HinM_padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>HinM_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;YES&quot;</span>, <span class="st">&quot;NO&quot;</span>))</a></code></pre></div>
+</div>
+<div id="gsea-enrichment-of-fshd-transcriptome-1" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> GSEA: enrichment of FSHD transcriptome</h3>
+<p>Out of 666 mis-expressed genes in FSHD muscle cells, 543 has homologs in mouse; 97 out of 534 homologs were up-regulated in Dux expressed mouse cell line. The correlation of 534 homologs expression between Dux expressed mouse cell line and FSHD muscle cells is 0.29. The GSEA by hypergeometric test gave <span class="math inline">\(p\)</span>-value &lt; <span class="math inline">\(1e-12\)</span> suggesting that Dux also induced similar transcription activity similar to FSHD muscle cells.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># GSEA</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">white_drawn =<span class="st"> </span><span class="kw">sum</span>(human_mouse_homolog<span class="op">$</span>MinM_up<span class="op">==</span><span class="st">&quot;YES&quot;</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>) <span class="co"># up-regulated in FSHD profile</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">white_ball  =<span class="st"> </span>MinM <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(MinM_logFC <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, MinM_padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">nrow</span>() <span class="co"># up-regulated </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">black_ball  =<span class="st"> </span><span class="kw">nrow</span>(MinM) <span class="op">-</span><span class="st"> </span>white_ball <span class="co"># universe - up-regulated</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">ball_drawn  =<span class="st"> </span><span class="kw">nrow</span>(human_mouse_homolog)  <span class="co"># how many are in FSHD profile</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">prob &lt;-<span class="st"> </span><span class="kw">dhyper</span>(<span class="dt">x=</span>white_drawn, </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">               <span class="dt">m=</span>white_ball, <span class="dt">n=</span>black_ball, <span class="dt">k=</span>ball_drawn, <span class="dt">log =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co"># correlation: pearson</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">pearson &lt;-<span class="st"> </span>human_mouse_homolog <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(MinM_logFC)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">pearson =</span> <span class="kw">cor</span>(HinH_logFC, MinM_logFC)) </a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">label &lt;-<span class="st"> </span><span class="kw">sprintf</span>(<span class="st">&quot;up in MinM = %2.0f / %1.0f </span><span class="ch">\n</span><span class="st">pearson = %0.2f&quot;</span>, </a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">                 <span class="kw">sum</span>(human_mouse_homolog<span class="op">$</span>MinM_up<span class="op">==</span><span class="st">&quot;YES&quot;</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="kw">nrow</span>(human_mouse_homolog), pearson)</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="kw">ggplot</span>(human_mouse_homolog, <span class="kw">aes</span>(<span class="dt">x=</span>MinM_logFC, <span class="dt">y=</span>HinH_logFC, <span class="dt">color=</span>MinM_up)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="st">  </span><span class="co">#geom_abline(intercept=0, slope=1, color=&quot;gray75&quot;, alpha=0.2) +</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>, <span class="dt">color=</span><span class="st">&quot;gray75&quot;</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.7</span>, <span class="dt">size=</span><span class="fl">1.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">x=</span><span class="op">-</span><span class="fl">4.5</span>, <span class="dt">y=</span><span class="dv">7</span>, <span class="dt">label=</span>label, <span class="dt">hjust=</span><span class="dv">0</span>, <span class="dt">vjust=</span><span class="dv">0</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;ivory4&quot;</span>, <span class="st">&quot;firebrick4&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;MinM compared to up-regulated homologs in HinH&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning: Removed 75 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 91 rows containing missing values (geom_point).</code></pre>
+<div class="figure"><span id="fig:viz-human-mouse-homolog-MinM"></span>
+<img src="gitbook_files/figure-html/viz-human-mouse-homolog-MinM-1.png" alt="Scatter plot of 534 homologs expression in Dux expressed mouse myobrast and FSHD muscle cells. Dashlines represents the linear regression." width="672" />
+<p class="caption">
+Figure 4.2: Scatter plot of 534 homologs expression in Dux expressed mouse myobrast and FSHD muscle cells. Dashlines represents the linear regression.
+</p>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="DUXC-transcriptome.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="DUXC-cleavage-profile.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["gitbook.pdf", "gitbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

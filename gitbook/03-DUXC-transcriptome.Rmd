@@ -1,0 +1,336 @@
+# DUXC transcriptome {#DUXC-transcriptome}
+In this chapter we present 
+(1) the hypothesis setting for determining differentailly expressed genes in the canine model
+(2) MA plots of DUXC, DUX4 and DUXC-ALT expression in canine
+(3) functions of DUXC-ALT down-regulated genes
+(4) the cross-species models: DUX4 expression in canine and murine
+
+
+## Load datasets and settings
+Load the `DESeqDataSet` instances (container of gene expression matrix and metadata) for all canine, mouse, and human models:
+```{r load-libraries-2}
+suppressPackageStartupMessages(library(DESeq2))
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(ggVennDiagram))
+suppressPackageStartupMessages(library(org.Cf.eg.db))
+suppressPackageStartupMessages(library(TxDb.Cfamiliaris.UCSC.canFam3.ensGene))
+suppressPackageStartupMessages(library(goseq))
+suppressPackageStartupMessages(library(latex2exp))
+pkg_dir <- "~/CompBio/canFam3.DuxFamily"
+data_dir <- file.path(pkg_dir, "data")
+fig_dir <- file.path(pkg_dir, "figures")
+# load datasets 
+source(file.path(pkg_dir, "scripts", "tools.R"))
+load(file.path(data_dir, "CinC.ens.dds.rda")) # DUXC in canine
+load(file.path(data_dir, "CALTinC.ens.dds.rda")) # DUXC-ALT in canine 
+load(file.path(data_dir, "HinC.ens.dds.rda")) # DUX4 in canine
+load(file.path(data_dir, "C2C12.ens.ddsl2.rda")) #DUX4 and Dux in murine
+
+rownames(HinC.ens.dds) <- sapply(strsplit(rownames(HinC.ens.dds), fixed=TRUE, "."), "[", 1)
+rownames(CinC.ens.dds) <- sapply(strsplit(rownames(CinC.ens.dds), fixed=TRUE, "."), "[", 1)
+rownames(CALTinC.ens.dds) <- sapply(strsplit(rownames(CALTinC.ens.dds), fixed=TRUE, "."), "[", 1)
+```
+
+__DESeq2 hypothesis settings__
+Our null hypothesis for determining affected genes is $H_0: |log2FoldChange| < 1$ with adjusted p-value threshold $0.05$.
+```{r deseq-results}
+CinC_res <- results(CinC.ens.dds, lfcThreshold=1, alpha=0.05)
+HinC_res <- results(HinC.ens.dds, lfcThreshold=1, alpha=0.05)
+CALTinC_res <- results(CALTinC.ens.dds, lfcThreshold=1, alpha=0.05)
+```
+
+```{r make-supplemental-table-1}
+# make supplemental table 1 with three sheets
+.tidy_dds_res <- function(res, dds) {
+  tidy_res <- as(res, "data.frame") %>%
+    dplyr::filter(padj < 0.05) %>%
+    rownames_to_column(var="ENSEMBL") 
+  symbols <- select(org.Cf.eg.db, keys=pull(tidy_res, ensembl),
+                    columns=c("SYMBOL"), keytype="ENSEMBL", 
+                    multiVal="first") %>%
+    distinct(ENSEMBL) 
+  tidy_dds_res <- left_join(tidy_dds_res, symbols)  
+    
+}
+```
+## CinC: DUXC expresison in canine muscle cells
+
+__MA plot__
+```{r CinC-MAplot, fig.cap="MA plot of DUXC expression in canine"}
+summary <- as(CinC_res, "data.frame") %>%
+      summarise(up = sum(padj < 0.05 & log2FoldChange > 1, na.rm=TRUE), 
+      down = sum(padj < 0.05 & log2FoldChange < 1, na.rm=TRUE))
+plotMA(CinC_res, alpha = 0.05, main="CinC")
+label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
+                 pull(summary, up), pull(summary, up)/nrow(CinC_res) *100)           
+text(x=1000, y=6, labels=label, adj=c(0, 0))
+label <- sprintf("LFC < 1 (down) : %d, %1.1f%%", 
+                 pull(summary, down), pull(summary, down)/nrow(CinC_res) *100)     
+text(x=1000, y=-5, labels=label, adj=c(0, 0))
+```
+```{r export-CinC-maplot}
+pdf(file.path(fig_dir, "CinC_maplot.pdf"), width=5.5, height=4.4)
+plotMA(CinC_res, alpha = 0.05, main="CinC")
+label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
+                 pull(summary, up), pull(summary, up)/nrow(CinC_res) *100)           
+text(x=500, y=6, labels=label, adj=c(0, 0))
+label <- sprintf("LFC < 1 (down) : %d, %1.1f%%", 
+                 pull(summary, down), pull(summary, down)/nrow(CinC_res) *100)     
+text(x=500, y=-5, labels=label, adj=c(0, 0))
+dev.off()
+```
+## HinC: DUX4 expression in canine muscle cells
+
+__MA plot__
+```{r HinC-MAplot, fig.cap="MA plot of DUX4 expression in canine"}
+summary <- as(HinC_res, "data.frame") %>%
+      summarise(up = sum(padj < 0.05 & log2FoldChange > 1, na.rm=TRUE), 
+      down = sum(padj < 0.05 & log2FoldChange < 1, na.rm=TRUE))
+plotMA(HinC_res, alpha = 0.05, main="HinC")
+       
+label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
+                 pull(summary, up), pull(summary, up)/nrow(HinC_res) *100)           
+text(x=1000, y=6, labels=label, adj=c(0, 0))
+label <- sprintf("LFC < 1 (down) : %d, %1.1f%%", 
+                 pull(summary, down), pull(summary, down)/nrow(HinC_res) *100)     
+text(x=1000, y=-5, labels=label, adj=c(0, 0))
+```
+```{r export-HinC-maplot}
+pdf(file.path(fig_dir, "HinC_maplot.pdf"), width=5.5, height=4.4)
+plotMA(HinC_res, alpha = 0.05, main="HinC")
+label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
+                 pull(summary, up), pull(summary, up)/nrow(HinC_res) *100)           
+text(x=500, y=6, labels=label, adj=c(0, 0))
+label <- sprintf("LFC < 1 (down) : %d, %1.1f%%", 
+                 pull(summary, down), pull(summary, down)/nrow(HinC_res) *100)     
+text(x=500, y=-5, labels=label, adj=c(0, 0))
+dev.off()
+```
+
+## DUXC-ALT expression - CALTinC
+DUXC-ALT positively affects a few genes (20) but down-regulates similar set of genes that DUXC and DUX4 down-regulate. This suggests that the extra exon of DUXC-ALT disrupts the transcriptional activity but the conserved C-terminal might retains its function and represses expression of some INF-induced genes (e.g. ISG15, CCL5, CXCL10, RSAD2, MX1/MX2).
+
+__MA plot__
+
+```{r CALTinC-MAplot, fig.cap="MA plot of DUXC-ALT expression in canine"}
+summary <- as(CALTinC_res, "data.frame") %>%
+      summarise(up = sum(padj < 0.05 & log2FoldChange > 1, na.rm=TRUE), 
+      down = sum(padj < 0.05 & log2FoldChange < 1, na.rm=TRUE))
+plotMA(CALTinC_res, alpha = 0.05, main="CALTinC")
+label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
+                 pull(summary, up), pull(summary, up)/nrow(CALTinC_res) *100)           
+text(x=1000, y=2.5, labels=label, adj=c(0, 0))
+label <- sprintf("LFC < 1 (down) : %d, %1.1f%%", 
+                 pull(summary, down), 
+                 pull(summary, down)/nrow(CALTinC_res) *100)     
+text(x=1000, y=-2.5, labels=label, adj=c(0, 0))
+```
+
+```{r export-CinC-maplot}
+pdf(file.path(fig_dir, "CALTinC_maplot.pdf"), width=5.5, height=4.4)
+plotMA(CALTinC_res, alpha = 0.05, main="CALTinC")
+label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
+                 pull(summary, up), pull(summary, up)/nrow(CALTinC_res) *100)           
+text(x=500, y=2.5, labels=label, adj=c(0, 0))
+label <- sprintf("LFC < 1 (down) : %d, %1.1f%%", 
+                 pull(summary, down), pull(summary, down)/nrow(CALTinC_res) *100)     
+text(x=500, y=-2.5, labels=label, adj=c(0, 0))
+dev.off()
+```
+
+__Venn diagram__
+
+Code below extracts the down-regulated genes by DUXC, DUX4 and DUXC-ALT and draws a venn diagram to visualize overlapping sets.
+```{r duxc-alt-down}
+## retract down-regulated genes
+.get_down <- function(dds) {
+  # appned gene names
+  res <- results(dds, lfcThreshold=1, alpha=0.05)
+  down <- as(res, "data.frame") %>%
+    rownames_to_column(var="ENSEMBL") %>%
+    dplyr::filter(padj < 0.05 & log2FoldChange < 0)
+}
+calt_down <- .get_down(CALTinC.ens.dds)
+duxc_down <- .get_down(CinC.ens.dds)
+dux4_down <- .get_down(HinC.ens.dds)
+```
+```{r duxc-alt-up, echo=FALSE, message=FALSE}
+## retract up-regulated genes
+.get_up <- function(dds) {
+  # appned gene names
+  res <- results(dds, lfcThreshold=1, alpha=0.05)
+  down <- as(res, "data.frame") %>%
+    rownames_to_column(var="ENSEMBL") %>%
+    dplyr::filter(padj < 0.05 & log2FoldChange > 0)
+}
+calt_up <- .get_up(CALTinC.ens.dds)
+duxc_up <- .get_up(CinC.ens.dds)
+dux4_up <- .get_up(HinC.ens.dds)
+
+## find out which up-regualted genes of duxc are overlap with calt and get annotation
+a <- dplyr::inner_join(calt_up, duxc_up, by="ENSEMBL") 
+id <- sapply(strsplit(a$ENSEMBL, ".", fixed=TRUE), "[[", 1)
+sym <- AnnotationDbi::select(org.Cf.eg.db, 
+                             keys=id, columns="SYMBOL", keytype="ENSEMBL")
+```
+
+NOTE: DUXC-ALT up-regulated 20 genes and nine of them are overlapped with the up-regulated by DUXC -- `r paste(dplyr::pull(sym, SYMBOL), collapse = ", ")`. 
+
+```{r down-venn, fig.cap="Venn diagram of down-regualated genes in DUXC, DUX4 and DUXC-ALTC.", message=FALSE}
+library(ggVennDiagram)
+#wes_palette(n=4, name="Zissou1", type="discrete")[c(1,4)]
+venn_data <- list(CALTinC = calt_down$ENSEMBL, 
+                  CinC = duxc_down$ENSEMBL, HinC = dux4_down$ENSEMBL)
+ggVennDiagram(venn_data) +
+  scale_fill_gradient(low="#E1AF00", high="#3B9AB2")
+ggsave(filename=file.path(fig_dir, "CALTinC_CinC_HinC_diagram.pdf"),
+       width=4, height=4)
+```
+
+### GO analysis for the down-regulated gene set
+The top GO terms suggest the repressive functions of DUXC-ALT:
+```{r go-annotation-down-reg-genes, message=FALSE, include=FALSE}
+dds <- CALTinC.ens.dds
+down <- calt_down
+universe <- sapply(strsplit(rownames(dds), ".", fixed=TRUE), "[[", 1)
+selected <- sapply(strsplit(down$ENSEMBL, ".", fixed=TRUE), "[[", 1)
+txsByGene <- transcriptsBy(TxDb.Cfamiliaris.UCSC.canFam3.ensGene, by="gene")
+names(txsByGene) <- 
+    sapply(strsplit(names(txsByGene), ".", fixed=TRUE), "[[", 1)
+    lengthData <- median(width(txsByGene))
+    
+isDEGs <- as.integer(universe %in% selected)
+names(isDEGs) <- universe
+bias.data <- lengthData[names(isDEGs)]
+pwf <- nullp(isDEGs, bias.data=bias.data, plot.fit=FALSE)
+    # rtracklayer::ucscGenomes()[40:42] does support canFam3
+    # but supportedGeneIDs() does onot support canFam3??
+GO.BP <- goseq(pwf, "canFam3", "ensGene", test.cats=c("GO:BP"))
+enriched.BP <- GO.BP %>%
+      mutate(fdr = p.adjust(over_represented_pvalue, method="BH")) %>%
+      dplyr::filter(fdr < 0.05)
+
+cat_genes <- sapply(enriched.BP$category, function(GOID) {
+  cat_genes <- .cat2DEgenes(GOID, pwf=pwf)
+  cat_genename <- AnnotationDbi::select(org.Cf.eg.db, 
+                                     keys=cat_genes, keytype="ENSEMBL",
+                                     columns="SYMBOL") %>% pull(SYMBOL)
+  paste(cat_genename, collapse=",")
+})
+enriched.BP <- add_column(enriched.BP, DEInCat=cat_genes)
+write.csv(enriched.BP, file=file.path(pkg_dir, "stats", "CALTinC_GO_repressed.csv"))
+```
+
+__Top 10 GO terms__
+```{r list-go}
+knitr::kable(enriched.BP[1:10, c("category", 
+                                 "over_represented_pvalue", 
+                                 "numInCat", "numDEInCat", "term")])
+```
+
+## Cross-species models: DUX4 expression in canine and murine
+This section shows the comparison of the cross-species models of DUX4 expression in canine and murine: the correlation of gene expression (assembled by log2 fold change) induced by DUX4 and DUXC is significant (Pearson=$0.83$) whereas that of  DUX4 and Dux in murine is weak (Pearson=$0.275$).
+
+```{r cross-species}
+.tidy_results <- function(dds, lfcThreshold=1, alpha=0.05) {
+  res <- results(dds, lfcThreshold=lfcThreshold, alpha=alpha)
+  as(res, "data.frame") %>%
+    rownames_to_column(var="ENSEMBL") %>%
+    dplyr::select(ENSEMBL, log2FoldChange, padj)
+}
+# get linear regression model
+lm_eqn <- function(df){
+    m <- lm(y ~ x, df);
+    eq <- substitute(italic(y) == a + b %.% italic(x)*","~~italic(r)~"="~r2, 
+         list(a = format(unname(coef(m)[1]), digits = 2),
+              b = format(unname(coef(m)[2]), digits = 2),
+              r2 = format(sqrt(summary(m)$r.squared), digits = 3)))
+    as.character(as.expression(eq));
+}
+# tidy up the DESeq2 results
+CinC <- .tidy_results(CinC.ens.dds) %>% 
+  dplyr::rename(CANINE_ENSEMBL=ENSEMBL, CinC_logFC=log2FoldChange,
+                CinC_padj=padj)
+HinC <- .tidy_results(HinC.ens.dds) %>%
+   dplyr::rename(CANINE_ENSEMBL=ENSEMBL, HinC_logFC=log2FoldChange,
+                 HinC_padj=padj)
+MinM <- .tidy_results(C2C12.ens.ddsl2$MinMvsNODOX) %>%
+   dplyr::rename(MOUSE_ENSEMBL=ENSEMBL, MinM_logFC=log2FoldChange,
+                 MinM_padj=padj)
+HinM <- .tidy_results(C2C12.ens.ddsl2$HinMvsNODOX) %>%
+   dplyr::rename(MOUSE_ENSEMBL=ENSEMBL, HinM_logFC=log2FoldChange,
+                 HinM_padj=padj)
+```
+
+### DUX4 and DUXC expression in canine
+Pearson correlation between DUX4 and DUXC expression (assembled by logFC) in canine is $0.803$. Code below draws the 2D density plot below presenting their linear relationship: dashed line is the linear regression line $y=0.11 + 0.8x$ whereas the solid line is $x=y$.
+
+```{r HinC-vs-CinC, fig.cap="2D density scatter plot between DUX4 and DUXC expression in canine. "}
+HinC_CinC <- HinC %>%
+  left_join(CinC, by="CANINE_ENSEMBL") %>%
+  dplyr::filter(!is.na(HinC_logFC), !is.na(CinC_logFC)) 
+  
+df <- HinC_CinC %>% dplyr::select(HinC_logFC, CinC_logFC) %>%
+  dplyr::rename(y=HinC_logFC, x=CinC_logFC)  
+label <- lm_eqn(df)
+gg <- ggplot(HinC_CinC, aes(x=CinC_logFC, y=HinC_logFC)) +
+  stat_density2d(geom="tile", aes(fill=..density..^0.15, alpha=1),
+                 contour=FALSE, show.legend=FALSE) +
+  geom_point(size=0.5) +
+  stat_density2d(geom="tile", aes(fill=..density..^0.15,    
+                                  alpha=ifelse(..density..^0.15<0.3,0,1)),
+                 contour=FALSE, show.legend=FALSE) + 
+  scale_fill_gradientn(colours = colorRampPalette(c("white", blues9))(256)) +
+  geom_smooth(method="lm", se=FALSE, show.legend=FALSE, color="gray25",
+              alpha=0.5,
+              linetype="dashed") +
+  geom_abline(slope=1, intercept=0, color="gray25", alpha=0.5) +
+  labs(title=TeX("HinC vs. CinC $\\log_2$ fold change"),
+       y=TeX("HinC: $\\log_2$(DUX4/luciferase)"),
+       x=TeX("CinC: $\\log_2$(DUXC/luciferase)")) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=16)) +
+  geom_text(x=7.5, y=7.5, label="x=y", angle=38, vjust=-1, color="gray25") +
+  geom_text(x=7.5, y=5.5, label="y=0.11+0.8x; pearson=0.803", angle=28,
+            vjust=1, color="gray25")
+gg
+ggsave(file.path(pkg_dir, "figures", "HinC_CinC_logFC_smooth_scatter.pdf"),
+       width=5, height=3.75)
+```
+
+### DUX4 and Dux expression in murine
+Pearson correlation between DUX4 and Dux expression in murine is $0.275$; linear regression model is $y=-0.024 + 0.21x$.
+
+```{r HinM-vs-MinM, fig.cap="2D density scatter plot between DUX4 and Dux expression in murine."}
+HinM_MinM <- HinM %>%
+  left_join(MinM, by="MOUSE_ENSEMBL") %>%
+  dplyr::filter(!is.na(HinM_logFC), !is.na(MinM_logFC)) 
+  
+df <- HinM_MinM %>% dplyr::select(HinM_logFC, MinM_logFC) %>%
+  dplyr::rename(y=HinM_logFC, x=MinM_logFC)  
+label <- lm_eqn(df)
+gg <- ggplot(HinM_MinM, aes(x=MinM_logFC, y=HinM_logFC)) +
+  stat_density2d(geom="tile", aes(fill=..density..^0.15, alpha=1),
+                 contour=FALSE, show.legend=FALSE) +
+  geom_point(size=0.5) +
+  stat_density2d(geom="tile", aes(fill=..density..^0.15,    
+                                  alpha=ifelse(..density..^0.15<0.3,0,1)),
+                 contour=FALSE, show.legend=FALSE) + 
+  scale_fill_gradientn(colours = colorRampPalette(c("white", blues9))(256)) +
+  geom_smooth(method="lm", se=FALSE, show.legend=FALSE, color="gray25",
+              alpha=0.5,
+              linetype="dashed") +
+  geom_abline(slope=1, intercept=0, color="gray25", alpha=0.5) +
+  labs(title=TeX("HinM vs. MinM $\\log_2$ fold change"),
+       y=TeX("HinM: $\\log_2$(DUX4/no DUX4)"),
+       x=TeX("MinM: $\\log_2$(Dux/no Dux)")) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5, face="bold", size=16)) +
+  geom_text(x=10, y=10, label="x=y", angle=38, vjust=-1, color="gray25") +
+  geom_text(x=10, y=1.4, label="y=-0.024+0.21x; pearson=0.275", angle=8,
+            vjust=1, color="gray25")
+  
+gg
+ggsave(file.path(pkg_dir, "figures", "HinM_MinM_logFC_smooth_scatter.pdf"),
+       width=5, height=3.75)
+```
