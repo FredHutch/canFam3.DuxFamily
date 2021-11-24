@@ -1,0 +1,71 @@
+---
+title: "Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD"
+author: "Chao-Jen Wong"
+documentclass: "book"
+site: bookdown::bookdown_site
+bibliography: [journals.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Bioinformatics and statistics analysis"
+---
+
+# Preface {-}
+
+We wrote this book to support the reproducibility and transparancy of the computational work for our manuscript, _Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_[insert line here]. This book is built by **R markdown**, **knitr** [@R-knitr], and **bookdown** [@bookdown2016] R packages. It presents the workflow and reproducible codes of our Bioinformatics analysis on the RNA-seq and ChIP-seq data, which are available in our [github repos](https://github.com/FredHutch/canFam3.DuxFamily.git). All the figures and tables here in the book are genereated on the fly of the code. 
+
+Note that some of the code might be tedious and therefore are hidden from the display, but they are included the raw Rmd files 
+
+The The processed R-compatible datasets for all human DUX4 ([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)), mouse Dux ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282)) and canine DUXC models ([GSEXXXXX]()), both ChIP-seq and RNA-seq, are available in our [github repos](https://github.com/FredHutch/canFam3.DuxFamily.git).
+
+## Datasets
+
+The datasets are located in the `/data` folder in the [repos](https://github.com/FredHutch/canFam3.DuxFamily.git). It includes the results of ChIP-seq (peaks) andprocessed RNA-seq datasets, all of which were in R/Bioconductor compatible format. 
+The datasets include:     
+1. read counts and DESeq2 results (`DESeqDataSet`) randered from RNA-seq of the human DUX4, mouse Dux and canine DUXC transcription factor models  
+2. repeat analysis results   
+3. peaks called from ChIP-seq  
+4. miscellaneous `data.frame` collected from other publications that were used for our analysis
+```
+\data
+├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
+├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
+├── CALTinC_rmsk.rda: repeat element expression in DUXC-ALT transcriptome
+├── CinC.ens.dds.rda: DUXC transcriptome
+├── CinC_rmsk.rda: DUXC repeat element expression
+├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
+├── HinC_rmsk.rda: repeat element expression in HinC transcriptome
+├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
+├── HinH_rmsk.rda: repeat element expression in HinH transcriptome
+├── canine.repName.SE.rda: repeat element expression in CinC transcriptome (don't need it)
+├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set [ref]
+├── peaks_list.rda: peaks called by ChIP-seq
+├── rmsk.dds.rda: repeat element expression in CinC transcriptome
+├── rmsk.res.rda
+└── z4_ensembl.rda: Akiyama 2015 2C-like gene set from [ref]
+```
+
+## Tips
+
+__How to use AnnotationHub to access the GTF file and build a `TxDb` (transcript database) annotation package on the fly__
+```{r build-TxDb-pkg, eval=FALSE}
+# example:
+library(AnnotationHub)
+ah = AnnotationHub()
+query(ah, c("canFam3", "ensembl"))
+gr <- ah["AH79003"] ## download Canis_familiaris ensembl version 99
+## (1) build on the fly
+txdb <- makeTxDbFromGRanges(gr)  ## build on the fly
+## (2) build a package
+md <- 
+  data.frame(name=c("ensembl_version", "Data source", 
+                    "Organism", "Resource URL", "Type of Gene ID"),
+             value=c("canFam3.1.99", "AnnotationHub query AH79003", 
+                     "Canis familiaris ", "http://ensembl.org", 
+                     "Ensembl Gene ID"))
+txdb <- makeTxDbFromGRanges(gr, metadata=md)
+makeTxDbPackage(txdb=txdb, version="1.0.0",
+                pkgname="TxDb.Cfamiliaris.CanFam3.ensGene.v99",
+                maintainer="Chao-Jen Wong <cwon2@fredhutch.org>",
+                author="Chao-Jen Wong",
+                destDir="~/tapscott/canfam3")
+```
