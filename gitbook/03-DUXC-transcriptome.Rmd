@@ -1,13 +1,13 @@
 # DUXC transcriptome {#DUXC-transcriptome}
-In this chapter we present 
-(1) the hypothesis setting for determining differentailly expressed genes in the canine model
-(2) MA plots of DUXC, DUX4 and DUXC-ALT expression in canine
-(3) functions of DUXC-ALT down-regulated genes
-(4) the cross-species models: DUX4 expression in canine and murine
+In this chapter, we present      
+(1) the hypothesis setting for determining differentailly expressed genes in the canine model  
+(2) MA plots of DUXC, DUX4 and DUXC-ALT expression in canine  
+(3) GO analysis for the DUXC-ALT down-regulated genes  
+(4) analysis for the cross-species models: DUX4 expression in canine and murine  
 
 
 ## Load datasets and settings
-Load the `DESeqDataSet` instances (container of gene expression matrix and metadata) for all canine, mouse, and human models:
+First, we load the `DESeqDataSet` instances (container of gene expression matrix and metadata) for all canine, mouse, and human models:
 ```{r load-libraries-2}
 suppressPackageStartupMessages(library(DESeq2))
 suppressPackageStartupMessages(library(tidyverse))
@@ -31,21 +31,26 @@ rownames(CinC.ens.dds) <- sapply(strsplit(rownames(CinC.ens.dds), fixed=TRUE, ".
 rownames(CALTinC.ens.dds) <- sapply(strsplit(rownames(CALTinC.ens.dds), fixed=TRUE, "."), "[", 1)
 ```
 
-__DESeq2 hypothesis settings__
-Our null hypothesis for determining affected genes is $H_0: |log2FoldChange| < 1$ with adjusted p-value threshold $0.05$.
+## DESeq2 
+
+### hypothesis settings
+$H_0: |log2FoldChange| < 1$ with adjusted p-value threshold $0.05$.
+
 ```{r deseq-results}
 CinC_res <- results(CinC.ens.dds, lfcThreshold=1, alpha=0.05)
 HinC_res <- results(HinC.ens.dds, lfcThreshold=1, alpha=0.05)
 CALTinC_res <- results(CALTinC.ens.dds, lfcThreshold=1, alpha=0.05)
 ```
 
-```{r make-supplemental-table-1}
+
+
+```{r make-supplemental-table-1, echo=FALSE, eval=FALSE}
 # make supplemental table 1 with three sheets
 .tidy_dds_res <- function(res, dds) {
   tidy_res <- as(res, "data.frame") %>%
     dplyr::filter(padj < 0.05) %>%
     rownames_to_column(var="ENSEMBL") 
-  symbols <- select(org.Cf.eg.db, keys=pull(tidy_res, ensembl),
+  symbols <- AnnotationDbi::select(org.Cf.eg.db, keys=pull(tidy_res, ensembl),
                     columns=c("SYMBOL"), keytype="ENSEMBL", 
                     multiVal="first") %>%
     distinct(ENSEMBL) 
@@ -53,13 +58,14 @@ CALTinC_res <- results(CALTinC.ens.dds, lfcThreshold=1, alpha=0.05)
     
 }
 ```
-## CinC: DUXC expresison in canine muscle cells
 
-__MA plot__
-```{r CinC-MAplot, fig.cap="MA plot of DUXC expression in canine"}
+### CinC: DUXC expresison in canine muscle cells
+
+```{r CinC-MAplot, echo=FALSE, fig.cap="MA plot of DUXC expression in canine"}
 summary <- as(CinC_res, "data.frame") %>%
       summarise(up = sum(padj < 0.05 & log2FoldChange > 1, na.rm=TRUE), 
       down = sum(padj < 0.05 & log2FoldChange < 1, na.rm=TRUE))
+
 plotMA(CinC_res, alpha = 0.05, main="CinC")
 label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
                  pull(summary, up), pull(summary, up)/nrow(CinC_res) *100)           
@@ -68,7 +74,7 @@ label <- sprintf("LFC < 1 (down) : %d, %1.1f%%",
                  pull(summary, down), pull(summary, down)/nrow(CinC_res) *100)     
 text(x=1000, y=-5, labels=label, adj=c(0, 0))
 ```
-```{r export-CinC-maplot}
+```{r export-CinC-maplot, echo=FALSE, include=FALSE}
 pdf(file.path(fig_dir, "CinC_maplot.pdf"), width=5.5, height=4.4)
 plotMA(CinC_res, alpha = 0.05, main="CinC")
 label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
@@ -79,10 +85,9 @@ label <- sprintf("LFC < 1 (down) : %d, %1.1f%%",
 text(x=500, y=-5, labels=label, adj=c(0, 0))
 dev.off()
 ```
-## HinC: DUX4 expression in canine muscle cells
 
-__MA plot__
-```{r HinC-MAplot, fig.cap="MA plot of DUX4 expression in canine"}
+### HinC: DUX4 expression in canine muscle cells
+```{r HinC-MAplot, echo=FALSE, fig.cap="MA plot of DUX4 expression in canine"}
 summary <- as(HinC_res, "data.frame") %>%
       summarise(up = sum(padj < 0.05 & log2FoldChange > 1, na.rm=TRUE), 
       down = sum(padj < 0.05 & log2FoldChange < 1, na.rm=TRUE))
@@ -95,7 +100,7 @@ label <- sprintf("LFC < 1 (down) : %d, %1.1f%%",
                  pull(summary, down), pull(summary, down)/nrow(HinC_res) *100)     
 text(x=1000, y=-5, labels=label, adj=c(0, 0))
 ```
-```{r export-HinC-maplot}
+```{r export-HinC-maplot, echo=FALSE, include=FALSE}
 pdf(file.path(fig_dir, "HinC_maplot.pdf"), width=5.5, height=4.4)
 plotMA(HinC_res, alpha = 0.05, main="HinC")
 label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
@@ -107,12 +112,10 @@ text(x=500, y=-5, labels=label, adj=c(0, 0))
 dev.off()
 ```
 
-## DUXC-ALT expression - CALTinC
-DUXC-ALT positively affects a few genes (20) but down-regulates similar set of genes that DUXC and DUX4 down-regulate. This suggests that the extra exon of DUXC-ALT disrupts the transcriptional activity but the conserved C-terminal might retains its function and represses expression of some INF-induced genes (e.g. ISG15, CCL5, CXCL10, RSAD2, MX1/MX2).
+### DUXC-ALT expression - CALTinC
+DUXC-ALT positively affects a few genes (20) but the down-regulates are similar with the DUXC and DUX4 down-regulates. This suggests that even the in-frame extra exon of DUXC-ALT disrupts the transcriptional activity, the conserved C-terminal get to maintain its function and represses expression of some INF-induced genes (e.g. ISG15, CCL5, CXCL10, RSAD2, MX1/MX2).
 
-__MA plot__
-
-```{r CALTinC-MAplot, fig.cap="MA plot of DUXC-ALT expression in canine"}
+```{r CALTinC-MAplot, echo=FALSE, fig.cap="MA plot of DUXC-ALT expression in canine"}
 summary <- as(CALTinC_res, "data.frame") %>%
       summarise(up = sum(padj < 0.05 & log2FoldChange > 1, na.rm=TRUE), 
       down = sum(padj < 0.05 & log2FoldChange < 1, na.rm=TRUE))
@@ -126,7 +129,7 @@ label <- sprintf("LFC < 1 (down) : %d, %1.1f%%",
 text(x=1000, y=-2.5, labels=label, adj=c(0, 0))
 ```
 
-```{r export-CinC-maplot}
+```{r export-CALTinC-maplot, eval=FALSE, include=FALSE}
 pdf(file.path(fig_dir, "CALTinC_maplot.pdf"), width=5.5, height=4.4)
 plotMA(CALTinC_res, alpha = 0.05, main="CALTinC")
 label <- sprintf("LFC > 1 (up) : %d, %1.1f%%", 
@@ -138,10 +141,9 @@ text(x=500, y=-2.5, labels=label, adj=c(0, 0))
 dev.off()
 ```
 
-__Venn diagram__
+Showing below is a venn diagram showing the overlaps of the down-regulates of DUX, DUX4, and DUXC-ALT.
 
-Code below extracts the down-regulated genes by DUXC, DUX4 and DUXC-ALT and draws a venn diagram to visualize overlapping sets.
-```{r duxc-alt-down}
+```{r duxc-alt-down, echo=FALSE}
 ## retract down-regulated genes
 .get_down <- function(dds) {
   # appned gene names
@@ -174,9 +176,7 @@ sym <- AnnotationDbi::select(org.Cf.eg.db,
                              keys=id, columns="SYMBOL", keytype="ENSEMBL")
 ```
 
-NOTE: DUXC-ALT up-regulated 20 genes and nine of them are overlapped with the up-regulated by DUXC -- `r paste(dplyr::pull(sym, SYMBOL), collapse = ", ")`. 
-
-```{r down-venn, fig.cap="Venn diagram of down-regualated genes in DUXC, DUX4 and DUXC-ALTC.", message=FALSE}
+```{r down-venn, echo=FALSE, fig.cap="Venn diagram of down-regualated genes in DUXC, DUX4 and DUXC-ALTC.", message=FALSE}
 library(ggVennDiagram)
 #wes_palette(n=4, name="Zissou1", type="discrete")[c(1,4)]
 venn_data <- list(CALTinC = calt_down$ENSEMBL, 
@@ -186,9 +186,12 @@ ggVennDiagram(venn_data) +
 ggsave(filename=file.path(fig_dir, "CALTinC_CinC_HinC_diagram.pdf"),
        width=4, height=4)
 ```
+NOTE: DUXC-ALT up-regulated 20 genes and nine of them are overlapped with the up-regulated by DUXC -- `r paste(dplyr::pull(sym, SYMBOL), collapse = ", ")`. 
 
-### GO analysis for the down-regulated gene set
-The top GO terms suggest the repressive functions of DUXC-ALT:
+
+__GO analysis for the down-regulated gene set__  
+
+The down-regulated genes of DUXC-ALT are interesting; they might reveals the repressive functions that the conservative c-terminal regulates. Below is the top 10 repressed GO terms for the DUXC-ALT down-reguated.
 ```{r go-annotation-down-reg-genes, message=FALSE, include=FALSE}
 dds <- CALTinC.ens.dds
 down <- calt_down
