@@ -1,5 +1,5 @@
 # ChIP-seq for the canine model {#chipseq}
-We performed ChIP-seq experiments to determind the transcription factor DUX4, DUXC and DUXC-ALT's binding sites and motifs in the canine genome. Below we described the sample information and ChIP-seq preprocessing pipeline, peaks calling, and motifs discovery. 
+We performed ChIP-seq experiments to determind the transcription factor DUX4, DUXC and DUXC-ALT's binding sites and motifs in the canine genome. DUX4 and DUXC were using monoclonal antiboy whereas DUXC-ALT using polyclonol Below we described the sample information and ChIP-seq preprocessing pipeline, peaks calling, and motifs discovery. 
 
 ```{r load-lib-dataset-2}
 suppressPackageStartupMessages(library(TxDb.Cfamiliaris.UCSC.canFam3.ensGene))
@@ -7,6 +7,7 @@ txdb <- TxDb.Cfamiliaris.UCSC.canFam3.ensGene
 suppressPackageStartupMessages(library(canFam3.rmsk))
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(wesanderson))
+suppressPackageStartupMessages(library(ggVennDiagram))
 # eventially change to loading from github
 pkg_dir <- "~/CompBio/canFam3.DuxFamily"
 load(file.path(pkg_dir, "data", "peaks_list.rda")) # peaks list
@@ -14,31 +15,26 @@ load(file.path(pkg_dir, "data", "chipseq_si.rda")) # sample information
 ```
 
 ## ChIP-seq samples 
-We mainly used the monoclonal antibodies treated samples for our manuscript, except DUXC-ALT. 
 
 ```{r sample-attributes, echo=FALSE}
-as.data.frame(si) %>% dplyr::select(sample_name, lib_size) %>%
-  add_column(transcription_factor = c("luciferas", "DUX4", "DUXC", "DUXC-ALT",
-                                      "luciferas", "DUX4", "DUXC"),
-             cell_type=c(rep("polyclonal", 4), rep("monoclonal", 3)))
+chipseq_si
 ```
 
 ## Analysis workflow
-The pre-processing pipeline and peak calling of the ChIP-seq for the canine model follows a standard pipeline:
+We used starndard pre-processing pipeline and _MACS2_ to call peaks
 
 1. __Filter unqualified reads__: based on casava filter, filtered out reads whose filter flag, indicated in the identifier, equals to "Y".
 2. __Trim adapter__: `AGATCGGAAGAGCACACGTCAGAACTCCAGTCACGCACTAATCTCGTATG`  
 3. __Quality control__: quality control by _fastqc_ to confirm that there is no more adapter contemination  
 4. __Alignement__: align read to the _canFam3_ genome build by _BWA-0.7.10_ (`/scripts/do_bwa.sh `)
-5. __Peak calling__: peak calling made by macs2 (MACS2) with Luciferase monoclonal samples as negative controls (`Sample5_ImmCnMb_luc_mono.bam`, monoclonal cell line) 
+5. __Peak calling__: peak calling made by macs2 (MACS2) with Luciferase monoclonal samples as negative controls; monoclonal cell line `Sample5_ImmCnMb_luc_mono` is used for monoclonal DUXC/DUX4 samples and the polyclonal cell line `Sample1_ImmCnMb_luc_poly` for `Sample4_ImmCnMb_CALTh_poly`) 
 ```
 macs2 callpeak -t $sampleName.bam -c $cnt -f BAM \
   --outdir $macsDir -g 2.42e9 -n $sampleName \
   -B -q 0.01
 ```
 6. __Peak annotation__: annotate peaks using Bioconductor **ChIPseeker** [@ChIPseeker] package along with a customed `TxDb` (`TxDb.Cfamiliaris.UCSC.canFam3.ensGene`) annotation package derived from the Ensembl's gtf file in the canfam3 genome build.     
-7. Prepare peaks FASTA files: select top 1000 peaks and flank up/downstream 50 bps around the peak summits (`/scripts/peaks.R`)
-8. __Motif discovery__: prepare peaks FASTA files by selecting top 1000 peaks and flank up/downstream 50 bps around the peak summits (`/scripts/peaks.R`); discovery motifs by using MEME 5.1.1 (`/scripts/peaks.R`)
+7. __Motif discovery__: prepare peaks FASTA files by selecting top 1000 peaks and flank up/downstream 50 bps around the peak summits (`/scripts/peaks.R`); discovery motifs by using MEME 5.1.1 (`/scripts/peaks.R`)
 ```
 meme Sample6_ImmCnMb_hDUX4_mono_peaksSeq_100.fa \ 
   -dna -oc . -nostatus -time 18000 -mod zoops \ 
@@ -116,38 +112,24 @@ ggplot(df, aes(x=transcription_factor, y=percentage, fill=simplify)) +
 ggsave(file.path(pkg_dir, "figures", "chipseq-peaks-functional-distribution.pdf"), width=3, height=4)
 ```
 
-## Functinal enrichement analysis
 
-```{r enriched-pathway}
-library(clusterProfiler)
-library(ReactomePA)
-enrichPathWay()
-```
 ## Overlap of peaks 
 
 ### DUXC and DUX4
-```{r vennplot-DUXC-DUX4}
+```{r vennplot-DUXC-DUX4-ov}
 genes= lapply(peaks_list[c(4, 5)], function(gr) gr$geneId)
 names(genes) <- c("DUX4", "DUXC")
-vennplot(genes)
+#vennplot(genes)
+ggVennDiagram(genes)
 ```
 
 ### DUXC and DUXC-ALT
-```{r vennplot-DUXC-DUX4}
+```{r vennplot-DUXC-ALT-DUX4-ov}
 genes= lapply(peaks_list[c(3, 5)], function(gr) gr$geneId)
 names(genes) <- c("DUXC-ALT", "DUXC")
-vennplot(genes)
+ggVennDiagram(genes)
 ```
 
-About 55% of DUXC (monoclone) peaks overlap with hDUX4 peaks.
-```{r overlap-hDUX4-CCH}
-ov <- findOverlaps(peaks_list[["Sample7_ImmCnMb_CCH_mono"]],
-                   peaks_list[["Sample6_ImmCnMb_hDUX4_mono"]])
-freq <- length(unique(queryHits(ov)))/length(peaks_list[["Sample7_ImmCnMb_CCH_mono"]])
-freq
-```
-__Question:__ Do DUXC's A or G peaks overlap with hDUX4 peaks?
-About 60% and 50% of A-peaks and G-peaks overlap with hDUX4 peaks, respectively.
 
 ```{r A-G-peaks-ov-hDUX4, eval=FALSE, echo=FALSE}
 # 1. identify peaks has motifs
@@ -174,33 +156,13 @@ length(unique(queryHits(ov_G)))/length(query)
 
 ```
 
-### Functional distribution
-1. compare peaks location between CCH conditions
-```{r share_peaks_CCH, eval=FALSE}
-CCH_mono <- peaks_list[["Sample7_ImmCnMb_CCH_mono"]]
-CCH_poly <- peaks_list[["Sample3_ImmCnMb_CCH_poly"]]
-left <- join_overlap_inner(CCH_mono, CCH_poly) 
-length(left)
-right <- join_overlap_inner(CCH_poly, CCH_mono)
-length(right)
-```
 
-2. compare peak locations between HinC condition
-```{r share_peaks_hDUX4, eval=FALSE}
-hDUX4_mono <- peaks_list[["Sample6_ImmCnMb_hDUX4_mono"]]
-hDUX4_poly <- peaks_list[["Sample2_ImmCnMb_hDUX4_poly"]]
-left <- join_overlap_inner(hDUX4_mono, hDUX4_poly) 
-length(left)
-right <- join_overlap_inner(hDUX4_poly, hDUX4_mono)
-length(right)
-```
-3. Compare peak location between CCH and CALT conditions
+## Motifs analysis 
+__Quesition:__ Do DUXC’s A or G peaks overlap with hDUX4 peaks?
+About 60% and 50% of A-peaks and G-peaks overlap with hDUX4 peaks, respectively.
 
-
-## Motifs analysis NEED UPDATE
-__Question:__ The CCH motif T(A/G)ATCCAATCA: does the position, A/G, associated with induced genes??
-
-The A motif does not associated with induced genes.
+__Question:__ As for DUXC motif T(A/G)ATCCAATCA, does the position, A/G, associated with induced genes?
+No, neither A nor G motif is associated with induced genes.
 
 ```{r CCH_motif, echo=FALSE, eval=FALSE}
 # run this on rhino01
