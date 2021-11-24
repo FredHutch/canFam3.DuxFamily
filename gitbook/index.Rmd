@@ -1,7 +1,11 @@
 ---
 title: "Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD"
 author: "Chao-Jen Wong"
+date: "`r Sys.Date()`"
 documentclass: "book"
+output:
+  bookdown::gitbook:
+    highlight: tango
 site: bookdown::bookdown_site
 bibliography: [journals.bib, packages.bib]
 biblio-style: apalike
@@ -11,42 +15,44 @@ description: "Bioinformatics and statistics analysis"
 
 # Preface {-}
 
-We wrote this book to support the reproducibility and transparancy of the computational work for our manuscript, _Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_[insert line here]. This book is built by **R markdown**, **knitr** [@R-knitr], and **bookdown** [@bookdown2016] R packages. It presents the workflow and reproducible codes of our Bioinformatics analysis on the RNA-seq and ChIP-seq data, which are available in our [github repos](https://github.com/FredHutch/canFam3.DuxFamily.git). All the figures and tables here in the book are genereated on the fly of the code. 
+We wrote this book to support the reproducibility and transparancy of the computational work for the manuscript, _Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_[insert line here]. This book is built by **R markdown**, **knitr** [@R-knitr], and **bookdown** [@bookdown2016] R packages. It presents the workflow and reproducible **R** code of our Bioinformatics analysis on the RNA-seq and ChIP-seq data, in which the processed data are available in our [GitHub repos](https://github.com/FredHutch/canFam3.DuxFamily). All the figures and tables in the book are rendered by the [book source Rmd files](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook) on the fly. 
 
-Note that some of the code might be tedious and therefore are hidden from the display, but they are included the raw Rmd files 
-
-The The processed R-compatible datasets for all human DUX4 ([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)), mouse Dux ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282)) and canine DUXC models ([GSEXXXXX]()), both ChIP-seq and RNA-seq, are available in our [github repos](https://github.com/FredHutch/canFam3.DuxFamily.git).
+Note that some of the code might be tedious and therefore are hidden from the display, but they are can be found in the [source files](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook)
 
 ## Datasets
 
-The datasets are located in the `/data` folder in the [repos](https://github.com/FredHutch/canFam3.DuxFamily.git). It includes the results of ChIP-seq (peaks) andprocessed RNA-seq datasets, all of which were in R/Bioconductor compatible format. 
-The datasets include:     
-1. read counts and DESeq2 results (`DESeqDataSet`) randered from RNA-seq of the human DUX4, mouse Dux and canine DUXC transcription factor models  
-2. repeat analysis results   
-3. peaks called from ChIP-seq  
-4. miscellaneous `data.frame` collected from other publications that were used for our analysis
+The repository's [data](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/data) foler include RNA-seq read counts (`DESeqDataSet`) as well as the ChIP-seq peaks calling results (`GRanges`). 
+
+- canine RNA-seq (GSE188928): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat element expression
 ```
-\data
-├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
 ├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
 ├── CALTinC_rmsk.rda: repeat element expression in DUXC-ALT transcriptome
 ├── CinC.ens.dds.rda: DUXC transcriptome
 ├── CinC_rmsk.rda: DUXC repeat element expression
 ├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
 ├── HinC_rmsk.rda: repeat element expression in HinC transcriptome
-├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
-├── HinH_rmsk.rda: repeat element expression in HinH transcriptome
-├── canine.repName.SE.rda: repeat element expression in CinC transcriptome (don't need it)
-├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set [ref]
-├── peaks_list.rda: peaks called by ChIP-seq
-├── rmsk.dds.rda: repeat element expression in CinC transcriptome
-├── rmsk.res.rda
-└── z4_ensembl.rda: Akiyama 2015 2C-like gene set from [ref]
 ```
 
-## Tips
+- human DUX4 transcriptome in human myblast([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
+```
+├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
+├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
+├── HinH_rmsk.rda: repeat element expression in HinH transcriptome
+```
 
-__How to use AnnotationHub to access the GTF file and build a `TxDb` (transcript database) annotation package on the fly__
+- miscellaneous   
+```
+├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set
+├── canine_human_mouse_ensOrtholog.rda human-canine and mouse-canine paired orthologous
+├── peaks_list.rda: ChIP-seq peaks 
+├── chipseq_si.rda: ChIP-seq sample information
+└── z4_ensembl.rda: Akiyama 2015 2C-like gene set from 
+```
+
+## Annotation
+
+### canFam3 ensembl GTF
+We used Bioconductor's _AnnotationHub_ package to extract canFam3 ensembl's GTF file and built a `TxDb` (transcript database) annotation package. 
 ```{r build-TxDb-pkg, eval=FALSE}
 # example:
 library(AnnotationHub)
@@ -64,8 +70,11 @@ md <-
                      "Ensembl Gene ID"))
 txdb <- makeTxDbFromGRanges(gr, metadata=md)
 makeTxDbPackage(txdb=txdb, version="1.0.0",
-                pkgname="TxDb.Cfamiliaris.CanFam3.ensGene.v99",
+                pkgname="TxDb.Cfamiliaris.CanFam3.ensGene",
                 maintainer="Chao-Jen Wong <cwon2@fredhutch.org>",
                 author="Chao-Jen Wong",
                 destDir="~/tapscott/canfam3")
 ```
+
+## Software
+R/3.6.3 and Bioconductor v3.10
