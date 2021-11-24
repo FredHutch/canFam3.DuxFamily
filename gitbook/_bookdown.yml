@@ -1,5 +1,10 @@
 book_filename: "gitbook"
 delete_merged_file: true
+rmd_subdir: true
+view: https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook/%s
+edit: https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook/%s
+output_dir: "../docs"
+clean: ["journals.bib", "packages.bib"] 
 language:
   ui:
     chapter_name: "Chapter "
