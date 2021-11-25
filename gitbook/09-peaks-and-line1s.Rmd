@@ -1,6 +1,7 @@
 # DUXC peaks and LINE1s {#peaks-line1}
 To answer whether DUXC and DUX4 directly regulate to L1s, we want to check if DUXC an DUX4's motifs are enriched in the peaks that overlap with L1s. To do so, we did the following steps:      
-1. use the narrowed peaks  (+/- 50 bps from summit) and select the subset that overlap with the differentially expressed L1s  (LFC > 1; adjusted p-value < 0.05; compared with control lucifereas samples)   
+
+1. use the narrowed peaks  (+/- 50 bps from summit) and select the subset that overlap with the differentially expressed L1s  (LFC > 1; adjusted p-value < 0.05; compared with control lucifereas samples)    
 2. get sequence of the selected peaks      
 3. use _MEME_ to find the DUXC/DUX4 motif of these peaks     
 4. use _BioStrings::matchPattern()_ to find the motif enrichment     
