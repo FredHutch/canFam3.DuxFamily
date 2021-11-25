@@ -40,10 +40,11 @@ The repository's [data](https://github.com/FredHutch/canFam3.DuxFamily/tree/mast
 ├── HinH_rmsk.rda: repeat element expression in HinH transcriptome
 ```
 
-- miscellaneous   
+- miscellaneous. The orthologous are collected from Ensembl ortholog database V88.   
 ```
 ├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set
-├── canine_human_mouse_ensOrtholog.rda human-canine and mouse-canine paired orthologous
+├── canine_human_mouse_ensOrtholog.rda: human-canine and mouse-canine paired orthologous
+├── human_mouse_ensOrtholog.rda: human-mouse paired Ortholog
 ├── peaks_list.rda: ChIP-seq peaks 
 ├── chipseq_si.rda: ChIP-seq sample information
 └── z4_ensembl.rda: Akiyama 2015 2C-like gene set from 
