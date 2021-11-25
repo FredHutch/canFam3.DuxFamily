@@ -19,25 +19,35 @@ We wrote this book to support the reproducibility and transparancy of the comput
 
 Note that some of the code might be tedious and therefore are hidden from the display, but they are can be found in the [source files](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook)
 
+## Nomenclature
+```{r nomenclature-table, echo=FALSE}
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(kableExtra))
+data.frame(
+  nomenclature=c("CinC", "HinC", "CALTinC", "HinH", "HinM", "MinM"),
+  model=c("DUXC in canine", "hDUX4 in canine", "DUXC-ALT in canine", 
+          "hDUX4 in human", "hDUX4 in mouse", "mDux in mouse")) %>% 
+  kableExtra::kbl() %>%
+  kableExtra::kable_styling()
+```
+
 ## Datasets
 
 The repository's [data](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/data) foler include RNA-seq read counts (`DESeqDataSet`) as well as the ChIP-seq peaks calling results (`GRanges`). 
 
-- canine RNA-seq (GSE188928): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat element expression
+- canine RNA-seq (GSE188928): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
 ```
 ├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
-├── CALTinC_rmsk.rda: repeat element expression in DUXC-ALT transcriptome
 ├── CinC.ens.dds.rda: DUXC transcriptome
-├── CinC_rmsk.rda: DUXC repeat element expression
 ├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
-├── HinC_rmsk.rda: repeat element expression in HinC transcriptome
+├── rmsk.dds.rda: DUX4, DUXC, DUXC-ALT repeat elements expression
 ```
 
 - human DUX4 transcriptome in human myblast([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
 ```
 ├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
 ├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
-├── HinH_rmsk.rda: repeat element expression in HinH transcriptome
+├── HinH_rmsk.rda: repeat element expression in HinH transcriptome (DESeq2 resutls)
 ```
 
 - miscellaneous. The orthologous are collected from Ensembl ortholog database V88.   
