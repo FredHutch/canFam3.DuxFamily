@@ -1,17 +1,18 @@
 # Repeat elements {#repeats}
-In this chapter we performed bioinformatic profiling on repeat elements inferred repeat family and class activation in CinC and HinC transcriptome using gene set enrichment analysis (GSEA). The associated computational methods are:     
-- counting reads that overlap with repeat elements   
-- identifing DUX4/DUXC affected repeat elements by _DESeq2_         
-- comparing CinC to HinC transcriptome    
-- analying family and class enrichment in repeat elements     
-- estimating peaks distribution in class of repeat elements: show preference on binding to LTR.
+In this chapter, we performed repeat element profiling and inferred repeat family and class activation in CinC and HinC transcriptome using gene set enrichment analysis (GSEA). The computational methods we employed include   
+
+- counting reads that overlap with repeat elements     
+- identifing DUX4/DUXC affected repeat elements by _DESeq2_           
+- comparing CinC to HinC repeats profiling
+- analying family and class enrichment in repeat elements       
+- estimating peaks distribution in class of repeat elements     
 
 the following chapters, 7 and 8, investigated more detials of retrotransposons and satellite repeats. (regulatory activities in our canine model and the impact in DUXC and DUX4 expressed canine muscles.)
 
 ## Takeaway
-The RNA expression levels of repeat elements in DUXC expressed muscle cells is highly correlated with that in DUX4 (Pearson=0.782). We used the repeats annotation from UCSC Repeat Masker (RMSK) track on main chromosomes of canFam3 genome and applied an ad-hoc _RMSKstats_ package (github URL) to estimate read counts on the annotated repeat elements (see Methods).  With a threshold of adjusted $p$-value < 0.05 corresponding to the null hypothesis $H_0: |log2FC| < 1$, _DESeq2_ identified 231 and 99 differentially expressed repeat elements in DUX4 and DUXC expressed canine skeletal cells, respectively, compared to cells expressing Luciferase. 86% (83/99) of the differentially expressed repeat elements in CinC is overlapped with that of in HinC.
+The RNA expression levels of repeat elements in DUXC expressed muscle cells is highly correlated with that in DUX4 (Pearson=0.782). We used the repeats annotation from UCSC Repeat Masker (RMSK) track on main chromosomes of canFam3 genome. With a threshold of adjusted $p$-value < 0.05 corresponding to the null hypothesis $H_0: |log2FC| < 1$, _DESeq2_ identified 231 and 99 differentially expressed repeat elements in DUX4 and DUXC expressed canine skeletal cells, respectively, compared with the cells expressing Luciferase. 86% (83/99) of the differentially expressed repeat elements in CinC is overlapped with that of in HinC.
 
-DUX4 continued to show the trend of activating retrotransposons as it did in human skeletal muscle (Whidden 2017) and in the 2C-like embryonic stage (Hendrickson 2017). Similarly, DUXC followed the same trend in canine.  In fact, by gene set enrichment analysis using hypergeometric tests (code shown below), LINE1, ERV1, ERVL, and ERVL-MaLR LTR subfamilies were enriched in both DUX4 and DUXC expressed canine skeletal muscle. Almost all the activated LTRs of DUXC were overlapping with that of DUX4. Moreover, the peak binding distribution in classes of repeat element confirmed the preference of DUX4 and DUXC in binding to LTRs and LINE1: LTRs and LINEs constitute 5% and 15% of the reference canine genome, respectively, whereas the frequency of the peak binding sites (within +/- 50 from the summit) on LTRs and LINEs are 14% ~ 17% and 21% ~ 35%, respectively. The enrichment of LTRs activation is statistically significant. But the evidence of DUXC's direct activation to LINE1 remains subtle and requires further investigation (e.g. motifs of peaks that bind to LINE1).
+DUX4 continued to show the trend of activating retrotransposons as it did in human skeletal muscle [@whidden2017] and in the 2C-like embryonic stage [@hendrickson2017]. Similarly, DUXC followed the same trend in canine.  In fact, by gene set enrichment analysis using hypergeometric tests (code shown below), LINE1, ERV1, ERVL, and ERVL-MaLR LTR subfamilies were enriched in both DUX4 and DUXC expressed canine skeletal muscle. Almost all the activated LTRs of DUXC were overlapping with that of DUX4. Moreover, the peak binding distribution in classes of repeat element confirmed the preference of DUX4 and DUXC in binding to LTRs and LINE1: LTRs and LINEs constitute 5% and 15% of the reference canine genome, respectively, whereas the frequency of the peak binding sites (within +/- 50 from the summit) on LTRs and LINEs are 14% ~ 17% and 21% ~ 35%, respectively. The enrichment of LTRs activation is statistically significant. But the evidence of DUXC's direct activation to LINE1 remains subtle and requires further investigation (e.g. motifs of peaks that bind to LINE1).
 
 __Load libraries and datasets__
 ```{r load-lib-dataset-6}
@@ -21,14 +22,18 @@ suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(wesanderson) )
 suppressPackageStartupMessages(library(DESeq2))
 suppressPackageStartupMessages(library(latex2exp))
+
 pkg_dir <- "~/CompBio/canFam3.DuxFamily"
 fig_dir <- file.path(pkg_dir, "figures")
 data_dir <- file.path(pkg_dir, "data")
+
 load(file.path(pkg_dir, "data", "peaks_list.rda"))
 load(file.path(pkg_dir, "data", "rmsk.dds.rda"))
 load(file.path(pkg_dir, "data", "CinC.ens.dds.rda"))
 load(file.path(pkg_dir, "data", "HinC.ens.dds.rda"))
 load(file.path(pkg_dir, "data", "CALTinC.ens.dds.rda"))
+
+source(file.path(pkg_dir, "scripts", "tools.R"))
 ```
 
 ## Repeat element expression
