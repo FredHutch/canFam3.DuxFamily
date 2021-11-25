@@ -1,13 +1,15 @@
 # DUXC transcriptome compared to early embryo transcriptome profile {#DUXC-early-embryo}
-We compared DUXC transcriptome to homologs of the early mouse and human embryo transcriptome to determine whether DUXC transcritome is enriched for genes expressed in the early embryo. Using the homologs of mouse 2C-like signature (Akiyama 2015 [ref]), GSEA suggests that that DUXC transcriptome is enriched for genes expressed in the homologs of mouse 2C-like.
+We compared DUXC transcriptome to homologs of the early mouse and human embryo transcriptome to determine whether DUXC transcritome is enriched for genes expressed in the early embryo. Using the homologs of mouse 2C-like signature [@akiyama2015], GSEA suggested that that DUXC transcriptome is enriched for genes expressed in the homologs of mouse 2C-like.
 
 __Load datasets__
 ```{r load-libraries-5}
 pkg_dir <- "~/CompBio/canFam3.DuxFamily"
 source(file.path(pkg_dir, "scripts", "load_lib_dataset.R"))
+suppressPackageStartupMessages(library(latex2exp))
 load(file.path(pkg_dir, "data", "canine_human_mouse_ensOrtholog.rda"))
 load(file.path(pkg_dir, "data", "human_mouse_ensOrtholog.rda"))
 ```
+
 __Tool: hypergeometric test__
 ```{r embryo_hypergeometric}
 # hypergeometric test
@@ -103,7 +105,8 @@ prob
 ```
 
 ## iPSCs 
-We used the DUX4 expressed iPSCs (24 hours; Hendrickson 2017) as an early embryo model. 
+We used the DUX4 expressed iPSCs [@hendrickson2017] as an early embryo model. 
+The hygergeometric test yielded $p-value < 2e-13$.
 ```{r iPSCs-DUX4-model, warning=FALSE, message=FALSE}
 ipscs <- read_csv(file.path(pkg_dir, "extdata", "handrickson_2017_supple_table6.csv"),
                   skip_empty_rows=TRUE) %>%
