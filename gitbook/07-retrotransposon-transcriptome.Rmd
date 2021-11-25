@@ -1,11 +1,9 @@
 # LTR activation {#LTR-activation}
 
-This chapter includes more details on LTR (ERV1, ERLV and ERVL-MaLR) activation: 
-- Background of ERVL and ERVL-MaLR subfamilies in human and murine     
-- ERVL and ERVL-MaLR activation by DUXC and DUX4 in canine myoblast     
-- Compare to the LTR subfamily activation in human myoblast      
+Previously \@ref{repeats}, we showd the repeat elemnets profiling which revealed LTR activation by DUXC and DUX4 in the canine model. Here we investigated the subfamilies of LTR - ERVL and ERVL-MaLR. In the canine model, DUX4 and DUXC both activate elements form MaLR and ERVL. In addition, we found that DUXC prones to activate more ERVL elements (MLT2D, MER76, HERVL74, LTR1A2, LTR101, LTR33C) wheareas DUX4 to more MaLR elements (MLT1A/B/E2/J).
 
-In chapter6 we showed that MaLR and ERLV subfamilies are activated by DUX4 and DUXC in our canine model. In this section, we investigated which subset of MaLR and ERVL were activated by DUX4 and DUXC. Although some elements in MaLR and ERVL were activated by both DUX4 and DUXC, DUXC prones to activate more ERVL elements (MLT2D, MER76, HERVL74, LTR1A2, LTR101, LTR33C) wheareas DUX4 to more MaLR elements (MLT1A/B/E2/J).
+In this chapter, we (1) explain the background of ERVL and ERVL-MaLR subfamilies in human and murine, (2) exam ERVL and ERVL-MaLR activation by DUXC and DUX4 in canine myoblast, and (3) compare to the LTR subfamily activation in human myoblast.
+
 
 __Load and datsets and libraries__
 ```{r load-datasets-library-07}
@@ -43,17 +41,17 @@ __ERVL__: (denoted MLT2, MER* and LTR*) DUX4 and DUXC positively affect 49% and 
 ## background in murine and human
 Though sharing common ancestry, MuERV-L (denoted MT2_Mm and MT2) evolved differntly from MaLR in murine. The ERVL-MaLR include three major subfamilies: MLT, ORR1 and MT. MLT; MLT1 and MLT2, present ancenstral mammalian LTR; ORR1 and MT are the youngest repeats in rodent, and they radiate during rodent evolution. (Note: MT, ORR1 nd MT2 radiate during rodent evolution.)
 
-Whidden (2017), Hackdrison (2017) and Franke (2015) have investigated the activities of the mouse endogenous retrovirus type-L (MuERV-L) and nonautonomous mammalian (ERVL-MaLR) subfamilies under the influence of Dux and early embroynic activation. The studies confirm the species-specific preference on activation of retrotransposon subfamilies during the 2C-like (cleavage) stage or Dux/DUX4 over-expression: human bound to ancestral (MLT1) and primate-specific (THE1, MST) ERVL-MaLR subfamilies whereas murine to MuERV-L and young submailies of MaLR that evolved during rodent evolution. 
+Whidden et al. [@whidden2017], Hackdrison et al. [@hackdrison2017] and Franke et al [@franke2017] have investigated the activities of the mouse endogenous retrovirus type-L (MuERV-L) and nonautonomous mammalian (ERVL-MaLR) subfamilies under the influence of Dux and early embroynic activation. The studies confirm the species-specific preference on activation of retrotransposon subfamilies during the 2C-like (cleavage) stage or Dux/DUX4 over-expression: human bound to ancestral (MLT1) and primate-specific (THE1, MST) ERVL-MaLR subfamilies whereas murine to MuERV-L and young submailies of MaLR that evolved during rodent evolution. 
 
-Frank 2015 shows that one of the ERVL functions is gene-remodeling via four co-options:     
+Frank 2015 [@franke2017] showed that one of the ERVL functions is gene-remodeling via four co-options:     
 1. 5' exon via retrotransoson-derived spliced donor (SD)  
 2. 3' exon via retrotransposon-derived SD or poly-(A)  
 3. internal exon via retrotransposon-derived SD or DA  
 4. intraexonic, not contribute to mRNA process  
 
-In general, the younger ERVL subfamilies - ORR1, MT, MT2 - showed higher propotion of 5'exon co-option than older family (MLT) in murine. Human bound to use more _MLT1_ (subfamily of MaLR) 5'exon co-option, contributing _MLT_ to promotor and first exons. Unlike rodent, human does not use MT2 for 5'exon co-option; Rodent uses more _MT_ (subfamily of MaLR) and _MT2_ (subfamily of MuERL-V) 5'exon co-option. Whidden 2017 confirms that Dux and DUX4 express different subsets of MaLR transcripts in C2C12: Dux uses MT2 (MuERL-V) and MT (check?) as promoters whereas DUX4 uses _MTL_ (check) as promoters to activate the targets.
+In general, the younger ERVL subfamilies [@franke2017] - ORR1, MT, MT2 - showed higher propotion of 5'exon co-option than older family (MLT) in murine. Human bound to use more _MLT1_ (subfamily of MaLR) 5'exon co-option, contributing _MLT_ to promotor and first exons. Unlike rodent, human does not use MT2 for 5'exon co-option; Rodent uses more _MT_ (subfamily of MaLR) and _MT2_ (subfamily of MuERL-V) 5'exon co-option. Whidden et al. [@whidden2017] confirmed that Dux and DUX4 express different subsets of MaLR transcripts in C2C12: Dux uses MT2 (MuERL-V) and MT as promoters whereas DUX4 uses _MLT_ as promoters to activate the targets.
 
-Previous chapter stated that DUXC showed higher propotion of ERVL differential expression whereas DUX4 showed higher propotion in that of MaLR. Althought we observe differntial expression in MaLR in DUXC and DUX4, are they in distinct subfamilies in MaLR?
+Previous chapter \@ref{repeats} stated that DUXC showed higher propotion of ERVL differential expression whereas DUX4 showed higher propotion in that of MaLR. Althought we observe differntial expression in MaLR in DUXC and DUX4, the question is are they in distinct subfamilies of MaLR?
 
 
 ## ERVL subfamily activation in canine
@@ -144,11 +142,11 @@ ggsave(file.path(fig_dir, "rmsk_MaLR_DUX4_vs_DUXC.pdf"),
 
 Visualizaiton of the number of ERVL subfamilies activated by DUX4 and DUXC in canine.
 
-## Compare wih HinH
-Compare LTR retroelment activation of CinC and HinC with HinH. Also aim to answer whether the copy number associated with higher induction by DUX4 than by DUXC?
+## Compare to CinC and HinC to HinH
+Here we compared LTR retroelment activation of CinC and HinC to that of HinH. We aimed to answer whether copy number is associated with higher induction by DUX4 than by DUXC? Update: The answer is no. Copy number is not associated with higher induction of DUX4 nor DUXC.
 
 ### Copy number
-The code in this section aims to estimate the copy number of LTR subfamilies in hg38 and canFam3.
+The code below estimates the copy number of LTR subfamilies in hg38 and canFam3.
 ```{r number-of-instance, message=FALSE, warning=FALSE}
 # get the number of instance of a repeat element within a family
 get_family_copy_number <- function(hg38.rmsk, canFam3.rmsk, family_name) {
@@ -176,9 +174,9 @@ MaLR_copy_number <- get_family_copy_number(hg38.rmsk, canFam3.rmsk, "ERVL-MaLR")
 ERVL_copy_number <- get_family_copy_number(hg38.rmsk, canFam3.rmsk, "ERVL")
 ERV1_copy_number <- get_family_copy_number(hg38.rmsk, canFam3.rmsk, "ERV1")
 # HERV: expended in human/primate lineage
+head(MaLR_copy_number)
 ```
-
-Poll activated LTR retroelements in HinC, CinC and HinH together
+Tidy up activated LTR retroelements MaLR, ERVL, and ERV1) in HinC, CinC and HinH together.
 ```{r composite-LTRs, warning=FALSE}
 # 1. union the activated LTR retroelements of HinC and  CinC; then append HinH's statistics
 # 2. incorporate with copy number
@@ -205,6 +203,8 @@ logfc_gather <- gather(activated_LTRs, key=tr_factor, value=logFC,
 ```
 
 ### ERVL-MaLR
+The bar plot below displays signicantly expressed ERVL-MaLR elements in either CinC, HinC or HinH ($adj-p < 0.05$). Only _MLT1A1_ and _MLT1A0-int_ have higher copy number in human (ratio > 2) compared to canine (ratio > 0), but they don't have higher induction in human. 
+
 ```{r plot-MaLR-logFC, warning=FALSE, fig.cap="repName expression (logFC) in ERVL-MaLR family in CinC, HinC and HinH; Orange indicates up/down-regulation; * indicates higher copy number in human."}
 data <- dplyr::filter(logfc_gather, repFamily == "ERVL-MaLR") %>%
   left_join(MaLR_copy_number, by="repName") %>%
@@ -222,6 +222,8 @@ gg1
 ```
 
 ### ERVL
+Shown below is the significently expressed ERVL elememts expression in either CinC, HinC, or HinH. _MER21B_ and _MER21-int_ have highr copy number in human.
+
 ```{r plot-ERVL-logFC, warning=FALSE, fig.height=6, fig.cap="repName expression (logFC) in ERVL family in CinC, HinC and HinH; Orange indicates up/down-regulation; * indicates higher copy number in human."}
 data <- dplyr::filter(logfc_gather, repFamily == "ERVL") %>%
   left_join(ERVL_copy_number, by="repName") %>%
@@ -239,9 +241,9 @@ gg2
 ```
 
 ### ERV1
-DUX4 up-regulated more carnior-specific retroelement than DUXC in canine.
+Shown below is the significently expressed ERV1 elements in either CinC, HinC, or HinH. Suprisingly, DUX4 up-regulated more carnior-specific retroelement than DUXC in canine.
 
-```{r plot-ERV1-logFC, warning=FALSE, fig.height=6, fig.cap="repName expression (logFC) in ERV1 family in CinC, HinC and HinH; Orange indicates up/down-regulation; * indicates higher copy number in human."}
+```{r plot-ERV1-logFC, warning=FALSE, fig.height=6, fig.cap="repName expression (logFC) in ERV1 family in CinC, HinC and HinH; Orange indicates up/down-regulation; * indicates higher copy number in human. # indicates the copy number ratio (human/canine) is not available."}
 data <- dplyr::filter(logfc_gather, repFamily == "ERV1") %>%
   left_join(ERV1_copy_number, by="repName") %>%
   dplyr::mutate(repName = ifelse(!is.na(ratio) & ratio > 2, paste0(repName, "*"), repName)) %>%
