@@ -1,6 +1,6 @@
 # DUXC and Dux transcriptome compared to that of FSHD {#DUXC-FSHD-transcriptome}
 
-This chapter implemented the statistics methods comparing DUXC transcriptome to that of FSHD. The results suggested that DUXC induced transcription program similar to FSHD muscle cells. We employed the FSHD transcriptome profile done by Jagannathan 2016 (ref): 666 mis-expressed genes in FSHD muscle cell lines. With their 520 homologous (by Ensembl orthologs database V88) in canine, we used hypergeometric tests to exam whether the FSHD transcription program is enriched in canine. 
+We used gene set enrichment method to exam whether the FSHD profile was enriched by DUXC transcriptome in the canine model.  The results suggested that DUXC induced transcription program similar to FSHD muscle cells. We employed the FSHD transcriptome profile done by Jagannathan 2016 (ref) - there were 666 mis-expressed genes in FSHD muscle cell lines. Out of 666, 520 have human-canine paired homologous (by Ensembl orthologs database V88); we used hypergeometric tests to exam whether the FSHD transcription program is enriched in canine. 
 
 __Results:__ based on the 520 human-to-canine homologous, the Pearson correlation between DUXC transcriptome and FSHD transcriptome is 0.35, moderately higher than that of between mouse Dux and FSHD transcriptome (0.29). Out of the 520 homologous, 146 (29%) were positively affected by DUXC in canine; as a result, the hypergeometric test yielded $1e-12$ $p$-value, suggesting that that the mis-expressed gene set of FSHD was enriched. 
 
