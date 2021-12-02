@@ -1,20 +1,11 @@
 # Non-LTR retrotrasposons and satellites {#non-LTR}
 
-<<<<<<< HEAD
 This chapter investigated the satellites and non-LTR retrotransposons transcriptional activites. The non-LTR retrotransposons include short interspersed nuclear elements (SINEs) and long interspersed nuclear elements (LINEs).
 
 __Summary: non-LTR tretrotrasponses and satellites activiation in canine__  
 Studies ([@shadle2019] and [@whidden2017]) have shown that in human myoblast, DUX4 enriched HSATII and families of non-LTR RNA transcripts, such as Alu family of SINE and LINE1 (L1). Therefore, we were interested in examing the conservation of the non-LTR activation by DUX4 in our canine model. Our analysis showed that DUX4 up-regulated 53% of L1s (52/97) and 28.5% of DUX4 binding sites overlap with L1s. Given that L1s constitute 17% of the canine genome, DUX4, whether directly interacted with L1s or not, induced the L1 family's enrichment in canine myoblasts. On the other hand, the enrichment of L1s by DUXC was rather unimpressive - only 16% of L1s (16/97) exhibited differential expression, and 15.6% DUXC peaks overlap with L1s (figure \@ref(fig:LINE-up-regulation-freq)).  
 
 Unlike human SINEs derived from 7SL-RNA, canine SINEs share no homology with humans (Bentolila 1999). They evolved from tRNA genes (Bentolila 1999) and are categorized by RMSK into tRNA-Lys (72%, SINEC_#), MIR (27%), Deu (0.2%, AmnSINE1, AmnSINE2), and tRNA (0.2%, LFSINE_Vert, MamSINE1) families (supplemental figure). Six out of 11 tRNA-Lys elements (54%) are up-regulated in DUX4 expressed cell line; in fact, all tRNA-Lys have logFC > 1. That is, the tRNA-Lys family is enriched in HinC transcriptome. Though none of the tRNA-Lys was called up-regulated in DUXC cells, their expression is highly correlated with that of in DUX4 expressed cell line (figure \@ref(fig:sine-distribution)).
-=======
-This chapter investigated the transcriptioal activites of satellites and non-LTR retrotransposons -- short interspersed nuclear elements (SINEs) and long interspersed nuclear elements (LINEs).
-
-__Summary: non-LTR tretrotrasponses and satellites activiation in canine__  
-Studies (Shaddle 2019; Whidden 2017) have shown that in human myoblast, DUX4 enriched HSATII and families of non-LTR RNA transcripts, such as Alu family of SINE and LINE1 (L1). Therefore, we were interested in examing the conservation of the non-LTR activation by DUX4 in our canine model. Our analysis showed that DUX4 up-regulated 53% of L1s (52/97) and 28.5% of DUX4 binding sites overlap with L1s. Given that L1s constitute 17% of the canine genome, DUX4, whether directly interacted with L1s or not, induced the L1 family's enrichment in canine myoblasts. On the other hand, the enrichment of L1s by DUXC was rather unimpressive - only 16% of L1s (16/97) exhibited differential expression, and 15.6% DUXC peaks overlap with L1s (supplemental figure).  
-
-Unlike human SINEs derived from 7SL-RNA, canine SINEs share no homology with humans (Bentolila 1999). They evolved from tRNA genes (Bentolila 1999) and are categorized by RMSK into tRNA-Lys (72%, SINEC_#), MIR (27%), Deu (0.2%, AmnSINE1, AmnSINE2), and tRNA (0.2%, LFSINE_Vert, MamSINE1) families (supplemental figure). Six out of 11 tRNA-Lys elements (54%) are up-regulated in DUX4 expressed cell line; in fact, all tRNA-Lys have logFC > 1. That is, the tRNA-Lys family is enriched in HinC transcriptome. Though none of the tRNA-Lys was called up-regulated in DUXC cells, their expression is highly correlated with that of in DUX4 expressed cell line (supplemental figure).
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 
 Canine (canFam3) has 5 major satellites and satellite-like family: Bs, Carnivore Satellite (CarSat1, CarSat2), Satellite canis Familiaris (SAT1_CF, SAT2_CF, SAT3_CF, SAT4_CF, and SAT6_CF), (CATTC)n, (GAATG)n and SUBTEL_sa. Bs, CarSat1, and SAT1_CF were differentially up-regulated in DUX4 expressed cells, whereas in DUXC expressed cells, Bs element was called up-regulated, and CarSat1 was moderately affected (adjusted p-value = 0.14). 
 
@@ -43,13 +34,9 @@ load(file.path(pkg_dir, "data", "CALTinC_rmsk.rda")) # made in chapter 6
 load(file.path(pkg_dir, "data", "HinH_rmsk.rda"))
 load(file.path(data_dir, "peaks_list.rda"))
 ```
-<<<<<<< HEAD
 
 Tidy up the differential analysis results on the repeats of HinC and CinC transcriptome into one _data.frame_ instance.
-=======
-__Construct a common set__
-Combine the differential analysis results on repeats for HinC and CinC into one _data.frame_ instance.
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
+
 ```{r comb_repeats}
 comb <- inner_join(HinC_rmsk$res_df, CinC_rmsk$res_df, 
                    by="repName", suffix=c("_HinC", "_CinC")) %>%
@@ -62,20 +49,13 @@ comb <- inner_join(HinC_rmsk$res_df, CinC_rmsk$res_df,
 reference: Analysis of major repetitive DNA sequences in the dog (Canis familiaris) genome, Betolila 1999.
 
 ## LINEs
-<<<<<<< HEAD
+
 __Background:__ LINEs constitute 20% of canine genome; LINE1 (L1) and LINE2 (L2) families derive 81% and 16% of the LINE repeat class, respectively. Whidden et al. [@whidden2017] showed that DUX4 up-regulated, directly or indirectly, impressive numbers of LINE1s in human myoblast. In this project, we examed whether DUX4 and DUXC transcription activities lead to similar LINE1s activation in canine myblast cells.
 
 __Results:__        
 
 - DUX4 up-regulated > 50% of L1s and L2s in canine cells          
 - 35% DUX4 peaks binds to LINEs  (monoclonal cell line)           
-=======
-__background:__ LINEs constitute 20% of canine genome; LINE1 (L1) and LINE2 (L2) families derive 81% and 16% of the LINE repeat class, respectively. Study (Whidden 2017) showed that DUX4 up-regulated, directly or indirectly, impressive numbers of LINE1s in human myoblast. In this project, we expected LINE1 enrichment in DUX4 and DUXC canine cells. 
-
-__Results:__      
-- DUX4 up-regulated > 50% of L1s and L2s in canine cells     
-- 35% DUX4 peaks binds to LINEs  (monoclonal cell line)      
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 - GSEA suggested LINE1 family is enriched in DUX4 transcriptome in canine cells          
 - DUX4 up-regulated many carnivore-specific L1s and some Half-L1s (HAL1s, ancient L1-like)     
 - DUXC up-regulated some LINEs (16% in LINE1 family); GESA does not suggest L1 enrichment in DUXC canine cells     
@@ -83,11 +63,7 @@ __Results:__
 - DUXC’s L1-overlapped peaks have a palindromic motif - AATCAATTGATT (243/691); DUX4’s have TAA(G/T/C)TCAATCA (431/999) ([Chapter 9](#peaks-line1))
 - Peaks overlapping with L1s have enriched __AATCA__ sequence ([Chapter 9](#peaks-line1))   
 
-<<<<<<< HEAD
 ```{r line-distribution, warning=FALSE, fig.cap="Distribution of LINE family.", echo=FALSE}
-=======
-```{r line-distribution, message=FALSE, warning=FALSE, fig.cap="Distribution of LINE family.", echo=FALSE}
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 line <- canFam3.rmsk %>% plyranges::filter(repClass=="LINE")
 percent <- function(prob) paste0(format(prob, digit=0), "%")
 line_freq <- line %>% 
@@ -176,11 +152,8 @@ logfc_gather <- gather(activated_L1s, key=tr_factor, value=logFC,
 ```
 
 
-<<<<<<< HEAD
+
 ```{r plot-L1-elements, echo=FALSE, fig.height=8, fig.cap="L1s activation in DUXC and DUX4 in canine cells. Only display significently expressio L1s in either CinC, HinC, or HinH."}
-=======
-```{r plot-L1-elements, echo=FALSE, fig.height=8, fig.cap="L1s activation in DUXC and DUX4 in canine cells."}
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 gg3 <- ggplot(logfc_gather, aes(x = repName, y=logFC, fill=sig)) +
   geom_bar(stat="identity") +
   facet_wrap ( ~ tr_factor) +
@@ -193,7 +166,6 @@ gg3
 ```
 
 ### LINE1 and DUXC/DUX4 binding sites
-<<<<<<< HEAD
 
 __This section is a summary of [Chapter 9](#peaks-line1).__
 
@@ -203,20 +175,10 @@ Our previous study ([@whidden2017]) and the canine model suggested that L1 subfa
 2. get sequence of the selected peaks        
 3. use _MEME_ to find the DUXC/DUX4 motif of these peaks          
 4. use _BioStrings::matchPattern()_ to find the motif enrichment          
-=======
-_This section is a summary of [Chapter 9](#peaks-line1))._
-
-Our previous study (Whidden 2017) and canine model suggested that L1 subfamily is enriched in DUX4 expressed human and canine myoblasts. But does DUX4 (or DUXC) directly interact L1s? Are the binding sites on L1s artifacts? To answer the question, we want to first identify the motifs of peaks that overlap with the differentially expressed LINE1 elements (LFC > 1 with adjusted p-value < 0.05) by:     
-1. use the narrowed peaks  (+/- 50 bps from summit) and select the subset that overlap with the differentially expression L1s     
-2. get sequence of the selected peaks      
-3. use _MEME_ to find the DUXC/DUX4 motif of these peaks     
-4. use _BioStrings::matchPattern()_ to find the motif enrichment     
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 
 __Results:__ 
 20.5% (21,888 out of 85,825) of DUX4 narrowed peaks overlap with L1s (25.50%); 14% of DUXC narrowed peaks overlap with L1s. Based on the top 1,000 of these L1-overlapped narrowed peaks of DUXC and DUX4 (on monoclonal cell lines), MEME identified a palindromic motif __AATCAATTGATT__ (243/691) in DUXC cells and a motif __TAAGTCAATCAG__ (431/999) in DUX4 cells. That is L1s do not have DUX4 nor DUXC motif enrichment; most likely that L1's up-regulated are directly affected by DUX4 or DUXC in canine cells. Interestingly, however, both motifs of L1-overlapped peaks in DUX4 and DUXC cells obtain a motif __AATCA__, which is the canonical, second part of DUX4, Dux and DUXC motifs. This implies that L1s are enriched with __AATCA__ sequences: 42.8% and 46.6% of DUXC and DUX4's L1-overlapped narrowed peaks have __AATCA__ sequences, mostly distributed near the center of the summits (technical details in [Chapter 9](#peaks-line1)).
 
-<<<<<<< HEAD
 __Take away:__
 DUXC and DUX4 seem not directly regulated L1s.
 
@@ -226,16 +188,6 @@ __Background:__ The short interspersed repetitive elements (SINEs) constitute ap
 __Results:__ RMSK categorized canine SINEs into tRNA-Lys (72%, `SINEC_*`), MIR (27%), Deu (0.2%, `AmnSINE1`, `AmnSINE2`), and tRNA (0.2%, `LFSINE_Vert`, `MamSINE1`) families (Figure \@ref(fig:sine-distribution)) with total 20 name/group and 1,610,013 instances of sequence. Six out of 11 tRNA-Lys (54%, named `SINEC_*`) are up-regulated in DUX4 expressed cell line, and all tRNA-Lys have logFC > 1. This means the tRNA-Lys family is enriched in HinC transcriptome. Though none of tRNA-Lys elements were called up-regulated by DUXC, their expression is highly correlated with that of in DUX4 expressed cell line.  
 
 __Note:__ Murine SINEs are derived from both 7SL-RNA (B1 family) and tRNA [@bentolila].
-=======
-Another take away point is that DUXC and DUX4 seem not directly regulated L1s.
-
-## SINE
-__Background:__ The short interspersed repetitive elements (SINEs) constitute approximately 10% of canine genome. Canine SINEs evolved from tRNA genes whereas human SINEs evolved from 7SL-RNA, which gave rise to human Alu family (Bentolila 1999); they do not share homology. However, known that human Alu family are enriched by DUX4 transcriptome in human myoblast (Shaddle 2019), we are interested to know whether canine SINEs are also enriched by DUX4 and DUXC in canine myoblast and why? 
-
-__Results:__ RMSK categorized canine SINEs into tRNA-Lys (72%, `SINEC_*`), MIR (27%), Deu (0.2%, `AmnSINE1`, `AmnSINE2`), and tRNA (0.2%, `LFSINE_Vert`, `MamSINE1`) families (Figure \@ref(fig:sine-distribution)) with total 20 name/group and 1,610,013 instances of sequence. Six out of 11 tRNA-Lys (54%, named `SINEC_*`) are up-regulated in DUX4 expressed cell line, and all tRNA-Lys have logFC > 1. This means the tRNA-Lys family is enriched in HinC transcriptome. Though none of tRNA-Lys elements were called up-regulated by DUXC, their expression is highly correlated with that of in DUX4 expressed cell line.  
-
-__Note:__ (Bentolila 1999) SINE that frequently interrupts and possibly serves as a novel 3' termination of a subclass of canine LINEs. Murine SINEs are derived from both 7SL-RNA (B1 family) and tRNA.
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 
 ### Distribution of SINE family
 ```{r sine-distribution, message=FALSE, warning=FALSE, fig.cap="Distribution of SINE family.", echo=FALSE}
@@ -282,18 +234,13 @@ Table below listed number of up-regulated repeats (name/group) in each SINE fami
 ```{r tRNA-Lys-regulation}
 SINE %>% dplyr::group_by(factor(repFamily_HinC)) %>%
   dplyr::summarise(n = dplyr::n(), 
-<<<<<<< HEAD
                    HinC_sig = sum(padj_HinC < 0.05), CinC_sig=sum(padj_CinC < 0.05)) %>%
   knitr::kable(caption="Number of up-regulated repeats (name/group) in each SINE family")
-=======
-                   HinC_sig = sum(padj_HinC < 0.05), CinC_sig=sum(padj_CinC < 0.05))
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 ```
 
 ## Satellites
 __Background:__ Satellites are consisted with short tandem repeats, and Canine satellite DNA may be more complicated and not restricted to the tandem repeats (Bentolila 1999). Based on RMAK, canine genome (canFam3) has 5 major satellites and satellite-like DNA -  Bs, Carnivore Satellite (CarSat1, CarSat2), Satellite canis Familiaris (SAT1_CF, SAT2_CF, SAT3_CF, SAT4_CF and SAT6_CF), `(CATTC)n`, `(GAATG)n` and SUBTEL_sa. Bs, CarSat1, Carsat2, and SAT1_CF are the four satellites (repName) show some expression in DUX4 and DUXC expressed canine cell lines and therefore were analyzed. (CarSat1 and SAT1_CF are cetromeric satellite families.)
 
-<<<<<<< HEAD
 __Results:__ Bs, CarSat1, and SAT1_CF were up-regulated in HinC. Bs was up-regulated in CinC; CarSat1 was moderately affected ($padj = 0.14$).
 
 How does SAT1_CF or CarSat compare to HSETII and GSETII?
@@ -302,17 +249,4 @@ How does SAT1_CF or CarSat compare to HSETII and GSETII?
 comb %>% dplyr::filter(repClass_HinC == "Satellite") %>%
   dplyr::select(repName, log2FoldChange_HinC, log2FoldChange_CinC, padj_HinC, padj_CinC) %>%
   knitr::kable(caption="Significant satallites in HinC and CinC transcriptome.")
-=======
-__Results:__ Bs, CarSat1, and SAT1_CF were up-regulated in HinC. Bs was up-regulated in CinC; CarSat1 was moderately affected (padj = 0.14).
-
-How does SAT1_CF or CarSat compare to HSETII and GSETII?
-
-```{r satellite, message=FALSE, warning=FALSE, echo=FALSE}
-sat <- canFam3.rmsk %>% plyranges::filter(repClass=="Satellite")
-# Satellites name:
-levels(factor(sat$repName))
-SAT <- comb %>% dplyr::filter(repClass_HinC == "Satellite") %>%
-  dplyr::select(repName, log2FoldChange_HinC, log2FoldChange_CinC, padj_HinC, padj_CinC)
-SAT
->>>>>>> 667c61168abd203e3bcb257a7c88da1359be1265
 ```

@@ -41,6 +41,9 @@ The repository's [data](https://github.com/FredHutch/canFam3.DuxFamily/tree/mast
 ├── CinC.ens.dds.rda: DUXC transcriptome
 ├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
 ├── rmsk.dds.rda: DUX4, DUXC, DUXC-ALT repeat elements expression
+├── CinC_rmsk.rda: DUXC repeat elements DESeq2 results
+├── HinC_rmsk.rda: DUX4 repeat elements DESeq2 resutls
+├── CALTinC_rmsk.rda: DUXC-ALT repeat elements DESeq2 results
 ```
 
 - human DUX4 transcriptome in human myblast([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
