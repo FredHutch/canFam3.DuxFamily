@@ -3,7 +3,7 @@ To support the reproducibility and transparancy of the computational work for th
 
 ## Datasets
 
-- canine RNA-seq [GSE188928](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
+- canine RNA-seq ([GSE188928](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928)): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
 ```
 ├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
 ├── CinC.ens.dds.rda: DUXC transcriptome
