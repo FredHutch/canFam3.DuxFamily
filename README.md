@@ -40,13 +40,12 @@ __Software__: Bioconductor 3.10 / R 3.6.3
 
 __Annotation__:
 
-- Ensembl86 for canFam3.1 is also available on UCSC. We have built a Bioconductor TxDb package:`/fh/fast/tapscott_s/CompBio/canFam3/TxDb.Cfamiliaris.UCSC.canFam3.ensGene_1.0.0.tar.gz`. This [page](https://fredhutch.github.io/canFam3.DuxFamily/) gives codes for acquiring Ensembl database and building an TxDb package.   
+- Ensembl86 for canFam3.1 is also available on UCSC. We have built a Bioconductor TxDb package:`/fh/fast/tapscott_s/CompBio/canFam3/TxDb.Cfamiliaris.UCSC.canFam3.ensGene_1.0.0.tar.gz`. This [page](https://fredhutch.github.io/canFam3.DuxFamily/) gives codes for acquiring Ensembl database and building a TxDb package.   
 - Bioconductor BSgenome package: _BSgenome.Cfamiliaris.UCSC.canFam3_     
 - Bioconductor Genome wide annotation package: _org.Cf.eg.db_     
-- Homology: downloaded from Ensembl and saved at      `~/CompBio/R_package/ensOrtholog.db/data/mouse_human_ensOrtholog.rda`
-- RMSK: download from UCSC genome browser canFam3 and make
-_canFam3.rmsk_ pacakge.  The package is stored at
-`~/CompBio/canFam3/canFam3_1.0.0.tar.gz`.     
+- Homology: downloaded from Ensembl and saved as    `/mouse_human_ensOrtholog.rda`
+- RMSK: download from UCSC genome browser canFam3 and made an R
+_canFam3.rmsk_ pacakge. 
 
 ## Where is the row data
 
