@@ -35,7 +35,7 @@ data.frame(
 
 The repository's [data](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/data) foler include RNA-seq read counts (`DESeqDataSet`) as well as the ChIP-seq peaks calling results (`GRanges`). 
 
-- canine RNA-seq [GSE188928](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
+- canine RNA-seq ([GSE188928](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928)): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
 ```
 ├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
 ├── CinC.ens.dds.rda: DUXC transcriptome
@@ -46,7 +46,7 @@ The repository's [data](https://github.com/FredHutch/canFam3.DuxFamily/tree/mast
 ├── CALTinC_rmsk.rda: DUXC-ALT repeat elements DESeq2 results
 ```
 
-- human DUX4 transcriptome in human myblast([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
+- human DUX4 transcriptome in human myblast ([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
 ```
 ├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
 ├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
