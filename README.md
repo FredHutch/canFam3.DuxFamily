@@ -1,7 +1,8 @@
 To support the reproducibility and transparancy of the computational work for the manuscript, [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948), we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a [__book__](https://fredhutch.github.io/canFam3.DuxFamily/) containning nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).
 
 
-## Datasets (/data)
+## Datasets 
+Datasets are stored in the __/data__ folder.
 
 - canine RNA-seq ([GSE188928](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928)): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
 ```
