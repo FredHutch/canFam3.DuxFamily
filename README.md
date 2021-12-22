@@ -1,7 +1,7 @@
-To support the reproducibility and transparancy of the computational work for the manuscript, [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948), we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a [book](https://fredhutch.github.io/canFam3.DuxFamily/) containning nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).
+To support the reproducibility and transparancy of the computational work for the manuscript, [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948), we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a [__book__](https://fredhutch.github.io/canFam3.DuxFamily/) containning nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).
 
 
-## Datasets
+## Datasets (/data)
 
 - canine RNA-seq ([GSE188928](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928)): DUX4, DUXC, and DUX-ALT transcriptome in canine skeletal muscle and repeat elements expression stored in `DESeqDataSet` instances
 ```
@@ -14,7 +14,7 @@ To support the reproducibility and transparancy of the computational work for th
 ├── CALTinC_rmsk.rda: DUXC-ALT repeat elements DESeq2 results
 ```
 
-- human DUX4 transcriptome in human myblast([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
+- human DUX4 transcriptome in human myblast ([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
 ```
 ├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
 ├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
