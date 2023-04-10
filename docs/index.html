@@ -120,28 +120,6 @@ code span.vs { color: #4e9a06; } /* VerbatimString */
 code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -324,7 +302,8 @@ div.csl-indent {
 Figure 0.1: The gene models of the ancestral double homeodomain gene DUXC and its alternative isoform DUXC-ALT in relation to the retrotransposed human DUX4 (hDUX4) and murine Dux (mDux).
 </p>
 </div>
-<p>The aim of this book is to promote the reproducibility and transparency of the computational work for our manuscript titled <em>Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD</em> <span class="citation">(<a href="#ref-duxc" role="doc-biblioref">Chao-Jen Wong 2022</a>)</span> . Built on R Markdown, knitr <span class="citation">(<a href="#ref-R-knitr" role="doc-biblioref">Xie 2019</a>)</span>, and bookdown <span class="citation">(<a href="#ref-bookdown2016" role="doc-biblioref">Xie 2016</a>)</span>, this book provides the workflow and reproducible R code for our bioinformatics analysis and generates tables and figures on the fly. Note that certain sections of the code may be hidden from view due to their length and tediousness, but can be accessed through the <a href="https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook">Rmd source files</a>.</p>
+<p>To support the reproducibility and transparency of the computational work for the manuscript, <a href="https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948"><em>Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD</em></a>, we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a <a href="https://fredhutch.github.io/canFam3.DuxFamily/"><strong>book</strong></a> containing nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).</p>
+<p>Note that certain sections of the code may be hidden from view due to their length and tediousness, but can be accessed through the <a href="https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook">Rmd source files</a>.</p>
 <div id="nomenclature" class="section level2 hasAnchor" number="0.1">
 <h2><span class="header-section-number">0.1</span> Nomenclature<a href="index.html#nomenclature" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -406,22 +385,23 @@ mDux in mouse
 ├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
 ├── rmsk.dds.rda: DUX4, DUXC, DUXC-ALT repeat elements expression
 ├── CinC_rmsk.rda: DUXC repeat elements DESeq2 results
-├── HinC_rmsk.rda: DUX4 repeat elements DESeq2 resutls
+├── HinC_rmsk.rda: DUX4 repeat elements DESeq2 results
 ├── CALTinC_rmsk.rda: DUXC-ALT repeat elements DESeq2 results</code></pre>
 <ul>
 <li>human DUX4 transcriptome in human myoblast (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461">GSE85461</a>) and mouse Dux transcriptome in mouse myoblast cell lines (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282">GSE87282</a>)<br />
 </li>
 </ul>
-<pre><code>├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
+<pre><code>├── C2C12.ens.ddsl2.rda: DUX and DUX4 transcriptome in mouse myoblast cell lines
 ├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
-├── HinH_rmsk.rda: repeat element expression in HinH transcriptome (DESeq2 resutls)</code></pre>
+├── HinH_rmsk.rda: repeat element expression in HinH transcriptome (DESeq2 results)</code></pre>
 <ul>
-<li>miscellaneous. The orthologous are collected from Ensembl horology database V88.<br />
+<li>miscellaneous. The orthologues are collected from Ensembl horology database V88.<br />
 </li>
 </ul>
 <pre><code>├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set
-├── canine_human_mouse_ensOrtholog.rda: human-canine and mouse-canine paired orthologous
-├── human_mouse_ensOrtholog.rda: human-mouse paired Ortholog
+├── canine_human_mouse_ensOrtholog.rda: human-canine and mouse-canine 
+    paired orthologues 
+├── human_mouse_ensOrtholog.rda: human-mouse paired Orthologue
 ├── peaks_list.rda: ChIP-seq peaks 
 ├── chipseq_si.rda: ChIP-seq sample information
 └── z4_ensembl.rda: Akiyama 2015 2C-like gene set from </code></pre>
@@ -458,18 +438,6 @@ mDux in mouse
 <h2><span class="header-section-number">0.4</span> Software<a href="index.html#software" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R/3.6.3, tidyverse and Bioconductor (v3.10) packages</p>
 
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-duxc" class="csl-entry">
-Chao-Jen Wong, Ashlee T Langford, Jennifer L Whiddon. 2022. <span>“Canine DUXC: Implications for DUX4 Retrotransposition and Preclinical Models of FSHD.”</span> <em>Human Molecular Genetics</em>. <a href="https://doi.org/10.1093/hmg/ddab352">https://doi.org/10.1093/hmg/ddab352</a>.
-</div>
-<div id="ref-bookdown2016" class="csl-entry">
-Xie, Yihui. 2016. <em>Bookdown: Authoring Books and Technical Documents with <span>R</span> Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
-</div>
-<div id="ref-R-knitr" class="csl-entry">
-———. 2019. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
 </div>
 </div>
             </section>
