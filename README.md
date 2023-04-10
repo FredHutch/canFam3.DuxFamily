@@ -1,3 +1,5 @@
+![duxc-summary]("./gitbook/images/duxc_summary/png")
+
 To support the reproducibility and transparency of the computational work for the manuscript, [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948), we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a [__book__](https://fredhutch.github.io/canFam3.DuxFamily/) containing nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).
 
 
