@@ -1,4 +1,4 @@
-To support the reproducibility and transparancy of the computational work for the manuscript, [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948), we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a [__book__](https://fredhutch.github.io/canFam3.DuxFamily/) containning nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).
+To support the reproducibility and transparency of the computational work for the manuscript, [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://academic.oup.com/hmg/advance-article/doi/10.1093/hmg/ddab352/6457948), we made this repository to include our processed RNA-seq and ChIP-seq datasets, as well as a [__book__](https://fredhutch.github.io/canFam3.DuxFamily/) containing nine chapters demonstrating all the bioinformatic analysis and automatically executable R code (you can directly run the code and reproduce the statistics and figures in the manuscript).
 
 
 ## Datasets 
@@ -11,22 +11,22 @@ Datasets are stored in the __/data__ folder.
 ├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
 ├── rmsk.dds.rda: DUX4, DUXC, DUXC-ALT repeat elements expression
 ├── CinC_rmsk.rda: DUXC repeat elements DESeq2 results
-├── HinC_rmsk.rda: DUX4 repeat elements DESeq2 resutls
+├── HinC_rmsk.rda: DUX4 repeat elements DESeq2 results
 ├── CALTinC_rmsk.rda: DUXC-ALT repeat elements DESeq2 results
 ```
 
-- human DUX4 transcriptome in human myblast ([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse Dux transcriptome in mouse myblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
+- human DUX4 transcriptome in human myoblast ([GSE85461](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461)) and mouse DUX transcriptome in mouse myoblast cell lines ([GSE87282](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282))     
 ```
-├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
+├── C2C12.ens.ddsl2.rda: DUX and DUX4 transcriptome in mouse myoblast cell lines
 ├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
-├── HinH_rmsk.rda: repeat element expression in HinH transcriptome (DESeq2 resutls)
+├── HinH_rmsk.rda: repeat element expression in HinH transcriptome (DESeq2 results)
 ```
 
-- miscellaneous. The orthologous are collected from Ensembl ortholog database V88.   
+- miscellaneous. The orthologue are collected from Ensembl orthologue database V88.   
 ```
 ├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set
-├── canine_human_mouse_ensOrtholog.rda: human-canine and mouse-canine paired orthologous
-├── human_mouse_ensOrtholog.rda: human-mouse paired Ortholog
+├── canine_human_mouse_ensOrtholog.rda: human-canine and mouse-canine paired orthologues
+├── human_mouse_ensOrtholog.rda: human-mouse paired Orthologue
 ├── peaks_list.rda: ChIP-seq peaks 
 ├── chipseq_si.rda: ChIP-seq sample information
 └── z4_ensembl.rda: Akiyama 2015 2C-like gene set from 
@@ -34,7 +34,7 @@ Datasets are stored in the __/data__ folder.
 
 ## Genome build / software / annotation
 
-- UCSC Genome broswser assembly ID: canFam3       
+- UCSC Genome browser assembly ID: canFam3       
 - NCBI Genome information: NCBI genome/85 CanFam3.1 GCF_000002285.3     
 
 __Software__: Bioconductor 3.10 / R 3.6.3
@@ -46,7 +46,7 @@ __Annotation__:
 - Bioconductor Genome wide annotation package: _org.Cf.eg.db_     
 - Homology: downloaded from Ensembl and saved as    `/mouse_human_ensOrtholog.rda`
 - RMSK: download from UCSC genome browser canFam3 and made an R
-_canFam3.rmsk_ pacakge. 
+_canFam3.rmsk_ package. 
 
 ## Where is the row data
 
