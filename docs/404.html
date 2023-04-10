@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD</title>
+  <title>Page not found | Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD</title>
   <meta name="description" content="Bioinformatics and statistics analysis" />
   <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD" />
+  <meta property="og:title" content="Page not found | Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Bioinformatics and statistics analysis" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD" />
+  <meta name="twitter:title" content="Page not found | Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD" />
   
   <meta name="twitter:description" content="Bioinformatics and statistics analysis" />
   
@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="chipseq.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -311,166 +311,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD</h1>
-<p class="author"><em>Chao-Jen Wong</em></p>
-<p class="date"><em>2023-04-10</em></p>
-</div>
-<div id="preface" class="section level1 unnumbered hasAnchor">
-<h1>Preface<a href="index.html#preface" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="figure"><span style="display:block;" id="fig:duxc-summary"></span>
-<img src="images/duxc_summary.png" alt="The gene models of the ancestral double homeodomain gene DUXC and its alternative isoform DUXC-ALT in relation to the retrotransposed human DUX4 (hDUX4) and murine Dux (mDux)." width="1141" />
-<p class="caption">
-Figure 0.1: The gene models of the ancestral double homeodomain gene DUXC and its alternative isoform DUXC-ALT in relation to the retrotransposed human DUX4 (hDUX4) and murine Dux (mDux).
-</p>
-</div>
-<p>The aim of this book is to promote the reproducibility and transparency of the computational work for our manuscript titled <a href="https://doi.org/10.1093/hmg/ddab352"><em>Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD</em></a> <span class="citation">(<a href="#ref-duxc" role="doc-biblioref">Chao-Jen Wong 2022</a>)</span>. Built on R Markdown, knitr <span class="citation">(<a href="#ref-R-knitr" role="doc-biblioref">Xie 2019</a>)</span>, and bookdown <span class="citation">(<a href="#ref-bookdown2016" role="doc-biblioref">Xie 2016</a>)</span>, this book provides the workflow and reproducible R code for our bioinformatics analysis and generates tables and figures on the fly. Note that certain sections of the code may be hidden from view due to their length and tediousness, but can be accessed through the <a href="https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook">Rmd source files</a>.</p>
-<div id="nomenclature" class="section level2 hasAnchor" number="0.1">
-<h2><span class="header-section-number">0.1</span> Nomenclature<a href="index.html#nomenclature" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>
-<span id="tab:nomenclature-table">Table 0.1: </span>The nomenclatures used in this book.
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-nomenclature
-</th>
-<th style="text-align:left;">
-model
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-CinC
-</td>
-<td style="text-align:left;">
-DUXC in canine
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-HinC
-</td>
-<td style="text-align:left;">
-hDUX4 in canine
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-CALTinC
-</td>
-<td style="text-align:left;">
-DUXC-ALT in canine
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-HinH
-</td>
-<td style="text-align:left;">
-hDUX4 in human
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-HinM
-</td>
-<td style="text-align:left;">
-hDUX4 in mouse
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-MinM
-</td>
-<td style="text-align:left;">
-mDux in mouse
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="datasets" class="section level2 hasAnchor" number="0.2">
-<h2><span class="header-section-number">0.2</span> Datasets<a href="index.html#datasets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Within the <a href="https://github.com/FredHutch/canFam3.DuxFamily/tree/master/data">data</a> folder of the repository, we have included <code>DESeqDataSet</code> instances that contain read counts for DUXC, DUXC-ALT, human DUX4 (hDUX4), and murine Dux (mDux), as well as their corresponding repeat elements expression and metadata. Additionally, the folder contains results from the ChIP-seq peaks calling in the form of <code>GRanges</code>.</p>
-<p>The raw canine RNA-seq data has been deposited to GEO, and can be accessed through the series number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928">GSE188928</a>.</p>
-<p>There are three categories of datsets:</p>
-<ul>
-<li>DUX4, DUXC, and DUX-ALT transcriptome (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE188928">GSE188928</a>) in canine skeletal muscle and repeat elements expression stored in DESeqDataSet instances</li>
-</ul>
-<pre><code>├── CALTinC.ens.dds.rda: DUXC-ALT transcriptome in canine skeletal muscle
-├── CinC.ens.dds.rda: DUXC transcriptome
-├── HinC.ens.dds.rda: DUX4 transcriptome in canine skeletal muscle
-├── rmsk.dds.rda: DUX4, DUXC, DUXC-ALT repeat elements expression
-├── CinC_rmsk.rda: DUXC repeat elements DESeq2 results
-├── HinC_rmsk.rda: DUX4 repeat elements DESeq2 resutls
-├── CALTinC_rmsk.rda: DUXC-ALT repeat elements DESeq2 results</code></pre>
-<ul>
-<li>human DUX4 transcriptome in human myoblast (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE85461">GSE85461</a>) and mouse Dux transcriptome in mouse myoblast cell lines (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87282">GSE87282</a>)<br />
-</li>
-</ul>
-<pre><code>├── C2C12.ens.ddsl2.rda: Dux and DUX4 transcriptome in mouse myoblast cell lines
-├── HinH.ens.dds.rda: DUX4 transcriptome in human myoblast
-├── HinH_rmsk.rda: repeat element expression in HinH transcriptome (DESeq2 resutls)</code></pre>
-<ul>
-<li>miscellaneous. The orthologous are collected from Ensembl horology database V88.<br />
-</li>
-</ul>
-<pre><code>├── human_cleavage.rda: Hendrikson 2017 zygotic activation gene set
-├── canine_human_mouse_ensOrtholog.rda: human-canine and mouse-canine paired orthologous
-├── human_mouse_ensOrtholog.rda: human-mouse paired Ortholog
-├── peaks_list.rda: ChIP-seq peaks 
-├── chipseq_si.rda: ChIP-seq sample information
-└── z4_ensembl.rda: Akiyama 2015 2C-like gene set from </code></pre>
-</div>
-<div id="annotation" class="section level2 hasAnchor" number="0.3">
-<h2><span class="header-section-number">0.3</span> Annotation<a href="index.html#annotation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="canfam3-ensembl-gtf" class="section level3 hasAnchor" number="0.3.1">
-<h3><span class="header-section-number">0.3.1</span> canFam3 ensembl GTF<a href="index.html#canfam3-ensembl-gtf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We used Bioconductor’s <em>AnnotationHub</em> package to extract canFam3 ensembl’s GTF file and built a <code>TxDb</code> (transcript database) annotation package. The code chunk below is an example of how to build a <code>TxDb</code> package using the <code>AnnotationHub</code> and <code>GenomicFeatures</code> packages.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example:</span></span>
-<span id="cb4-2"><a href="index.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AnnotationHub)</span>
-<span id="cb4-3"><a href="index.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GenomicFeatures)</span>
-<span id="cb4-4"><a href="index.html#cb4-4" aria-hidden="true" tabindex="-1"></a>ah <span class="ot">=</span> <span class="fu">AnnotationHub</span>()</span>
-<span id="cb4-5"><a href="index.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">query</span>(ah, <span class="fu">c</span>(<span class="st">&quot;canFam3&quot;</span>, <span class="st">&quot;ensembl&quot;</span>))</span>
-<span id="cb4-6"><a href="index.html#cb4-6" aria-hidden="true" tabindex="-1"></a>gr <span class="ot">&lt;-</span> ah[<span class="st">&quot;AH79003&quot;</span>] <span class="do">## download Canis_familiaris ensembl version 99</span></span>
-<span id="cb4-7"><a href="index.html#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="index.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## construce a meata data.frame</span></span>
-<span id="cb4-9"><a href="index.html#cb4-9" aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> </span>
-<span id="cb4-10"><a href="index.html#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">name=</span><span class="fu">c</span>(<span class="st">&quot;ensembl_version&quot;</span>, <span class="st">&quot;Data source&quot;</span>, </span>
-<span id="cb4-11"><a href="index.html#cb4-11" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&quot;Organism&quot;</span>, <span class="st">&quot;Resource URL&quot;</span>, <span class="st">&quot;Type of Gene ID&quot;</span>),</span>
-<span id="cb4-12"><a href="index.html#cb4-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">value=</span><span class="fu">c</span>(<span class="st">&quot;canFam3.1.99&quot;</span>, <span class="st">&quot;AnnotationHub query AH79003&quot;</span>, </span>
-<span id="cb4-13"><a href="index.html#cb4-13" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Canis familiaris &quot;</span>, <span class="st">&quot;http://ensembl.org&quot;</span>, </span>
-<span id="cb4-14"><a href="index.html#cb4-14" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Ensembl Gene ID&quot;</span>))</span>
-<span id="cb4-15"><a href="index.html#cb4-15" aria-hidden="true" tabindex="-1"></a>txdb <span class="ot">&lt;-</span> GenomicFeatures<span class="sc">::</span><span class="fu">makeTxDbFromGRanges</span>(gr, <span class="at">metadata=</span>md)</span>
-<span id="cb4-16"><a href="index.html#cb4-16" aria-hidden="true" tabindex="-1"></a>makeTxDbPackage<span class="sc">::</span><span class="fu">makeTxDbPackage</span>(</span>
-<span id="cb4-17"><a href="index.html#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">txdb=</span>txdb, <span class="at">version=</span><span class="st">&quot;1.0.0&quot;</span>,</span>
-<span id="cb4-18"><a href="index.html#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">pkgname=</span><span class="st">&quot;TxDb.Cfamiliaris.CanFam3.ensGene&quot;</span>,</span>
-<span id="cb4-19"><a href="index.html#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">maintainer=</span><span class="st">&quot;Chao-Jen Wong &lt;cwon2@fredhutch.org&gt;&quot;</span>,</span>
-<span id="cb4-20"><a href="index.html#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">author=</span><span class="st">&quot;Chao-Jen Wong&quot;</span>,</span>
-<span id="cb4-21"><a href="index.html#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">destDir=</span><span class="st">&quot;~/tapscott/canfam3&quot;</span>)</span></code></pre></div>
-</div>
-</div>
-<div id="software" class="section level2 hasAnchor" number="0.4">
-<h2><span class="header-section-number">0.4</span> Software<a href="index.html#software" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>R/3.6.3, tidyverse and Bioconductor (v3.10) packages</p>
-
-</div>
-</div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-duxc" class="csl-entry">
-Chao-Jen Wong, Ashlee T Langford, Jennifer L Whiddon. 2022. <em>Human Molecular Genetics</em>.
-</div>
-<div id="ref-bookdown2016" class="csl-entry">
-Xie, Yihui. 2016. <em>Bookdown: Authoring Books and Technical Documents with <span>R</span> Markdown</em>. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.
-</div>
-<div id="ref-R-knitr" class="csl-entry">
-———. 2019. <em>Knitr: A General-Purpose Package for Dynamic Report Generation in r</em>. <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
@@ -478,7 +323,7 @@ Xie, Yihui. 2016. <em>Bookdown: Authoring Books and Technical Documents with <sp
         </div>
       </div>
 
-<a href="chipseq.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -509,7 +354,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook/index.Rmd",
+"link": "https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook/%s",
 "text": "Edit"
 },
 "history": {
@@ -517,7 +362,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook/index.Rmd",
+"link": "https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook/%s",
 "text": null
 },
 "download": ["gitbook.pdf", "gitbook.epub"],
