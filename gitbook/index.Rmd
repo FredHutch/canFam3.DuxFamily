@@ -19,7 +19,7 @@ description: "Bioinformatics and statistics analysis"
 knitr::include_graphics("./images/duxc_summary.png")                        
 ```
 
-The aim of this book is to promote the reproducibility and transparency of the computational work for our manuscript titled [_Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_](https://doi.org/10.1093/hmg/ddab352) [@duxc]. Built on R Markdown, knitr [@R-knitr], and bookdown [@bookdown2016], this book provides the workflow and reproducible R code for our bioinformatics analysis and generates tables and figures on the fly. Note that certain sections of the code may be hidden from view due to their length and tediousness, but can be accessed through the [Rmd source files](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook).
+The aim of this book is to promote the reproducibility and transparency of the computational work for our manuscript titled _Canine DUXC: Implications for DUX4 retrotransposition and preclinical models of FSHD_ [@duxc]. Built on R Markdown, knitr [@R-knitr], and bookdown [@bookdown2016], this book provides the workflow and reproducible R code for our bioinformatics analysis and generates tables and figures on the fly. Note that certain sections of the code may be hidden from view due to their length and tediousness, but can be accessed through the [Rmd source files](https://github.com/FredHutch/canFam3.DuxFamily/tree/master/gitbook).
 
 ## Nomenclature
 ```{r nomenclature-table, echo=FALSE, message=FALSE}
